@@ -1,0 +1,61 @@
+\lecture
+		\begin{thm}\label{thm_series}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $R \neq 0$, und sei $ f: B_R(a) \to \C, f(z) = \sum\limits_{n=0}^\infty c_n (z-a)^n $. Dann ist $f$ holomorph mit $ f^\prime(z) = \sum\limits_{n=0}^\infty n c_n (z-a)^{n-1} $.
+		\end{thm}
+		
+		\begin{exmp}
+			Betrachte die Reihe $ \sum\limits_{i=0}^\infty i^2 z^{i-1} $ für $|z| < 1$. Da $ \sum\limits_{i=0}^\infty z^{i} = \frac{1}{1-z} $ für $|z|<1$, folgt mit Satz \ref{thm_series}: $ \sum\limits_{i=0}^\infty i z^{i-1} = \frac{1}{(1-z^2)} $ für $|z|<1$ und somit $ \sum\limits_{i=0}^\infty i z^{i} = \frac{z}{(1-z)^2} $ für $|z|<1$. Wieder mit Satz \ref{thm_series} gilt
+			\[ \sum\limits_{i=0}^\infty i^2 z^{i-1} = \frac{(1-z)^2+2z(1-z)}{(1-z)^4} = \frac{1-z+2z}{(1-z)^3} = \frac{1+z}{(1-z)^3}\ \text{für } |z|<1. \]
+		\end{exmp}
+		
+		Nun können wir mit dem Studium der komplexen Exponentialreihe beginnen.
+		
+		\begin{lem}
+			Die Reihe $ \sum\limits_{n=0}^\infty \frac{z^n}{n!} $ hat den Konvergenzradius $ R = \infty $.
+		\end{lem}
+		
+		\begin{defn}[Komplexe Exponentialfunktion]
+			Die Funktion $ \exp: \C \to \C, z \mapsto \sum\limits_{n=0}^\infty \frac{z^n}{n!} $ ist die \emph{(komplexe) Exponentialfunktion}.
+		\end{defn}
+		
+		Aus Satz \ref{thm_series} folgt, dass $\exp$ holomorph ist, mit $ \exp^\prime:\C \to \C, \exp^\prime(z) = \sum\limits_{n=1}^\infty n \cdot \frac{1}{n!} z^{n-1} = \exp(z). $\\
+		
+		\subsection*{Eigenschaften der Exponentialfunktion:}
+		Seien $z,w \in \C$. Da $ \sum\limits_{n=0}^\infty \frac{z^n}{n!},\ \sum\limits_{n=0}^\infty \frac{w^n}{n!} $ absolut konvergieren, konvergiert auch
+		\begin{align*}
+			\exp(z) \cdot \exp(w) &= \sum_{n=0}^\infty \frac{z^n}{n!} \cdot \sum_{m=0}^\infty \frac{w^m}{m!}\\
+			&= \sum_{n=0}^\infty \sum_{m=0}^\infty \frac{z^nw^m}{n!m!} = \sum_{n=0}^\infty \sum_{k=0}^n \frac{z^kw^{n-k}}{k!(n-k)!}\\
+			&= \sum_{n=0}^\infty \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} z^kw^{n-k} = \sum_{n=0}^\infty \frac{(z+w)^n}{n!}\\
+			&= \exp(z+w)
+		\end{align*}
+		Daraus folgt sofort:
+		\begin{align*}
+			\exp(z) \cdot \exp(-z) &= \exp(0) = \sum_{n=0} \frac{0^n}{n!} = 1 \quad \forall\, z \in \C,\\
+			\exp(-z) &= \frac{1}{\exp(z)},\ \exp(z) \neq 0 \quad \forall\, z \in \C.
+		\end{align*}
+		In der reellen Analysis setzt man $\exp(1)=e$ und zeigt dann $ \exp(q) = e^q \ \forall\, q \in \Q $. Dann setzt man $ e^x = \exp(x) \ \forall\, x \in \R. $ Hier setzen wir nun auch $ \exp(z) = e^z \ \forall\, z \in \C $.\\
+		Nun setzen wir (wie im reellen Fall):\\
+		$ \cos,\sin,\cosh,\sinh : \C \to \C, $
+		\begin{itemize}
+			\item $ \cos(z) = \sum\limits_{n=0}^\infty (-1)^n \frac{z^{2n}}{(2n)!} = 1-\frac{z^2}{2!} + \frac{z^4}{4!} + \dots $
+			\item $ \sin(z) = \sum\limits_{n=0}^\infty (-1)^n \frac{z^{2n+1}}{(2n+1)!} = z - \frac{z^3}{3!} + \frac{z^5}{5!} + \dots $
+			\item $ \cosh(z) = \sum\limits_{n=0}^\infty \frac{z^{2n}}{(2n)!} $
+			\item $ \sinh(z) = \sum\limits_{n=0}^\infty \frac{z^{2n+1}}{(2n+1)!} $
+		\end{itemize}
+		Es gilt:
+		\begin{enumerate}[label={\alph*})]
+			\item $ \cos(z) + i\sin(z) = e^{iz} $
+			\item $ \cosh(z) + \sinh(z) = e^z $
+			\item $ e^{iz} + e^{-iz} = 2 \cos(z) \implies \cos(z) = \frac{e^{iz} + e^{-iz}}{2} $\\
+			Ähnlich: $ \sin(z) = \frac{e^{iz} - e^{-iz}}{2i} \quad \implies e^{-iz} = \cos(z) -i\sin(z) $
+			\item $ \cos^2(z) + \sin^2(z) = 1 $
+			\item Da $ \cosh(z) - \sinh(z) = e^{-z} $ ist $ \cosh(z) = \frac{e^{z} + e^{-z}}{2} $ und $ \sinh(z) = \frac{e^{z} - e^{-z}}{2} $.
+			\item Aus Satz \ref{thm_series} folgt $ \cos^\prime(z) = -\sin(z) $\\
+			$ \sin^\prime(z) = \cos(z) $\\
+			$ \cosh^\prime(z) = \sinh(z) $\\
+			$ \sinh(z)^\prime = \cosh(z) $
+			\item $ \cos(z+w) = \cos(z)\cos(w) - \sin(z)\sin(w) $\\
+			$ \sin(z+w) = \sin(z)\cos(w) + \cos(z)\sin(w) $
+			\item $ e^{z+2\pi i} = e^z $ und für $ x,y \in \R $ gilt $ e^{x+iy} = e^x(\cos(y)+i\sin(y)) $\\
+			$ \implies |e^z| = |e^{x+iy}| = e^x, \quad \arg(e^z) \equiv y \mod 2\pi $
+		\end{enumerate}

@@ -1,0 +1,61 @@
+\section{Der Cauchy'sche Integralsatz}\lecture
+		
+		\begin{defn}[Bogenweise zusammenhängend]
+			Eine Menge $ D \subseteq \C $ heißt \emph{bogenweise zusammenhängend}, falls zu je zwei Punkten $ z,w \in D $ eine ganz in $D$ verlaufende, stückweise glatte Kurve existiert, welche $z$ mit $w$ verbindet: $ \gamma: [a,b] \to D $ mit $ \gamma(a) = z, \gamma(b)=w $.
+		\end{defn}
+		
+		\begin{rem}
+			Jede bogenweise zusammenhängende Menge $ D \subseteq \C $ ist zusammenhängend, denn sie ist wegzusammenhängend. Also ist jede lokal konstante Funktion auf $D$ konstant.
+		\end{rem}
+		\stepcounter{thm}
+		\begin{defn}[Gebiet]
+			Ein \emph{Gebiet} ist eine offene, bogenweise zusammenhängende Menge $ D \subseteq \C $. Der Begriff des Gebietes ist eine Verallgemeinerung des Begriffs des offenen Intervalls.
+		\end{defn}
+	
+		\subsection*{Zusammensetzung von Kurven}
+		Seien $\begin{aligned}
+			\gamma_1 : [a,b] \to \C\\
+			\gamma_2 : [b,c] \to \C
+		\end{aligned}$ zwei stückweise glatte Kurven mit der Eigenschaft $ \gamma_1(b) = \gamma_2(b) $. Dann wird durch 
+		\begin{align*}
+			\gamma_1 * \gamma_2 &: [a,c] \to \C\\
+			(\gamma_1 * \gamma_2)(t) &= \begin{cases}
+				\gamma_1 (t) \quad t \in [a,b]\\
+				\gamma_2 (t) \quad t \in [b,c]
+				\end{cases}
+		\end{align*}
+		eine stückweise glatte Kurve definiert, die \emph{Zusammensetzung} von $\gamma_1$ und $\gamma_2$.\\
+		Sei $ \gamma: [a,b] \to \C $ eine stückweise glatte Kurve. Dann ist die \emph{reziproke Kurve} $ \overbar{\gamma}: [a,b] \to \C, \overbar{\gamma}(t) = \gamma(a+b-t)$, also insbesondere $ \overbar{\gamma}(a) = \gamma(b), \overbar{\gamma}(b) = \gamma(a) $.
+		
+		Es gilt:
+		\begin{enumerate}[label={\roman*})]
+			\item $$\int_{\gamma_1 * \gamma_2} f = \int_{\gamma_1} f + \int_{\gamma_2} f $$ für $ \gamma_1: [a,b] \to \C, \gamma_2:[b,c]\to\C $ mit $ \gamma_1(b)=\gamma_2(b) $. Das folgt sofort aus der Definition der Integration entlang stückweise glatten Kurven.
+			\item \[ \int_{\overbar{\gamma}} f = -\int_\gamma f\ \text{für $\gamma: [a,b] \to \C$ stückweise glatt.} \]
+		\end{enumerate}
+		
+		\begin{thm}\label{2.2.4}
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ stetig. Dann sind folgende drei Aussagen äquivalent:
+			\begin{enumerate}[label={\roman*})]
+				\item $f$ besitzt eine Stammfunktion.
+				\item Das Integral von $f$ über jede in $D$ verlaufende geschlossene Kurve verschwindet.
+				\item Das Integral von $f$ über jede in $D$ verlaufende Kurve hängt nur vom Anfangs- und Endpunkt der Kurve ab.
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Dreiecksflächen und Dreieckswege}
+		Seien $ z_1,z_2,z_3 \in \C $ drei Punkte. Die von $ z_1,z_2,z_3 $ aufgespannte Dreiecksfläche ist die Menge
+		\[ \Delta_{z_1,z_2,z_3} = \Delta = \Bigl\{ z \in \C \ \bigm|\ z = t_1z_1 + t_2z_2 + t_3z_3,\ 0 \leq t_1,t_2,t_3,\ t_1+t_2+t_3 = 1 \Bigr\}. \]
+		$\Delta$ ist die konvexe Hülle der Punkte $ z_1,z_2,z_3 $. Mit je zwei Punkten $ w_1,w_2 \in \Delta $ liegt auch die gerade Verbindungsstrecke zwischen $w_1$ und $w_2$ in $\Delta$.\\
+		Der \emph{Dreiecksweg} $ <z_1,z_2,z_3> $ ist die geschlossene Kurve
+		\begin{align*}
+			\noalign{\centering $\gamma = \gamma_1 * \gamma_2 * \gamma_3: [0,3] \to \Delta$}
+			\gamma_1 &: [0,1] \to \Delta \qquad \gamma_1 (t) = z_1 + t(z_2-z_1)\\
+			\gamma_2 &: [1,2] \to \Delta \qquad \gamma_2 (t) = z_2 + (t-1)(z_3-z_2)\\
+			\gamma_3 &: [2,3] \to \Delta \qquad \gamma_3 (t) = z_3 + (t-2)(z_1 - z_3)
+		\end{align*}
+		$ <z_1,z_2,z_3> $ ist eine Parametrisierung des Randes von $\Delta$.
+			
+		\begin{thmn}[Cauchy'scher Integralsatz für Dreieckswege]
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine holomorphe Funktion. Seien $z_1,z_2,z_3 \in D$, sodass $ \Delta_{z_1,z_2,z_3} \subseteq D $. Dann gilt
+			\[ \int_{<z_1,z_2,z_3>} f = 0. \]
+		\end{thmn}

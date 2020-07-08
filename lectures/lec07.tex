@@ -1,0 +1,78 @@
+\section{Uniforme Konvergenz}\lecture
+		
+		Sei $ f: S \subseteq \C \to \C $ eine beschränkte Funktion. Wir definieren die \emph{Norm von $f$} als $ ||f||=\sup\limits_{z \in S} |f(z)| $. Es gilt $ ||f|| \geq 0,\ ||f||=0 \iff f=0 $ und $ ||f+g|| \leq ||f||+||g|| $. 
+		
+		\begin{defn}[Gleichmäßige Konvergenz]
+			Sei $ (f_n)_{n \in \N} $ eine Folge von Funktionen $ f_n: S \to \C $. $ (f_n)_{n \in N} $ \emph{konvergiert gleichmäßig} gegen $f$ auf $S$ ($ f: S \to \C $), falls $ \forall\, \epsilon > 0 \ \exists\, N \in N: ||f-f_n|| < \epsilon \ \forall\, n \geq N $. $f$ ist der gleichmäßige Limes von $ (f_n)_{n \in \N} $. Daraus folgt $ f_n(z) \overset{n \to \infty}{\longrightarrow} f(z) \ \forall\, z \in S $, aber die Umkehrung gilt nicht.
+		\end{defn}
+		
+		\begin{thm}
+			Sei $ (f_n)_{n \in \N}, f_n:S \to \C $ eine Folge von Funktionen, die gleichmäßig gegen eine Funktion $ f: S \to \C $ konvergiert. Sei $c \in S$. Falls $ f_n $ stetig an der Stelle $c$ ist für alle $n \in \N$, dann ist auch $f$ stetig an der Stelle $c$. 
+		\end{thm}
+		
+		\begin{defn}[Gleichmäßige Summierung]
+			Gegeben eine Folge $ (f_n)_{n \in \N} $ von Funktionen $ f_n: S \to \C $, so kann man die Reihe $ \sum\limits_{n=0}^\infty f_n $ von Funktionen definieren. Falls die Folge $ (F_n)_{n \in \N}, F_n = \sum\limits_{k=0}^n f_k $ gleichmäßig gegen eine Funktion $ F: S \to \C $ konvergiert, so sagt man, dass $ \sum\limits_{n=0}^\infty f_n $ \emph{gleichmäßig zu $F$ summiert}.
+		\end{defn}
+		
+		\begin{thmn}[Weierstraß'scher M-Test]
+			Sei für alle $ n \in \N $ die Funktion $ f_n:S \to \C $ so, dass $ M_n > 0 $ existieren mit $ ||f_n|| \leq M_n $. Falls $ \sum\limits_{n=0}^\infty M_n $ konvergiert, so konvergiert auch $ \sum\limits_{n=0}^\infty f_n $ gleichmäßig auf $S$.
+		\end{thmn}
+		
+		\begin{cor}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $ R > 0 $. Für alle $ r \in (0,R) $ ist die Reihe gleichmäßig konvergent auf $ \overbar{B_r(a)} $.
+		\end{cor}
+		
+	
+	
+	
+	
+	
+\chapter{Komplexe Integration}
+	
+	\section{Kurven und Kurvenintegrale}
+		
+		\begin{defn}[Kurve]
+			Eine \emph{Kurve} ist eine stetige Abbildung $ \gamma: [a,b] \to \C,\ a<b\in \R $.
+		\end{defn}
+		\stepcounter{thm}
+		\begin{defn}[Kurveneigenschaften]
+			Eine Kurve $ \gamma: [a,b] \to \C $ heißt
+			\begin{itemize}
+				\item \emph{geschlossen}, falls $ \gamma(a) = \gamma(b) $.
+				\item \emph{einfach}, falls $ \bound{\gamma}{[a,b)} $ und $ \bound{\gamma}{(a,b]} $ injektiv sind.
+				\item \emph{glatt}, falls sie stetig differenzierbar ist. Wir schreiben $ \dot{\gamma} : [a,b] \to \C $ für die Ableitung.
+				\item \emph{stückweise glatt}, falls es eine Unterteilung $ a = a-0 < a_1 < \dots < a_n=b $ gibt, sodass die Einschränkungen $ \gamma_j = \bound{\gamma}{\left[a_j,a_{j+1}\right]} $ glatt sind.
+				\item \emph{regulär}, falls sie glatt ist und für alle $ t \in [a,b] $ gilt $ \dot{\gamma}(t) \neq 0 $.
+			\end{itemize}
+		\end{defn}
+		\addtocounter{thm}{2}
+		\begin{defn}[Bogenlänge]
+			Sei $ \gamma: [a,b] \to \C $ eine Kurve.
+			\begin{itemize}
+				\item Ist $\gamma$ glatt, so bezeichnen wir die Bogenlänge mit 
+				$$ L(\gamma) = \int_{a}^{b} |\dot{\gamma}(t)| \d t. $$
+				\item Ist $\gamma$ stückweise glatt, so bezeichnen wir die Bogenlänge mit 
+				$$ L(\gamma) = \sum\\
+				_{j=0}^{n-1} L(\gamma_j). $$
+			\end{itemize}
+		\end{defn}
+		\addtocounter{thm}{2}
+		\begin{defn}[Kurvenintegral]
+			Sei $ \gamma: [a,b] \to \C $ eine glatte Kurve und sei $ f: D \to \C $ eine stetige Funktion mit $ \gamma(t) \in D \ \forall\, t \in [a,b] $. Dann ist 
+			\[ \int_\gamma f = \int_\gamma f(z) \d z := \int_{a}^{b} f(\gamma(t)) \cdot \dot{\gamma}(t) \d t \]	
+			das \emph{Kurvenintegral} von $f$ längs $\gamma$.\\
+			Falls $\gamma$ nur stückweise glatt ist, so existiert eine Zerlegung $ a=a_0 < a_1 < \dots < a_n=b $, sodass die Einschränkungen $ \alpha_j : [a_j,a_{j+1}] \to \C $ glatt sind. Dann ist 
+			\[ \int_\gamma f = \int_\gamma f(z) \d z := \sum_{j=0}^{n-1} \int_{\alpha_j} f(z) \d z. \]
+			Diese Definition hängt nicht von der Wahl der Zerlegung ab.
+		\end{defn}
+		
+		\begin{prop}
+			Das komplexe Kurvenintegral hat folgende Eigenschaften:
+			\begin{enumerate}
+				\item $ \int_\gamma f $ ist $\C$-linear in $f$.
+				\item Es gilt die "Standardabschätzung" $ |\int_\gamma f(z) \d z| \leq C \cdot L(\gamma) $ falls $ |f(z)| \leq C \ \forall\, z \in \gamma[a,b]. $
+				\item Das Kurvenintegral verallgemeinert das gewöhnliche Riemann-Integral: Sei $ \gamma: [a,b] \to \C, \gamma(t) = t $. Dann ist für alle $ t \in [a,b] \dot{\gamma}(t) = 1 $ und es gilt für eine stetige Abbildung $ f: [a,b] \to \C:$
+				$$ \int_\gamma f(z) \d z = \int_{a}^b f(t) \d t. $$
+				\item Transformationsinvarianz des Kurvenintegrals: Seien $ \gamma: [c,d] \to \C $ eine stückweise glatte Kurve, $ f: D \to \C $ stetig mit $ \gamma[c,d] \subseteq D \subseteq \C $, und $ \varphi: [a,b] \to [c,d] (a<b,c<d) $ eine stetig differenzierbare Funktion mit $ \varphi(a) = c, \varphi(b) = d $. Dann gilt $ \int_\gamma f = \int_{\gamma \circ \varphi} f $.
+			\end{enumerate}
+		\end{prop}

@@ -1,0 +1,40 @@
+\lecture
+		\begin{defn}[Elementargebiet]
+			Ein Gebiet $ D \subseteq \C $ heißt \emph{Elementargebiet}, wenn jede auf $D$ definierte holomorphe Funktion eine Stammfunktion auf $D$ besitzt.
+		\end{defn}
+		
+		\begin{exmp}
+			Nach Satz \ref{2.2.8} ist ein Sterngebiet ein Elementargebiet.
+		\end{exmp}
+		
+		\begin{thm}\label{2.2.14}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung auf einem Elementargebiet $D$ mit den Eigenschaften
+			\begin{enumerate}[label={\roman*})]
+				\item $f'$ ist ebenfalls holomorph.
+				\item $ f(z) \neq 0 \ \forall z \in D $.
+			\end{enumerate}
+			Dann existiert eine holomorphe Abbildung $ h: D \to \C $ mit $ f(z) = \exp(h(z)) \ \forall z \in D. $
+		\end{thm}
+		
+		\begin{rem}
+			In der Situation von \ref{2.2.14} ist die Abbildung $h$ ein holomorpher Zweig des Logarithmus von $f$.
+		\end{rem}
+		
+		\begin{cor}
+			In der Situation von \ref{2.2.14} existiert für jedes $ n \in \N $ eine holomorphe Abbildung $ H: D \to \C $ mit $ H^n = f $.
+		\end{cor}
+		
+		\begin{exmp}
+			Die Funktion $ f: \C \setminus\{0\} \to \C,\ z \mapsto \frac{1}{z} $ hat keine Stammfunktion auf $ \C \setminus\{0\} $. Also ist $ \C\setminus\{0\} $ kein Elementargebiet.
+		\end{exmp}
+		
+		\subsection*{Eigenschaften von Elementargebieten:}
+		\begin{enumerate}
+			\item Seien $ D,D' $ zwei Elementargebiete. Wenn $ D \cap D' $ zusammenhängend und nicht leer ist, so ist auch $ D \cup D' $ ein Elementargebiet.
+			\item Daraus folgt: geschlitzte Kreisringe sind Elementargebiete.
+			\item Sei $ D_1 \subseteq D_2 \subseteq D_3 \subseteq \dots $ eine aufsteigende Folge von Elementargebieten. Dann ist auch die Vereinigung $ D = \bigcup_{n=1}^\infty D_n $ ein Elementargebiet.
+		\end{enumerate}
+		
+		\begin{prop}
+			Sei $ D \subseteq \C $ ein Elementargebiet und $ \varphi: D \to D' $ eine konforme Abbildung. Sei zudem die Ableitung von $\varphi$ auch holomorph. Dann ist $D'$ ein Elementargebiet.
+		\end{prop}

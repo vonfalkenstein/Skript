@@ -1,0 +1,75 @@
+\chapter[Einführung]{Komplexe Zahlen und wichtige Begriffe}\lecture
+
+\section{Komplexe Zahlen}
+
+\begin{itemize}
+	\item $ \C = \R \bigoplus \R i $ mit $ i = \sqrt{-1} $ (bzw $ i^2 = -1 $). 
+	
+	\item In $\C$ addieren und multiplizieren wir wie folgt:
+	\begin{align*}
+	(a_1 + b_1i) + (a_2 + b_2i) &= (a_1 + a_2) + (b_1 + b_2)i\\
+	(a_1 + b_1i) \cdot (a_2 + b_2i) &= a_1a_2 - b_1b_2 + (a_1b_2 + a_2b_1)i
+	\end{align*}
+	$\C$ ist ein Körper mit $ 0 = 0+0i,\ 1 = 1+0i $ und der oben definierten Addition und Multiplikation.
+	
+	\item $ \C \cong \R^2 $ als $\R$-Vektorraum. Punkte $ a+bi $ aus $\C$ können als Punkte $ (a,b) \in \R^2 $ visualisiert werden.
+	\[ z= \underbrace{a}_{\Re(z)} + \underbrace{b}_{\Im(z)}i \]
+	$ \rightarrow $ die $x$-Achse in $\R^2$ ist die reelle Achse und die $y$-Achse ist die imaginäre Achse.
+	
+	\item $ \overbar{z} = a-bi $ ist die konjugierte Zahl zu $ z = a+bi \in \C $. Es gilt:
+	\[ \overbar{\overbar{z}} = z,\ \overbar{z+w} = \overbar{z} + \overbar{w},\ \overbar{zw} = \overbar{z} \overbar{w},\ z + \overbar{z} = 2\Re(z),\ z - \overbar{z} = 2i\Im(z) \]
+	($ \overbar{z} = z \iff z \in \R,\ \overbar{z} = -z \iff z \in \R i $)\\
+	Weiterhin gilt $ z \overbar{z} = \overbar{z} z = a^2 + b^2 $. Wir schreiben $ |z| = \sqrt{z \overbar{z}} $.
+	
+	\item Falls $ z = a+bi \neq 0\ \exists!\, \theta \in (-\pi,\pi] $, sodass $ \cos(\theta) = \frac{a}{\sqrt{a^2+b^2}} $ und $ \sin(\theta) = \frac{b}{\sqrt{a^2+b^2}}. $ Dann ist $ z = |z| + (\cos(\theta) + i\sin(\theta)) = |z| e^{i \theta} $ per Konstruktion die Polarform der komplexen Zahl $z$. Multiplikation von komplexen Zahlen in Polarform ist ganz einfach:
+	\[ r_1 e^{i\theta_1} \cdot r_2 e^{i\theta_2} = r_1r_2 e^{i(\theta_1 + \theta_2)},\quad \left( re^{i\theta} \right)^{-1} = \frac{1}{r} e^{-1\theta} \]
+	\[ \text{sonst: } (a+bi)^{-1} = \frac{1}{a+bi} = \frac{a-bi}{a^2+b^2} \]
+	
+	\item Geometrische Interpretation der Multiplikation: Addition von komplexen Zahlen ist das Gleiche wie die "Vektoraddition" von Vektoren in $\R^2$. Multiplizieren von $ z \in \C $ mit $ re^{i\theta} $ gibt Folgendes: $ |z \cdot re^{i\theta}| = |z| \cdot r,\ \arg(z \cdot re^{i\theta}) = \arg(z) + \theta $.\\
+	Also: Multiplikation mit $ re^{i\theta} $ entspricht einer "Drehstreckung" (Winkel $\theta$, Faktor $r$).
+	
+	\item Die Menge $ \{z \in \C \mid |z-c| = r,\ c \in \C, r \in \R_{\geq 0}\} $ definiert einen Kreis mit Mittelpunkt $c$ und Radius $r$. Eine Gleichung der Form $ x^2 + y^2 + 2gx + 2fy + h = 0 $ $ (x,y \in \R,\ g,f,h \in R $ konstant) kann geschrieben werden als $ z \overbar{z} + \alpha z + \overbar{\alpha z} + h=0 $ mit $ \alpha = g-if $ und $ z = x+iy $. Allgemeiner betrachten wir eine Gleichung $ Az\overbar{z} + Bz + \overbar{Bz} + C = 0. $ Die Lösungsmenge $ \{ z \in \C \mid Az\overbar{z} + Bz + \overbar{Bz} + C = 0 \} $ ist
+	\begin{enumerate}[label={\roman*})]
+		\item leer, falls $ B\overbar{B} - AC < 0 $
+		\item ein Kreis mit Mittelpunkt $ \frac{-\overbar{B}}{A} $ und Radius $ \sqrt{\frac{B \overbar{B} - AC}{A^2}} $, falls $ B\overbar{B} - AC \geq 0 $.
+	\end{enumerate}
+	Falls $A=0$ ist die Gleichung einfach $ Bz + \overbar{Bz} + C = 0 $. Falls $ B \neq 0 $ ist dies die Gleichung einer Geraden.
+\end{itemize}
+
+\begin{thm}
+	Seien $ c,d \in \C,\ c \neq d,\ k \in \R,\ k > 0 $. Die Menge $ \{ z \mid |z-c| = k|z-d| \} $ ist ein Kreis für $ k \neq 1 $. Im Falle $ k = 1 $ ist die Menge eine Gerade, die senkrecht zum Segment $ cd $ durch den Mittelpunkt verläuft.
+\end{thm}
+
+
+\section{Erinnerungen, wichtige Begriffe}
+
+\begin{itemize}
+	\item $\C$ ist vollständig, das heißt jede Cauchyfolge in $\C$ konvergiert.
+	
+	\item $ \sum_{n=1}^{\infty} c_n $ definiert eine komplexe Reihe. Falls $ \forall \, \epsilon > 0 \ \exists \, N \in \N $, sodass 
+	$$ \left| \sum_{r=n+1}^{m} c_r \right| < \epsilon\ \forall\, m>n>N, $$
+	dann ist die Reihe konvergent.
+	
+	\item Die Topologie von $ \C \cong \R^2 $ ist die von der Standardnorm $ \|\cdot\|^2 $ induzierte:\\
+	$ U \subset \C $ ist offen, falls $ \forall\, z \in U \ \exists\, \delta > 0: B_\delta(z) = \{z^\prime \in \C \mid |z^\prime-z| < \delta \} \subseteq U $. $ D \subset \C $ ist abgeschlossen, falls $ D^c = \C \setminus D $ offen ist. Der \emph{Abschluss} einer Teilmenge $ S \subseteq \C $ ist 
+	$$ \overbar{S} = \bigcap_{\substack{S \subset D\\D\ \text{abgeschlossen}}} D = \{ z \in \C \mid \forall\, \delta > 0: B_\delta(z) \cap S \neq 0 \}. $$
+	Das \emph{Innere} von $ S \subseteq \C $ ist 
+	$$ S^\circ = \bigcup_{\substack{U \subset S\\U\ \text{offen}}} U = \{ z \in \C\mid \exists\, \delta>0: B_\delta(z) \subseteq S \}. $$
+	Der Rand von $ S \subseteq \C $ ist
+	\[ \del S = \overbar{S}\setminus S^\circ. \]
+	Es gilt: $ \overbar{S} $ ist abgeschlossen und $ S = \overbar{S} \iff S $ ist abgeschlossen, $ S^\circ $ ist offen und $ S = S^\circ \iff S $ ist offen.
+	
+	\item $ f: \C \to \C $ wird oft geschrieben als $ f(z) = \underbrace{u(x,y)}_{\text{reeller Teil}} + i\underbrace{v(x,y)}_{\text{imaginärer Teil}} $ für $ z = x+iy $.
+	
+	\item $ f: \C \to \C,\ c,d \in \C $. 
+	$$ \lim_{z \to c} f(z) = d \iff \forall\, \epsilon > 0 \ \exists\, \delta >0: |z-c| < \delta \implies |f(z)-d|<\epsilon $$
+	Der Limes für $ z \to \infty $ ist etwas schwieriger, denn es gibt in $\C$ "viele Wege ins Unendliche". Man schreibt $ \lim\limits_{z \to \infty} f(z) = l $, falls $ \forall \, \epsilon > 0 \ \exists\, k>0: |z|>k \implies |f(z)-l|<\epsilon $, das heißt $ \lim\limits_{z \to \infty} f(z) = \lim\limits_{|z| \to \infty} f(z),\ \lim\limits_{z \to \infty} f(z) = \infty $ falls $ \forall\, E>0 \ \exists\, D>0: |z|>D \implies |f(z)|>E. $
+	
+	\item $ f,\phi: \C \to \C $
+	\begin{itemize}
+		\item $ f(z) = O(\phi(z)) $ für $ z \to \infty $, falls $ \exists\, K>0, D>0: |z|>D \implies |f(z)| \leq K|\phi(z)| $
+		\item $ f(z) = O(\phi(z)) $ für $ z \to 0 $, falls $ \exists\, K>0,\epsilon>0: |z|<\epsilon \implies |f(z)| \leq K|\phi(z)| $
+		\item $ f(z) = o(\phi(z)) $ für $ z \to \infty $, falls $ \lim\limits_{|z| \to \infty} \frac{f(z)}{\phi(z)} = 0 $
+		\item $ f(z) = o(\phi(z)) $ für $ z \to 0 $, falls $ \lim\limits_{z \to 0} \frac{f(z)}{\phi(z)} = 0 $
+	\end{itemize}
+\end{itemize}

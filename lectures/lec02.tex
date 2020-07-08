@@ -1,0 +1,93 @@
+\chapter{Komplexe Ableitung}\lecture
+	
+	\section{Komplexe Differenzierbarkeit}
+		
+		\begin{defn}[Komplexe Differenzierbarkeit]
+			Eine komplexe Abbildung $ f: U \to \C,\ U \subseteq \C $ ist an der Stelle $ c \in U $ \emph{differenzierbar}, falls $ \lim\limits_{z \to c} \frac{f(z)-f(c)}{z-c} $ existiert. Der Limes wird dann $ f^\prime(c) $, die \emph{Ableitung von $f$ an der Stelle $c$} genannt.
+		\end{defn}
+		
+		\begin{thm}
+			Wie auch im reellen Fall gelten folgende Regeln:\\
+			Seien $ f,g: U \to \C,\ U \subseteq \C $ an der Stelle $ c \in U $ differenzierbar. Dann gilt:
+			\begin{enumerate}[label={\roman*})]
+				\item $ f+g: U \to \C $ ist an $ c \in U $ differenzierbar mit $ (f+g)^\prime(c) = f^\prime(c) + g^\prime(c) $.
+				\item $ f\cdot g: U \to \C $ ist an $ c \in U $ differenzierbar mit $ (f\cdot g)^\prime(c) = f(c) g^\prime(c) + f^\prime(c) g(c) $.
+				\item Falls $ g(c^\prime) \neq 0\, \forall\, c^\prime \in U $ gilt, so ist $ \frac{f}{g}(c): U \to \C $ an $ c \in U $ differenzierbar mit $ \left(\frac{f}{g}\right)^\prime(c) = \frac{f^\prime(c)g(c) - g^\prime(c)f(c)}{g^2(c)} $.
+				\item Falls $ f(U) \subseteq dom(g) $ gilt und $g$ an $f(c)$ differenzierbar ist, so ist $ g \circ f: U \to \C $ an $ c \in U $ differenzierbar mit $ (g\circ f)^\prime(c) = g^\prime(f(c)) \cdot f^\prime(c) $.
+			\end{enumerate}
+		\end{thm}
+		
+		\begin{exmp*}\label{exmppolyn}
+			Die komplexe Funktion $ f: \C \to \C,\ z \mapsto z $ ist differenzierbar, denn $ \lim\limits_{z \to c} \frac{f(z)-f(c)}{z-c} = 1 \ \forall \, c \in \C $. Somit sind Polynome überall differenzierbare komplexe Funktionen und rationale Funktionen $ \frac{p}{q} $ sind differenzierbar, außer an den Nullstellen von $q$.
+		\end{exmp*}
+		
+		\begin{thmn}[Cauchy-Riemann-Gleichungen]
+			Sei $ f: \C \supseteq U \to \C $ eine komplexe Funktion, die an der Stelle $ c \in U $ komplex differenzierbar ist. Schreibe $ f(x+iy) = u(x,y) + iv(x,y) $ und $ c = a+ib $. Dann existieren alle partiellen Ableitungen $ \frac{\del u}{\del x},\ \frac{\del u}{\del y},\ \frac{\del v}{\del x},\ \frac{\del v}{\del y} $ an der Stelle $ (a,b) $ und es gilt 
+			$$ \frac{\del u}{\del x}(a,b) = \frac{\del v}{\del y}(a,b),\quad \frac{\del v}{\del x}(a,b) = - \frac{\del u}{\del y}(a,b). $$
+		\end{thmn}
+		
+		\begin{exmp}
+			Sei $ f:\C \to \C,\ f(x+iy) = \sqrt{|xy|} $. Dann gilt 
+			\begin{enumerate}
+				\item $ \frac{\del v}{\del x} = \frac{\del v}{\del y} = 0 $, denn $ v = 0 $,
+				\item $ \frac{\del u}{\del x}(0,0) = \lim\limits_{t \to 0} \frac{u(t,0) - u(0,0)}{t} = 0 $ und $ \frac{\del u}{\del y}(0,0) = 0. $
+			\end{enumerate}
+			Also gelten die Cauchy-Riemann-Gleichungen an der Stelle $ (0,0) \in \R^2 $, aber:
+			\begin{enumerate}[resume] 
+				\item $f$ ist nicht an $ 0 \in \C $ komplex differenzierbar: 
+				$$ \frac{f(z) - f(0)}{z-0} = \frac{\sqrt{|xy|}}{x+iy} = \frac{\sqrt{|\cos\theta\sin\theta|}}{\cos\theta + i\sin\theta} = \sqrt{|\cos\theta\sin\theta|}e^{-i\theta} $$
+				Für $ \theta = 0 $ oder $ \frac{\pi}{2} $ wäre das $0$, aber für $ \theta = \frac{\pi}{4} $ ist das $ \frac{\sqrt{2}}{2} \cdot \frac{1}{\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}} = \frac{1}{1+i} = \frac{1-i}{2}. $ Also haben wir $ \lim\limits_{r \to 0} \frac{f(re^{i\theta}) - f(0)}{re^{i\theta}} = \frac{1-i}{2} \neq 0 $ für $ \theta = \frac{\pi}{4} $ und $f$ ist nicht differenzierbar an der Stelle $0$.
+			\end{enumerate}
+		\end{exmp}
+		
+		\begin{thm}
+			Sei $ B_R(c) $ ein offener Ball in $\C$. Sei $ f: U \to \C $ mit $ B_R(c) \subseteq U $, schreibe $ f(x+iy) = u(x,y) + iv(x,y) $. Falls 
+			\begin{enumerate}[label={\roman*})]
+				\item die partiellen Ableitungen $ \frac{\del u}{\del x},\ \frac{\del u}{\del y},\ \frac{\del v}{\del x},\ \frac{\del v}{\del y} $ existieren und stetig in $ B_R(c) $ sind und
+				\item die Cauchy-Riemann-Gleichungen an der Stelle $ a+ib \cong (a,b) $ erfüllt sind,
+			\end{enumerate}
+			dann ist $f$ an der Stelle $c$ differenzierbar.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ und sei $ B \subseteq U $ ein offener Ball. Schreibe $ f(x+iy) = u(x,y) + iv(x,y) $. Falls 
+			\begin{enumerate}[label={\roman*})]
+				\item die partiellen Ableitungen existieren und stetig auf $B$ sind und
+				\item die Cauchy-Riemann-Gleichungen auf $B$ gelten,
+			\end{enumerate}
+			dann ist $f$ auf $B$ differenzierbar.
+		\end{thm}
+		
+		\begin{defn}[Holomorphie]
+			Sei $U \subseteq \C$ offen. Eine Funktion $ f: U \to \C $ heißt \emph{holomorph}, falls $f$ an jedem $ c \in U $ differenzierbar ist. Im Falle $ U = \C $ heißt $f$ \emph{ganze Funktion}.
+		\end{defn}
+		
+		\begin{exmp}
+			\begin{itemize}
+				\item Aus Beispiel \ref{exmppolyn} folgt, dass Polynome ganze Funktionen sind.				
+				\item Die rationale Funktion $ f: \C\setminus \{1\} \to \C,\ z \mapsto \frac{z+2i}{z-i} $ ist holomorph auf $ C \setminus \{i\} $.
+				\item $ f: \C \to \C,\ z \mapsto z^2 = (x+iy)^2 = (x^2-y^2)+i(2xy) \\
+				\implies u(x,y) = x^2-y^2,\ v(x,y) = 2xy $
+				\[
+				\left.\begin{array}{ll}
+					\frac{\del u}{\del x}(x,y) = 2x\\
+					\frac{\del u}{\del y}(x,y) = -2y\\
+					\frac{\del v}{\del x}(x,y) = 2y = -\frac{\del u}{\del y}\\
+					\frac{\del v}{\del y}(x,y) = 2x = \frac{\del u}{\del x}
+				\end{array} \right\} \text{alle stetig auf }\R^2
+				\]
+				also ist $f$ holomorph (also eine ganze Funktion) mit $ f^\prime(z) = \frac{\del u(x,y)}{\del x} + i\frac{\del v(x,y)}{\del x} = 2x + 2iy. $				
+				\item $ f: \C\setminus\{0\} \to \C,\ z \mapsto \frac{1}{z} = \frac{1}{x+iy} \implies u(x,y) = \frac{x}{x^2 + y^2} v(x,y) = \frac{-y}{x^2 + y^2} $
+				\[
+				\left.\begin{array}{ll}
+				\frac{\del u}{\del x}(x,y) = \frac{x^2+y^2-2x^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2} = \frac{\del v}{\del y}(x,y)\\
+				\frac{\del u}{\del y}(x,y) = \frac{-2xy}{(x^2+y^2)^2} = -\frac{\del v}{\del x}(x,y)
+				\end{array} \right\} \text{alle stetig auf }\R^2\setminus\{0\}
+				\]
+				Also ist $f$ holomorph mit 
+				\begin{align*}
+					f^\prime(z) &= \frac{y^2-x^2}{(x^2+y^2)^2} + i\frac{2xy}{(x^2+y^2)^2} = \frac{y^2-x^2 + i2xy}{(x^2+y^2)^2}\\
+					&= \frac{-(x-iy)^2}{(x+iy)^2(x-iy)^2} = \frac{1}{z^2}\quad \forall\, z \in \ \setminus\{0\}. 
+				\end{align*}
+			\end{itemize}
+		\end{exmp}

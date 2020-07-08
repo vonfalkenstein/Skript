@@ -1,0 +1,36 @@
+\section[Weitere Eigenschaften]{Weitere Eigenschaften holomorpher Abbildungen}\lecture
+		
+		\begin{thm}[Weierstraß, 1841]\label{2.5.1}
+			Seien $ f_0,f_1,f_2,\dots: D \to \C $ holomorphe Abbildungen. Die Folge $ (f_n)_{n \in  \N} $ konvergiere lokal gleichmäßig gegen $f: D \to \C$. Dann ist $f$ holomorph und $ (f'_n)_{n \in \N} $ konvergiert gleichmäßig gegen $f'$.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $f: D \to \C$ eine von der Nullfunktion verschiedene holomorphe Funktion, $D \subseteq \C$ ein Gebiet. Die Menge $N(f) = \{z \in D \mid f(z) = 0\}$ ist diskret in $D$, das heißt, $N(f)$ hat keinen Häufungspunkt in $D$. 
+		\end{thm}
+		
+		\begin{corn}[Identitätssatz für holomorphe Funktionen]
+			Seien $f,g: D \to \C$ zwei holomorphe Funktionen auf einem Gebiet $ D \neq \emptyset $. Dann sind die folgenden Aussagen äquivalent:
+			\begin{enumerate}[label={\roman*})]
+				\item $f=g$
+				\item Die Menge $ \{z \in D \mid f(z)=g(z)\} $ hat einen Häufungspunkt in $D$.
+				\item Es gibt einen Punkt $z_0 \in D$ mit $ f^{(n)}(z_0) = g^{(n)}(z_0) $ für alle $n \in \N$.
+			\end{enumerate}
+		\end{corn}
+		
+		\begin{corn}[Eindeutigkeit der holomorphen Fortsetzung]
+			Sei $D \subseteq \C$ ein Gebiet und $M \subseteq D$ eine Menge mit mindestens einem Häufungspunkt in $D$ und $f: M \to \C$ eine Funktion. Existiert eine holomorphe Funktion $\tilde{f}: D \to \C$, welche $f$ fortsetzt, also $\tilde{f}(z) = f(z) \ \forall\, z \in M$, dann ist $\tilde{f}$ eindeutig bestimmt.
+		\end{corn}
+		
+		\begin{prop}
+			Sei $I \subseteq \R $ ein nicht-leeres Intervall. Eine Funktion $ f: I \to \C $ besitzt genau dann eine holomorphe Fortsetzung auf einem Gebiet $ D \subseteq \C $ mit $ I \subset D $, wenn $f$ reell-analytisch ist.
+		\end{prop}
+		
+		Für ein offenes $D \subseteq \C$ definieren wir nun $ \O(D) = \{ f: D \to \C \mid f $ holomorph$ \} $. Dann ist $ \O(D) $ offensichtlich ein kommutativer Ring mit $1$.
+			
+		\begin{prop}
+			Sei $D \subseteq \C$ ein Gebiet. Dann ist $\O(D)$ ein Integritätsring, also nullteilerfrei.
+		\end{prop}
+		
+		\begin{cor}
+			Im Umkehrschluss gilt, dass falls $\O(D)$ ein Integritätsring ist, $D$ ein Gebiet sein muss.
+		\end{cor}

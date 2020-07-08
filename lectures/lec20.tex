@@ -1,0 +1,61 @@
+\subsection*{Laurentreihen und Singularitäten holomorpher Abbildungen}\lecture
+		
+		Sei $ f: D \to \C $ eine holomorphe Abbildung und $a \in \C$ eine Singularität von $f$. Dann ist $f$ für ein geeignetes $ r > 0$ holomorph auf $ \dot{B_r(a)} \subset D $. Nach Satz \ref{3.3.4} besitzt $f$ eine Laurententwicklung auf $ \dot{B_r(a)} $
+		\[ f(z) = \sum_{n \in \Z} a_n(z-a)^n\qquad \forall\, z \in \dot{B_r(a)}. \] 
+		
+		\begin{thm}\label{3.3.5}
+			In der oben geschilderten Situation ist die Singularität $a$ von $f$
+			\begin{enumerate}[label={\roman*})]
+				\item \emph{hebbar} $\iff a_n = 0 \ \forall\, n<0$,
+				\item ein \emph{Pol} der Ordnung $k \in \N \iff a_{-k} \neq 0 $ und $a_n=0 \ \forall\, n < -k$,
+				\item \emph{wesentlich} $\iff a_n \neq 0$ für unendlich viele $n < 0$.
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Komplexe Fourierreihen}
+		
+		Seien $ a<b $ und betrachte $ D = \{z \in \C \mid a < \Im(z) < b\}. $ Sei $ f: D \to \C $ holomorph, sodass $ \omega \in \R^* $ mit $ f(z + \omega) = f(z) $ für $z \in D$, $f$ hat also die reelle Periode $\omega$.\\
+		Sei $g: \tilde{D} \to \C,\ g(z) = f(\omega z)$ für $\tilde{D} = \begin{cases}
+		\left\{ z \in \C \mid \frac{a}{\omega} < \Im(z) < \frac{b}{\omega} \right\}, \quad &\omega > 0\\
+		\left\{ z \in \C \mid \frac{b}{\omega} < \Im(z) < \frac{a}{\omega} \right\}, \quad &\omega < 0.
+		\end{cases}$\\
+		Es gilt $ g(z+1) = = f(\omega(z+1)) = f(\omega z + \omega) = f(\omega z) = g(z)\ \forall \,z \in \tilde{D} $, also hat $g$ die Periode $1 \in \R$. O.B.d.A  habe also $f$ die Periode 1.
+		
+		\begin{lem}
+			\begin{enumerate}[label={\roman*})]
+				\item Die Abbildung $ \phi: \C\to \C, z \mapsto e^{2\pi iz} $ bildet $D$ auf den Kreisring $ \mathcal{R} = \left\{ z \in \C \mid \underbrace{e^{-2\pi b}}_{=r} < |z| < \underbrace{e^{-2\pi a}}_{=R} \right\} $ ab.
+				\item Für $ a = - \infty $ ist $ \mathcal{R} = \{z \in \C \mid r < |z| < \infty\} $ und für $ b = \infty $ ist $ \mathcal{R} = \{ z\in \C \mid 0 < |z| < R\}. $
+			\end{enumerate}
+		\end{lem}
+		
+		Setze $ g: \mathcal{R} \to \C,\ w \mapsto f(z) $ für $ w = e^{2\pi iz} $.
+		\begin{itemize}
+			\item $g$ ist wohldefiniert, denn $ \begin{aligned}[t]
+			&e^{2\pi iz} = e^{2\pi iz'} \\
+			&\iff z - z' \in \Z \\
+			&\iff f(z') = f(z' + z-z') = f(z).
+			\end{aligned} $
+			\item $g$ ist holomorph: Es gilt $ \phi'(z) = 2\pi i e^{2\pi iz} \neq 0\ \forall\, z \in \C. $
+		\end{itemize}
+		Aus dem Satz für implizite Funktionen folgt, dass $ \forall\, z \in D $ eine offene Umgebung $ D_0 \subseteq D $ existiert, sodass $ \phi: D_0 \to \phi(D_0) \subseteq \mathcal{R} $ konform ist mit $ \phi^{-1} = \phi(D_0) \to D_0 $ holomorph.\\
+		Sei also $ w \in \mathcal{R}. $ Wähle $ z \in D $ mit $ \phi(z) = e^{2\pi iz} = w, $ und wähle $D_0$ wie oben. Dann ist
+		$$\begin{tikzcd}
+			\bound{g}{\phi(D_0)}:\phi(D_0)\arrow{rr}\arrow{ddr}{\phi^{-1}} & & \C\\
+			&&\\
+			&D_0 \arrow{uur}{f}
+		\end{tikzcd}$$
+		holomorph.\\
+		Die Funktion $ g: \mathcal{R} \to \C $ lässt sich dann in eine Laurentreihe entwickeln:
+		\begin{align*}
+			g(z) &= \sum_{n \in \Z} a_nz^n\qquad \text{für } z \in \mathcal{R},\ \text{mit}\\
+			a_n &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta| = \rho} \frac{g(\zeta)}{\zeta^{n+1}}\d\zeta\\
+			&= \frac{1}{2\pi i} \int_0^1 \frac{2\pi i \rho e^{2\pi it} \cdot g\left(\rho e^{2\pi it}\right)}{\rho^{n+1} e^{2\pi i(n+1)t}} \d t\\
+			&= \int_0^1 \frac{g\left( \rho e^{2\pi it} \right)}{\rho^n e^{2\pi int}} \d t \quad \text{für } r<\rho<R,\ \forall\, n \in \Z
+		\end{align*}
+		
+		\begin{thmn}[Fourierentwicklung]
+			Sei $ D = \{ z \in \C \mid  a < \Im(z) < b \} $ für $ -\infty \leq a < b \leq \infty $. Sei $ f: D \to \C $ holomorph mit der Periode 1, das heißt $ f(z) = f(z+1)\ \forall \, z \in D. $ Dann lässt sich $f$ in eine in $D$ lokal normal konvergente komplexe \emph{Fourierreihe} 
+			\[ f(z) = \sum_{n \in \Z} a_n e^{2\pi inz} \]
+			entwickeln. Die \emph{Fourierkoeffizienten} $a_n$ sind eindeutig bestimmt: für jedes $ y \in (a,b) $ gilt
+			\[ a_n = \int_0^1 f(x+iy)e^{-2\pi in(x+iy)} \d x. \]
+		\end{thmn}

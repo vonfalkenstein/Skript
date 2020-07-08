@@ -1,0 +1,84 @@
+\lecture
+		Also ist eine komplexe Abbildung $ f: U \to \C,\ U \subseteq \C $ genau dann an $ x+iy = c \in \C $ differenzierbar, wenn $ D_{(x,y)}(u,v) $, aufgefasst als Abbildung $ \C \to \C $, $\C$-linear ist. Wir erweitern nun ein Standardergebnis aus der reellen Analysis zum komplexen Fall:
+		\stepcounter{thm}
+		\begin{thm}
+			Sei $ f: U \to \C,\ U \subseteq \C $ holomorph auf $ B_R(c) \subseteq U $, und sei $ f^\prime(z) = 0\ \forall z \in B_R(c) $. Dann ist $f$ konstant auf $ B_R(c). $
+		\end{thm}
+		
+		\begin{thmn}[Lemma von Goursat]
+			Sei $ f: U \to \C $ auf $U$ holomorph, $ c \in U $. Dann gibt es eine Funktion $ v: U \to \C $ mit 
+			$$ v(z) \overset{z \to c}{\longrightarrow} 0\ \text{und } f(z) = f(c) + (z-c)f^\prime(c) + (z-c) v(z). $$
+		\end{thmn}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ eine komplexe Funktion, $ c \in U $. Falls eine komplexe Zahl $A$ existiert, sodass 
+			\[ \frac{f(z) - f(c) - A(z-c)}{z-c} \overset{z \to c}{\longrightarrow} 0, \]
+			so ist $f$ an der Stelle $c$ differenzierbar mit $ f^\prime(c) = A. $
+		\end{thm}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ holomorph mit $ U \subseteq \C $ offen und zusammenhängend. Falls $ |f| $ auf $U$ konstant ist, dann auch $f$.
+		\end{thm}
+	
+	
+	
+	\subsection*{Komplexe Differentialformen und das Wirtinger-Kalkül}
+		
+		In der reellen Analysis beschäftigt man sich mit reellwertigen alternierenden Differentialformen auf offenen Teilmengen $ U \subseteq \R^n $. Man kann auch komplexwertige $k$-Formen betrachten, die lokal von der Gestalt
+		\[ \omega = \sum_{1 \leq j_1 < \dots < j_k \leq n} a_{j_1,\dots,j_k} \d x_{j_1} \wedge \dotsc \wedge \d x_{j_k} \]
+		sind, mit komplexwertigen Funktionen $ a_{j_1,\dots,j_k}: U \to \C $. Das äußere Produkt solcher Formen ist wie im reellen Fall definiert. Wenn man das Differential $\d$ auf komplexwertige Formen fortsetzen will, muss man 
+		\begin{equation}\label{eq_df}
+			\d f := \d (\Re f) + i \d (\Im f)
+		\end{equation}
+		 setzen (für $ f: U \to C,\ f = \Re f + i \Im f $), und so 
+		\[ \d \omega = \sum_{1 \leq j_1 < \dots < j_k \leq n} \d a_{j_1,\dotsc,j_k} \wedge \d x_{j_1} \wedge \dotsc \wedge \d x_{j_k}. \]
+		Es gilt $ \d^2 = 0 $ und per Definition ist d kompatibel mit $\wedge$: 
+		$$ \d(\omega \wedge \eta) = \d \omega \wedge \eta + (-1)^{|\omega|} \omega\wedge \d \eta. $$
+		Nun sei $ f: U \to \C, U \subseteq \C^n, $ und die Form $\omega$	soll auch von komplexen Argumenten abhängen. Das heißt $\omega$ ist eine Form auf $ U \subseteq \C^n $, die wir vermöge der Identifikation $ \C^n \cong \R^{2n},\ z_j = x_j + iy_j,\ j=1,\dotsc,n $ als Form auf $ U \subseteq \R^{2n} $ auffassen können.\\
+		$ z_j $ und $ \overbar{z_j} $ sind dann komplexwertige Funktionen auf $ \R^{2n} $ und aus \ref{eq_df} folgt
+		\[
+		\left\{\begin{array}{ll}
+			\d z_j = \d x_j + i \d y_j\\
+			\d\overbar{z_j} = \d x_j - i \d y_j
+		\end{array} \right.\ \text{für } j=1,\dotsc,n.
+		\]
+		Umgekehrt gilt dann $ \d x_j = \frac{\d z_j + \d\overbar{z_j}}{2} $ und $ \d y_j = \frac{\d z_j - \d\overbar{z_j}}{2} $.\\
+		Das heißt, jede komplexwertige $k$-Differentialform auf $ U \subseteq \C^n $ lässt sich ausdrücken als Linearkombination (mit komplexwertigen Koeffizienten) von $k$-fachen Dachprodukten von $ \d z_j, \d \overbar{z_j} $.
+		
+		Sei $ f: U \to \C, U \subseteq \C^n, f= f_\Re + if_\Im $ stetig differenzierbar. Dann gilt per Definition:
+		\begin{align*}
+			\d f &= \d f_\Re + i\d f_\Im\\
+			&= \sum_{j=1}^{n} \left( \frac{\del f_\Re}{\del x_j} \d x_j + \frac{\del f_\Re}{\del y_j}\d y_j \right) + i \sum_{j=1}^n \left( \frac{\del f_\Im}{\del x_j} \d x_j + \frac{\del f_\Im}{\del y_j} \d y_j \right)\\
+			&= \sum_{j=1}^{n} \left( \frac{\del f_\Re}{\del x_j} + i \frac{\del f_\Im}{\del x_j} \right) \d x_j + \sum_{j=1}^n \left( \frac{\del f_\Re}{\del y_j} + i \frac{\del f_\Im}{\del y_j} \right) \d y_j.
+		\end{align*}
+		Schreibe $ \frac{\del f}{\del x_j} = \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j},\ \frac{\del f}{\del y_j} = \frac{\del f_\Re}{\del y_j} + i\frac{\del f_\Im}{\del y_j} $. Dann ist 
+		\[ \d f = \sum_{j=1}^n \left( \frac{\del f}{\del x_j} \d x_j + \frac{\del f}{\del y_j} \d y_j \right). \]
+		\begin{align*}
+			\text{Setze nun }\quad \frac{\del f}{\del z_j} &= \frac{1}{2} \left( \frac{\del f}{\del x_j} - i \frac{\del f}{\del y_j} \right),\\
+			\frac{\del f}{\del \overbar{z_j}} &= \frac{1}{2} \left( \frac{\del f}{\del x_j} + i \frac{\del f}{\del y_j} \right).\\
+			\text{Dann gilt}\quad \frac{\del f}{\del x_j} &= \frac{\del f}{\del z_j} + \frac{\del f}{\del \overbar{z_j}}\\
+			\frac{\del f}{\del y_j} &= i \left(\frac{\del f}{\del z_j} - \frac{\del f}{\del \overbar{z_j}}\right).
+		\end{align*}
+		Es gilt dann:
+		\begin{align*}
+			\d f &= \sum_{j=1}^{n} \left( \left( \frac{\del f}{\del z_j} + \frac{\del f}{\del \overbar{z_j}} \right) \d x_j + i \left( \frac{\del f}{\del z_j} - \frac{\del f}{\del \overbar{z_j}} \right) \d y_j \right)\\
+			&= \sum_{j=1}^n \left( \frac{\del f}{\del z_j} (\d x_j + i\d y_j) + \frac{\del f}{\del \overbar{z_j}} (\d x_j - i\d y_j) \right)\\
+			&= \sum_{j=1}^n \left( \frac{\del f}{\del z_j}\d z_j + \frac{\del f}{\del \overbar{z_j}}\d \overbar{z_j} \right).\\
+		\noalign{Außerdem ist}
+			\frac{\del \overbar{f}}{\del z_j} &= \frac{1}{2} \left( \frac{\del \overbar{f}}{\del x_j} - i\frac{\del \overbar{f}}{\del y_j} \right)\\
+			&= \frac{1}{2} \left( \frac{\del f_\Re}{\del x_j} - i\frac{\del f_\Im}{\del x_j} - i\frac{\del f_\Re}{\del y_j} + i^2\frac{\del f_\Im}{\del y_j} \right)\\
+			&= \overbar{\frac{1}{2} \left( \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j} + i\frac{\del f_\Re}{\del y_j} - \frac{\del f_\Im}{\del y_j} \right)}\\
+			&= \overbar{\frac{\del f}{\del \overbar{z_j}}}
+		\end{align*}
+		und ähnlich bekommt man 
+		$$ \frac{\del \overbar{f}}{\del \overbar{z_j}} = \overbar{\frac{\del f}{\del z_j}}. $$
+		Nun gilt
+		\begin{align*}
+			\frac{\del f}{\del \overbar{z_j}} = 0 &\iff \frac{1}{2} \left( \frac{\del f}{\del x_j} + i\frac{\del f}{\del y_j} \right) = 0\\
+			&\iff \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j} + i\frac{\del f_\Re}{\del y_j} - \frac{\del f_\Im}{\del y_j} = 0\\
+			&\iff \begin{cases}
+			\frac{\del f_\Re}{\del x_j} = \frac{\del f_\Im}{\del y_j}\\
+			\frac{\del f_\Im}{\del x_i} = -\frac{\del f_\Re}{\del y_j}
+			\end{cases}
+		\end{align*}
+		Also insbesondere für $n=1$: $ \d f = \frac{\del f}{\del z}\d z \iff f $ holomorph. 

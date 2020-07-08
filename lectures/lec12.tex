@@ -1,0 +1,38 @@
+\section{Die Cauchy'sche Integralformel}\lecture
+		
+		\begin{thm}
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine holomorphe Funktion. Seien weiterhin $ z_0 \in D $ und $ r > 0 $, sodass $ \overbar{B_r(z_0)} \subseteq D. $ Dann gilt für jeden Punkt $ z \in B_r(z_0) $:
+			\[ f(z) = \frac{1}{2\pi i} \int_\gamma \frac{f(\xi)}{\xi - z} \d \xi \]
+			für die Kurve $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it}. $
+		\end{thm}
+		
+		\begin{rem}
+			\begin{enumerate}[label = {\alph*})]
+				\item Wir sagen, dass $\gamma$ die Kreislinie mit Mittelpunkt $z_0$ und Radius $r$ ist. Es ist eine Parametrisierung des Kreises um $z_0$ mit Radius $r$, mit konstanter Geschwindigkeit $r$.
+				\item Wenn über eine Kreislinie $\gamma$ integriert wird, schreiben wir 
+				$$ \varointctrclockwise_\gamma\ \text{für } \int_\gamma,\ \text{oder auch } \varointctrclockwise_{|\zeta - z_0|=r}. $$
+			\end{enumerate}
+		\end{rem}
+		
+		\begin{lem}
+			Es gilt für $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it} $: $ \varointctrclockwise_\gamma \frac{\d \zeta}{\zeta - a} = 2\pi i $ für alle $a$ mit $ |a-z_0| < r. $ $a$ liegt im Inneren des Kreises um $z_0$ mit Radius $r$.
+		\end{lem}
+		
+		\begin{corn}["Mittelwertgleichung"]
+			Seien $ f: D \to \C $ holomorph, $ z_0 \in D $ und $ r > 0 $, sodass $ \overbar{B_r(z_0)} \subseteq D $. Dann gilt
+			\begin{align*}
+				f(z_0) &= \frac{1}{2\pi i} \int_\gamma \frac{f(\xi)}{\xi - z_0} \d \xi\\
+				\noalign{\centering für $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it} $, also}
+				f(z_0) &= \frac{1}{2\pi i} \int_0^{2\pi} \frac{rie^{it} f(z_0+re^{it})}{re^{it}} \d t\\
+				&= \frac{1}{2\pi} \int_0^{2\pi} f(z_0+re^{it}) \d t.
+			\end{align*}
+		\end{corn}
+		
+		\begin{rem}[Cauchy'sche Integralformel]
+			Die Werte einer holomorphen Funktion im Inneren einer Kreisscheibe können durch die Werte der Funktion auf dem Rand berechnet werden.
+		\end{rem}
+		
+		\begin{rem}[Leibniz'sche Regel]
+			Sei $ f: [a,b]\times D \to \C $ stetig, sodass $ \forall t \in [a,b]\ f_t: D \to \C,\ f_t(z) = f(t,z) $ holomorph ist. Die Ableitung $ \frac{\del f}{\del z}: [a,b]\times D \to \C $ sei auch stetig. Dann ist die Funktion $ g: D \to \C,\ g(z) = \int_a^b f(t,z) \d t $ holomorph, und es gilt
+			\[ g'(z) = \int_a^b \frac{\del f}{\del z}(t,z)\d t. \]
+		\end{rem}

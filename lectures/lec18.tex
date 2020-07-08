@@ -1,0 +1,22 @@
+\section{Wesentliche Singularitäten}\lecture
+		
+		\begin{prop}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung und sei $ a \in \C $ eine Polstelle von $f$. Dann gilt $ \lim\limits_{z\to a} |f(z)| = \infty. $
+		\end{prop}
+		
+		\begin{defn}[Wesentliche Singularität]
+			Eine Singularität $a \in \C$ einer holomorphen Funktion $f: D \to \C$ heißt \emph{wesentlich}, falls sie nicht außerwesentlich ist.
+		\end{defn}
+		
+		\begin{thmn}[Satz von Casorati-Weierstraß]
+			Sei $a$ eine wesentliche Singularität der holomorphen Abbildung $f: D \to \C$. Sei $ \dot{B_r(a)} $ eine beliebige punktierte Umgebung von $a$. Dann ist das Bild $ f\left(\dot{B_r(a)} \cap D\right) $ dicht in $\C$, das heißt für alle $b \in \C$ und $\epsilon > 0$ gilt $ f\left( \dot{B_r(a)} \cap D\right) \cap B_\epsilon(b) \neq \emptyset. $
+		\end{thmn}
+		
+		\begin{thmn}[Klassifikation der Singularitäten durch das Abbildungsverhalten]
+			Sei $a$ eine isolierte Singularität der holomorphen Abbildung $f: D \to \C$. Die Singularität $a \in \C$ ist
+			\begin{enumerate}[label={\roman*})]
+				\item hebbar $\iff f$ ist in einer punktierten Umgebung von $a$ beschränkt
+				\item ein Pol $\iff \lim\limits_{z\to a}|f(z)| = \infty$
+				\item wesentlich $\iff$ in jeder punktierten Umgebung von $a$ kommt $f$ jedem beliebigen Wert $b \in \C$ beliebig nahe
+			\end{enumerate}
+		\end{thmn}

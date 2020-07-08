@@ -1,0 +1,55 @@
+\section{Das Maximumsprinzip}	\lecture
+		
+		\begin{thmn}[Satz von der Gebietstreue]\label{2.6.1}
+			Ist $f$ eine nichtkonstante holomorphe Funktion auf einem Gebiet $D \subseteq \C$, dann ist das Bild $f(D)$ offen und zusammenhängend, also ein Gebiet.
+		\end{thmn}
+		
+		\begin{prop}
+			\begin{itemize}
+				\item[]
+				\item Jede nichtkonstante holomorphe Abbildung $f: D \to \C$ mit $f(0) = 0$ ist in einer kleinen offenen Umgebung von $0$ die Zusammensetzung einer konformen Abbildung mit einer $n$-ten Potenz.
+				\item Die Winkel im Nullpunkt werden ver-$n$-facht.
+				\item Falls $f$ injektiv in einer Umgebung von $a \in D$ ist, so ist die Ableitung $f'$ in einer Umgebung von $a$ von $0$ verschieden.
+			\end{itemize}
+		\end{prop}
+		
+		\begin{cor}
+			Sei $ f: D \to \C $ holomorph auf einem Gebiet $D \subseteq \C$. Gilt $ \Re(f)=c $ oder $ \Im(f) = c $ oder $ |f|=c,\ c \in \R $, dann ist $f$ selbst konstant.
+		\end{cor}
+		
+		\begin{thmn}[Das Maximumsprinzip]
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ holomorph. Existiert ein $a \in D$ mit $ |f(a)| \geq |f(z)| \ \forall\, z \in D $, dann ist $f$ konstant auf $D$.
+		\end{thmn}
+		
+		\begin{rem}
+			\begin{itemize}
+				\item[]
+				\item Wir sehen im Beweis, dass es reicht, wenn wir voraussetzen, dass $|f|$ ein lokales Maximum besitzt. Wegen des Identitätssatzes reicht es, $f$ nur lokal zu betrachten.
+				\item Sei $ K \subset D $ eine kompakte Teilmenge des Gebietes $D$ und $f : D \to \C$ holomorph. Dann hat $ \bound{f}{K}: D \to \C $ ein Betragsmaximum, da $f$ stetig ist. Aus Satz \ref{2.6.1} folgt dann, dass dieses Betragsmaximum auf dem Rand von $K$ angenommen werden muss.
+			\end{itemize}
+		\end{rem}
+		
+		\begin{corn}[Minimumsprinzip]
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ nicht-konstant und holomorph. Wenn $ f $ in $ a \in D $ ein (lokales) Betragsminimum besitzt, dann ist $f(a) = 0$.
+		\end{corn}
+		
+		\begin{thmn}[Schwarz'sches Lemma]
+			Sei $ f: B_1(0) \to B_1(0) $ eine holomorphe Abbildung mit $f(0)=0$. Dann gilt $ |f(z)| \leq |z|\ \forall\, z \in B_1(0) $. Daraus folgt auch $ |f'(0)| \leq 1 $.
+		\end{thmn}
+		
+		\begin{lem}
+			Sei $ \varphi: B_1(0) \to B_1(0) $ eine bijektive Abbildung, sodass $ \varphi $ und $ \varphi^{-1} $ holomorph sind. Falls $ \varphi(0)=0 $ gilt, dann existiert eine komplexe Zahl $ \xi \in \C $ mit $ |\xi|=1 $, sodass $ \varphi(z) = \xi z \ \forall\, z \in B_1(0). $
+		\end{lem}
+		
+		\begin{lem}
+			Sei $ a \in B_1(0) $. Dann ist $ \varphi_a: B_1(0) \to B_1(0) $ definiert durch $ \varphi_a(z) = \frac{z-a}{\overbar{a}z-1} $ bijektiv und holomorph mit 
+			\begin{enumerate}[label={\roman*})]
+				\item $\varphi_a(a)=0$
+				\item $ \varphi_a(0)=a $
+				\item $ \varphi_a^{-1} = \varphi_a. $
+			\end{enumerate}
+		\end{lem}
+		
+		\begin{thm}
+			Sei $ \varphi: B_1(0) \to B_1(0) $ eine konforme Abbildung. Dann existieren $ \xi \in \C,\ |\xi| = 1 $ und $ a \in B_1(0) $ mit $ \varphi(z) = \xi \frac{z-a}{\overbar{a}z-1}\ \forall\, z \in B_1(0) $.
+		\end{thm}

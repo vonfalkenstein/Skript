@@ -1,0 +1,40 @@
+\section{Der komplexe Logarithmus}\lecture
+		
+		Erinnerung: Für reelle Zahlen $ x,y > 0 $ gilt $ y = e^x \iff x = \log(y) $.\\
+		Da $ e^z = e^{z+2\pi i} \ \forall\, z \in \C $ ist die Funktion $ \exp: z \mapsto e^z $ nicht mehr injektiv!
+		
+		\begin{defn}[Hauptzweig des Logarithmus]
+			Der \emph{Hauptlogarithmus} $ \log: \C \setminus \{0\} \to \C $ ist die Abbildung $ z \mapsto \log(|z|) + i \arg(z) $.
+		\end{defn}
+		
+		Es gilt dann sofort $ \exp(\log(z)) = z,\ \log(\exp(z)) = x+iy^\prime $ mit $ y^\prime \in (-\pi,\pi], y^\prime \equiv y \mod 2\pi. $ Da $ e^{z+2k\pi i} = e^z $ könnte der Logarithmus $ \log: \C \setminus\{0\} \to \R \times (\alpha,\alpha + 2 \pi] i $ definiert sein für jeden Wert von $ \alpha \in \R $! Unsere Definition entspricht der festen Wahl $ \alpha = -\pi $, $\log$ ist nur Linksinverse von $\exp$ auf $ \{ z \in \C \mid z=x+iy\ \text{mit } y \in (-\pi,\pi) \} $. Wir bekommen:
+		\begin{itemize}
+			\item $ \log(-1) = \log(\cos(\pi) + i\sin(\pi)) = i\pi $
+			\item $ \log(-i) = \log\left( \cos \left( \frac{-\pi}{2} \right) + i \sin \left( \frac{-\pi}{2} \right) \right) = -i \frac{\pi}{2} $
+			\item $ \log(1+i\sqrt{3}) = \log\left(2\left(\cos \left( \frac{\pi}{3} \right) + i \sin \left( \frac{\pi}{3} \right)\right)\right) $
+		\end{itemize}
+		
+		\begin{thm}\label{thm_logdiff}
+			Für alle $ \alpha \in \R $ ist er entsprechende Zweig $ \log: \C \setminus \R_{\geq 0} e^{i\alpha} \to \R + i(\alpha,\alpha + 2\pi) $ des Logarithmus holomorph mit $ \log^\prime(z) = \frac{1}{z}\ \forall z \in \C \setminus \{0\}. $ Wir können dann $ \log^\prime: \C\setminus\{0\} \to \C $ als komplexe Ableitung von $\log$ auffassen. Das folgt daher, dass $\log$ bis auf eine Konstante $ 2k\pi i $ definiert ist.
+		\end{thm}
+		
+		\begin{rem}
+			Wir haben in Satz \ref{thm_logdiff} $\log$ auf die offene Teilmenge $ \C \setminus \R_{\geq 0} e^{i\alpha} $ von $\C$ definiert. Das war ein \emph{Zweig} des Logarithmus. Der Hauptzweig ist auf $\C \setminus \R_{\leq 0}$ definiert. Der Hauptzweig von $\arg$ ist auch die Funktion $ \C \setminus \R_{\leq 0} \to \R, re^{i\theta} \mapsto \theta $. Wir betrachten auch die Abbildungen
+			\begin{align*}
+				z \mapsto z^{"\frac{1}{n}"} &= \{ e^{\frac{1}{n}\log(z)} = e^{\frac{hr}{n} + i \frac{\theta + 2k\pi}{n}} \mid k \in \Z \}\\
+				&= \{ r^\frac{1}{n} \cdot e^{i \frac{\theta + 2k\pi}{n}} \mid k \in \Z \}
+			\end{align*}
+			Wir definieren sie über $ \C \setminus \R_{\leq 0} \to \C, re^{i\theta} \mapsto r^\frac{1}{n} e^\frac{i\theta}{n} $. In allen Beispielen sind 0 und $\infty$ \emph{Verzweigungspunkte} der Abbildungen.
+		\end{rem}
+	
+	
+	\section{Meromorphe Abbildungen}
+		
+		\begin{defn}[Singularität, Pole, Meromorphie]
+			Sei $ f : U \subseteq \C \to \C $ eine komplexe Abbildung.
+			\begin{itemize}
+				\item Falls $ \lim\limits_{z \to c} f(z) $ existiert, aber $ \lim\limits_{z \to c} f(z) \neq f(c) $ gilt, so sagt man, dass $f$ eine \emph{hebbare Singularität} an der Stelle $c$ hat. 
+				\item Falls $ n \geq 1\ (n \in \N) $ existiert, sodass $ \lim\limits_{z \to c} (z-c)^n f(z) $ existiert (aber $ \lim\limits_{z \to c} f(z) $ nicht existiert), so ist $c$ ein \emph{Pol} von $f$. Die \emph{Ordnung des Pols} ist dann $ Ord(c) = \min\limits_{n \in A},\ A = \left\{ n \in \N \mid \lim\limits_{z \to c}(z-c)^nf(c)\ \text{existiert} \right\}. $ Mit $ Ord(c) = n $ nennt man $c$ einen $n$-fachen Pol von $f$.
+				\item Falls $ f $ überall bis auf Pole holomorph ist, so ist $f$ eine \emph{meromorphe Funktion}.
+			\end{itemize}
+		\end{defn}

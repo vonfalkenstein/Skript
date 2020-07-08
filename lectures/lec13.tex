@@ -1,0 +1,27 @@
+\lecture\addtocounter{thm}{2}
+		\begin{thmn}[Verallgemeinerte Cauchy'sche Integralformel]\label{2.3.6}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Dann ist $f$ beliebig oft komplex differenzierbar. Jede Ableitung ist wieder holomorph.\\
+			Sei $ z_0 \in D $ und $r>0$, sodass $ \overbar{B_r(z_0)} \subseteq D $. $ \forall\,n \in \N,\ \forall\, z \in B_r(z_0) $ gilt:
+			\[ f^{(n)}(z) = \frac{n!}{2 \pi i} \varointctrclockwise_\gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}} \d \zeta, \]
+			wobei $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it}. $
+		\end{thmn}
+		
+		\begin{thmn}[Satz von Morera]
+			Sei $ D \subset \C $ offen und $f: D \to \C$ stetig. Für jeden Dreiecksweg $ <z_1,z_2,z_3> $, für den die jeweilige Dreiecksfläche $\Delta$ ganz in $D$ enthalten ist, sei
+			\[ \int_{<z_1,z_2,z_3>} f(\zeta) \d\zeta = 0. \]
+			Dann ist $f$ holomorph.
+		\end{thmn}
+		
+		\begin{thmn}[Satz von Liouville]
+			Jede beschränkte ganze Funktion $f: \C \to \C$ ist konstant.
+		\end{thmn}
+		
+		\begin{thmn}[Fundamentalsatz der Algebra]
+			Jedes nichtkonstante komplexe Polynom besitzt eine Nullstelle.
+		\end{thmn}
+	
+		\begin{cor}
+			Jedes Polynom $ P(z) = \sum_{\nu=0}^{n} a_\nu z^\nu,\ a_\nu \in \C, $ vom Grad $ n \geq 1 $ lässt sich als Produkt von $n$ Linearfaktoren und einer Konstante $ C \in \C \setminus \{0\} $ schreiben, d.h. 
+			$$ P(z) = C \cdot \prod_{\nu = 1}^n (z-\alpha_\nu). $$
+			Dabei sind die Zahlen $ \alpha_1,\dotsc,\alpha_n \in \C $ bis auf ihre Reihenfolge eindeutig bestimmt und $ C = a_n. $
+		\end{cor}

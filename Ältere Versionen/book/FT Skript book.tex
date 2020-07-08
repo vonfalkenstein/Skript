@@ -1,0 +1,1377 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage{hyperref,nicefrac,bigints,amssymb,mathtools,amsmath,amsfonts,amsthm,enumitem,microtype,fancyhdr,lmodern,textcomp,xcolor,setspace,lipsum,tikz-cd,stmaryrd,esint}
+%\usepackage{halloweenmath,}
+%\usepackage{bbold}
+\usepackage{marginnote}
+
+%===================DEFINITIONSLISTE==================================================
+
+\usepackage{thmtools}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\thmtlo@chaptervspacehack
+{\addtocontents{loe}{\protect\addvspace{10\p@}}}
+{\addtocontents{loe}{\protect\thmlopatch@endchapter\protect\thmlopatch@chapter{\thechapter}}}
+{}{}
+\AtEndDocument{\addtocontents{loe}{\protect\thmlopatch@endchapter}}
+\long\def\thmlopatch@chapter#1#2\thmlopatch@endchapter{%
+	\setbox\z@=\vbox{#2}%
+	\ifdim\ht\z@>\z@
+	\hbox{\bfseries\chaptername\ #1}\nobreak
+	#2
+	\addvspace{10\p@}
+	\fi
+}
+\def\thmlopatch@endchapter{}
+
+\makeatother
+\renewcommand{\thmtformatoptarg}[1]{ -- #1}
+\renewcommand{\listtheoremname}{Liste der Definitionen}
+
+%==========================FORMATIERUNG=========================================
+
+\usepackage[inner=3cm, outer=3cm, top=3cm, bottom=3cm]{geometry}		%Seitengröße
+\usepackage{titlesec}
+%	\titlespacing*{\subsection}{0pt}{50pt}{20pt}
+%	\newcommand{\sectionbreak}{\clearpage}
+%\renewcommand{\leq}{\varleq}
+%\renewcommand{\geq}{\vargeq}
+\renewcommand{\epsilon}{\varepsilon}
+
+%==========================DEUTSCH==============================================
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}								%Sprache. Falls es Englisch sein soll einfach zum Kommentar machen
+\usepackage[babel,german=quotes]{csquotes}				%deutsche Anführungszeichen bei \enquote{}
+\usepackage[T1]{fontenc}
+\usepackage{hyphsubst}									%deutsche Worttrennung
+\HyphSubstIfExists{ngerman-x-latest}{%
+	\HyphSubstLet{ngerman}{ngerman-x-latest}}{}
+\HyphSubstIfExists{german-x-latest}{%
+	\HyphSubstLet{german}{german-x-latest}}{}
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+%==============TITEL=============================================================
+		
+\title{\Huge \textbf{Funktionentheorie}}
+	\author{Jun.-Prof. Dr. Madeleine Jotz Lean\\\LaTeX{}-Version von Niklas Sennewald}
+	\date{Sommersemester 2020}
+	
+%==============HEADER============================================================
+	
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{%
+	\markboth{\thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\setlength{\headheight}{15pt}
+    \fancyhf{}
+    \lhead{\leftmark}
+    \rhead{\rightmark}
+    \cfoot{\thepage}
+    \lfoot{Funktionentheorie}
+    \rfoot{Jun.-Prof. Dr. Madeleine Jotz Lean}
+
+%=============ENVIRONMENTS=======================================================
+
+\newtheoremstyle{newthm}% name of the style to be used
+{\topsep}% measure of space to leave above the theorem. E.g.: 3pt
+{15pt}% measure of space to leave below the theorem. E.g.: 3pt
+{\itshape}% name of font to use in the body of the theorem
+{7.5pt}% measure of space to indent
+{\bfseries}% name of head font
+{\\}% punctuation between head and body
+{ }% space after theorem head; " " = normal interword space
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\newtheoremstyle{newdef}% name of the style to be used
+{\topsep}% measure of space to leave above the theorem. E.g.: 3pt
+{15pt}% measure of space to leave below the theorem. E.g.: 3pt
+{}% name of font to use in the body of the theorem
+{7.5pt}% measure of space to indent
+{\bfseries}% name of head font
+{\\}% punctuation between head and body
+{ }% space after theorem head; " " = normal interword space
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\newtheoremstyle{newrem}% name of the style to be used
+{\topsep}% measure of space to leave above the theorem. E.g.: 3pt
+{\topsep}% measure of space to leave below the theorem. E.g.: 3pt
+{}% name of font to use in the body of the theorem
+{7.5pt}% measure of space to indent
+{\bfseries}% name of head font
+{: }% punctuation between head and body
+{ }% space after theorem head; " " = normal interword space
+{\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}
+
+\theoremstyle{newthm}
+\newtheorem{thm}{Satz}[section]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Korollar}
+
+\theoremstyle{newdef}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{conj}[thm]{Annahme}
+
+\theoremstyle{newrem}
+\newtheorem{exmp}[thm]{Beispiel}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{rem}{Bemerkung}
+\newtheorem*{note}{Anmerkung}
+
+%================================================================================
+
+%\usepackage{showframe}
+
+%==========================COMMANDS==============================================
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\G}{\mathcal{G}}	
+\renewcommand{\O}{\mathcal{O}}
+\renewcommand{\d}{\ \operatorname{d}\hspace{-2px}}
+%\newcommand{\e}{\mathbb{1}}
+\newcommand{\del}{\partial}
+\newcommand{\Rnn}{\mathbb{R}^{n \times n}}
+\newcommand{\Rmm}{\mathbb{R}^{m \times m}}
+\newcommand{\Rnm}{\mathbb{R}^{n \times m}}
+\newcommand{\Rmn}{\mathbb{R}^{m \times n}}
+\newcommand{\Aut}{\text{Aut}}
+\newcommand{\A}{\mathfrak{A}}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\id}{id}
+\newcommand{\ord}[2]{\operatorname{ord} \left( #1,#2 \right)}
+\newcommand{\Ind}[1]{\operatorname{Ind}_{#1}}
+\newcommand{\Res}[2]{\operatorname{Res} \left( #1;#2 \right) }
+\newcommand{\bound}[2]{\left.#1\right|_{#2}}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+
+
+
+%================================================================================
+
+
+\begin{document}
+	\frontmatter
+	\maketitle
+
+	\setcounter{page}{1}
+	\tableofcontents
+	\newpage
+	\thispagestyle{plain}
+	Dieses Skript stellt keinen Ersatz für die Vorlesungsnotizen von Prof. Jotz Lean dar und wird nicht nochmals von ihr durchgesehen, im Grunde sind das hier nur meine persönlichen Mitschriften. Beweise werde ich i.d.R. nicht übernehmen (weil das in \LaTeX{} einfach keinen Spaß macht). \hspace{\fill} glhf
+	\mainmatter
+	\setcounter{chapter}{-1}	
+	\setstretch{1.15}			%Zeilenabstand. Kann man auch später nochmal reinhämmern, falls man es ändern will
+
+
+
+\chapter[Einführung]{Komplexe Zahlen und wichtige Begriffe}
+	
+	\section{Komplexe Zahlen}\marginnote{Vorlesung 1}
+		
+		\begin{itemize}
+			\item $ \C = \R \bigoplus \R i $ mit $ i = \sqrt{-1} $ (bzw $ i^2 = -1 $). 
+			
+			\item In $\C$ addieren und multiplizieren wir wie folgt:
+			\begin{align*}
+			(a_1 + b_1i) + (a_2 + b_2i) &= (a_1 + a_2) + (b_1 + b_2)i\\
+			(a_1 + b_1i) \cdot (a_2 + b_2i) &= a_1a_2 - b_1b_2 + (a_1b_2 + a_2b_1)i
+			\end{align*}
+			$\C$ ist ein Körper mit $ 0 = 0+0i,\ 1 = 1+0i $ und der oben definierten Addition und Multiplikation.
+			
+			\item $ \C \cong \R^2 $ als $\R$-Vektorraum. Punkte $ a+bi $ aus $\C$ können als Punkte $ (a,b) \in \R^2 $ visualisiert werden.
+			\[ z= \underbrace{a}_{\Re(z)} + \underbrace{b}_{\Im(z)}i \]
+			$ \rightarrow $ die $x$-Achse in $\R^2$ ist die reelle Achse und die $y$-Achse ist die imaginäre Achse.
+			
+			\item $ \overbar{z} = a-bi $ ist die konjugierte Zahl zu $ z = a+bi \in \C $. Es gilt:
+			\[ \overbar{\overbar{z}} = z,\ \overbar{z+w} = \overbar{z} + \overbar{w},\ \overbar{zw} = \overbar{z} \overbar{w},\ z + \overbar{z} = 2\Re(z),\ z - \overbar{z} = 2i\Im(z) \]
+			($ \overbar{z} = z \iff z \in \R,\ \overbar{z} = -z \iff z \in \R i $)\\
+			Weiterhin gilt $ z \overbar{z} = \overbar{z} z = a^2 + b^2 $. Wir schreiben $ |z| = \sqrt{z \overbar{z}} $.
+			
+			\item Falls $ z = a+bi \neq 0\ \exists!\, \theta \in (-\pi,\pi] $, sodass $ \cos(\theta) = \frac{a}{\sqrt{a^2+b^2}} $ und $ \sin(\theta) = \frac{b}{\sqrt{a^2+b^2}}. $ Dann ist $ z = |z| + (\cos(\theta) + i\sin(\theta)) = |z| e^{i \theta} $ per Konstruktion die Polarform der komplexen Zahl $z$. Multiplikation von komplexen Zahlen in Polarform ist ganz einfach:
+			\[ r_1 e^{i\theta_1} \cdot r_2 e^{i\theta_2} = r_1r_2 e^{i(\theta_1 + \theta_2)},\quad \left( re^{i\theta} \right)^{-1} = \frac{1}{r} e^{-1\theta} \]
+			\[ \text{sonst: } (a+bi)^{-1} = \frac{1}{a+bi} = \frac{a-bi}{a^2+b^2} \]
+			
+			\item Geometrische Interpretation der Multiplikation: Addition von komplexen Zahlen ist das Gleiche wie die "Vektoraddition" von Vektoren in $\R^2$. Multiplizieren von $ z \in \C $ mit $ re^{i\theta} $ gibt Folgendes: $ |z \cdot re^{i\theta}| = |z| \cdot r,\ \arg(z \cdot re^{i\theta}) = \arg(z) + \theta $.\\
+			Also: Multiplikation mit $ re^{i\theta} $ entspricht einer "Drehstreckung" (Winkel $\theta$, Faktor $r$).
+			
+			\item Die Menge $ \{z \in \C \mid |z-c| = r,\ c \in \C, r \in \R_{\geq 0}\} $ definiert einen Kreis mit Mittelpunkt $c$ und Radius $r$. Eine Gleichung der Form $ x^2 + y^2 + 2gx + 2fy + h = 0 $ $ (x,y \in \R,\ g,f,h \in R $ konstant) kann geschrieben werden als $ z \overbar{z} + \alpha z + \overbar{\alpha z} + h=0 $ mit $ \alpha = g-if $ und $ z = x+iy $. Allgemeiner betrachten wir eine Gleichung $ Az\overbar{z} + Bz + \overbar{Bz} + C = 0. $ Die Lösungsmenge $ \{ z \in \C \mid Az\overbar{z} + Bz + \overbar{Bz} + C = 0 \} $ ist
+			\begin{enumerate}[label={\roman*})]
+				\item leer, falls $ B\overbar{B} - AC < 0 $
+				\item ein Kreis mit Mittelpunkt $ \frac{-\overbar{B}}{A} $ und Radius $ \sqrt{\frac{B \overbar{B} - AC}{A^2}} $, falls $ B\overbar{B} - AC \geq 0 $.
+			\end{enumerate}
+			Falls $A=0$ ist die Gleichung einfach $ Bz + \overbar{Bz} + C = 0 $. Falls $ B \neq 0 $ ist dies die Gleichung einer Geraden.
+		\end{itemize}
+		
+		\begin{thm}
+			Seien $ c,d \in \C,\ c \neq d,\ k \in \R,\ k > 0 $. Die Menge $ \{ z \mid |z-c| = k|z-d| \} $ ist ein Kreis für $ k \neq 1 $. Im Falle $ k = 1 $ ist die Menge eine Gerade, die senkrecht zum Segment $ cd $ durch den Mittelpunkt verläuft.
+		\end{thm}
+		
+	
+	\section{Erinnerungen, wichtige Begriffe}
+		
+		\begin{itemize}
+			\item $\C$ ist vollständig, das heißt jede Cauchyfolge in $\C$ konvergiert.
+			
+			\item $ \sum_{n=1}^{\infty} c_n $ definiert eine komplexe Reihe. Falls $ \forall \, \epsilon > 0 \ \exists \, N \in \N $, sodass 
+			$$ \left| \sum_{r=n+1}^{m} c_r \right| < \epsilon\ \forall\, m>n>N, $$
+			dann ist die Reihe konvergent.
+			
+			\item Die Topologie von $ \C \cong \R^2 $ ist die von der Standardnorm $ \|\cdot\|^2 $ induzierte:\\
+			$ U \subset \C $ ist offen, falls $ \forall\, z \in U \ \exists\, \delta > 0: B_\delta(z) = \{z^\prime \in \C \mid |z^\prime-z| < \delta \} \subseteq U $. $ D \subset \C $ ist abgeschlossen, falls $ D^c = \C \setminus D $ offen ist. Der \emph{Abschluss} einer Teilmenge $ S \subseteq \C $ ist 
+			$$ \overbar{S} = \bigcap_{\substack{S \subset D\\D\ \text{abgeschlossen}}} D = \overbar{S} = \{ z \in \C \mid \forall\, \delta > 0: B_\delta(z) \cap S \neq 0 \}. $$
+			Das \emph{Innere} von $ S \subseteq \C $ ist 
+			$$ S^\circ = \bigcup_{\substack{U \subset S\\U\ \text{offen}}} U = \{ z \in \C\mid \exists\, \delta>0: B_\delta(z) \subseteq S \}. $$
+			Der Rand von $ S \subseteq \C $ ist
+			\[ \del S = \overbar{S}\setminus S^\circ. \]
+			Es gilt: $ \overbar{S} $ ist abgeschlossen und $ S = \overbar{S} \iff S $ ist abgeschlossen, $ S^\circ $ ist offen und $ S = S^\circ \iff S $ ist offen.
+			
+			\item $ f: \C \to \C $ wird oft geschrieben als $ f(z) = \underbrace{u(x,y)}_{\text{reeller Teil}} + i\underbrace{v(x,y)}_{\text{imaginärer Teil}} $ für $ z = x+iy $.
+			
+			\item $ f: \C \to \C,\ c,d \in \C $. 
+			$$ \lim_{z \to c} f(z) = d \iff \forall\, \epsilon > 0 \ \exists\, \delta >0: |z-c| < \delta \implies |f(z)-d|<\epsilon $$
+			Der Limes für $ z \to \infty $ ist etwas schwieriger, denn es gibt in $\C$ "viele Wege ins Unendliche". Man schreibt $ \lim\limits_{z \to \infty} f(z) = l $, falls $ \forall \, \epsilon > 0 \ \exists\, k>0: |z|>k \implies |f(z)-l|<\epsilon $, das heißt $ \lim\limits_{z \to \infty} f(z) = \lim\limits_{|z| \to \infty} f(z),\ \lim\limits_{z \to \infty} f(z) = \infty $ falls $ \forall\, E>0 \ \exists\, D>0: |z|>D \implies |f(z)|>E. $
+			
+			\item $ f,\phi: \C \to \C $
+				\begin{itemize}
+					\item $ f(z) = O(\phi(z)) $ für $ z \to \infty $, falls $ \exists\, K>0, D>0: |z|>D \implies |f(z)| \leq K|\phi(z)| $
+					\item $ f(z) = O(\phi(z)) $ für $ z \to 0 $, falls $ \exists\, K>0,\epsilon>0: |z|<\epsilon \implies |f(z)| \leq K|\phi(z)| $
+					\item $ f(z) = o(\phi(z)) $ für $ z \to \infty $, falls $ \lim\limits_{|z| \to \infty} \frac{f(z)}{\phi(z)} = 0 $
+					\item $ f(z) = o(\phi(z)) $ für $ z \to 0 $, falls $ \lim\limits_{z \to 0} \frac{f(z)}{\phi(z)} = 0 $
+				\end{itemize}
+		\end{itemize}
+
+
+
+\chapter{Komplexe Ableitung}
+	
+	\section{Komplexe Differenzierbarkeit}\marginnote{Vorlesung 2}
+		
+		\begin{defn}[Komplexe Differenzierbarkeit]
+			Eine komplexe Abbildung $ f: U \to \C,\ U \subseteq \C $ ist an der Stelle $ c \in U $ \emph{differenzierbar}, falls $ \lim\limits_{z \to c} \frac{f(z)-f(c)}{z-c} $ existiert. Der Limes wird dann $ f^\prime(c) $, die \emph{Ableitung von $f$ an der Stelle $c$} genannt.
+		\end{defn}
+		
+		\begin{thm}
+			Wie auch im reellen Fall gelten folgende Regeln:\\
+			Seien $ f,g: U \to \C,\ U \subseteq \C $ an der Stelle $ c \in U $ differenzierbar. Dann gilt:
+			\begin{enumerate}[label={\roman*})]
+				\item $ f+g: U \to \C $ ist an $ c \in U $ differenzierbar mit $ (f+g)^\prime(c) = f^\prime(c) + g^\prime(c) $.
+				\item $ f\cdot g: U \to \C $ ist an $ c \in U $ differenzierbar mit $ (f\cdot g)^\prime(c) = f(c) g^\prime(c) + f^\prime(c) g(c) $.
+				\item Falls $ g(c^\prime) \neq 0\, \forall\, c^\prime \in U $ gilt, so ist $ \frac{f}{g}(c): U \to \C $ an $ c \in U $ differenzierbar mit $ \left(\frac{f}{g}\right)^\prime(c) = \frac{f^\prime(c)g(c) - g^\prime(c)f(c)}{g^2(c)} $.
+				\item Falls $ f(U) \subseteq dom(g) $ gilt und $g$ an $f(c)$ differenzierbar ist, so ist $ g \circ f: U \to \C $ an $ c \in U $ differenzierbar mit $ (g\circ f)^\prime(c) = g^\prime(f(c)) \cdot f^\prime(c) $.
+			\end{enumerate}
+		\end{thm}
+		
+		\begin{exmp}\label{exmppolyn}
+			Die komplexe Funktion $ f: \C \to \C,\ z \mapsto z $ ist differenzierbar, denn $ \lim\limits_{z \to c} \frac{f(z)-f(c)}{z-c} = 1 \ \forall \, c \in \C $. Somit sind Polynome überall differenzierbare komplexe Funktionen und rationale Funktionen $ \frac{p}{q} $ sind differenzierbar, außer an den Nullstellen von $q$.
+		\end{exmp}
+		
+		\begin{thm}[Cauchy-Riemann-Gleichungen]
+			Sei $ f: \C \supseteq U \to \C $ eine komplexe Funktion, die an der Stelle $ c \in U $ komplex differenzierbar ist. Schreibe $ f(x+iy) = u(x,y) + iv(x,y) $ und $ c = a+ib $. Dann existieren alle partiellen Ableitungen $ \frac{\del u}{\del x},\ \frac{\del u}{\del y},\ \frac{\del v}{\del x},\ \frac{\del v}{\del y} $ an der Stelle $ (a,b) $ und es gilt 
+			$$ \frac{\del u}{\del x}(a,b) = \frac{\del v}{\del y}(a,b),\quad \frac{\del v}{\del x}(a,b) = - \frac{\del u}{\del y}(a,b). $$
+		\end{thm}
+		
+		\begin{exmp}
+			Sei $ f:\C \to \C,\ f(x+iy) = \sqrt{|xy|} $. Dann gilt 
+			\begin{enumerate}
+				\item $ \frac{\del v}{\del x} = \frac{\del v}{\del y} = 0 $, denn $ v = 0 $,
+				\item $ \frac{\del u}{\del x}(0,0) = \lim\limits_{t \to 0} \frac{u(t,0) - u(0,0)}{t} = 0 $ und $ \frac{\del u}{\del y}(0,0) = 0. $
+			\end{enumerate}
+			Also gelten die Cauchy-Riemann-Gleichungen an der Stelle $ (0,0) \in \R^2 $, aber:
+			\begin{enumerate}[resume] 
+				\item $f$ ist nicht an $ 0 \in \C $ komplex differenzierbar: 
+				$$ \frac{f(z) - f(0)}{z-0} = \frac{\sqrt{|xy|}}{x+iy} = \frac{\sqrt{|\cos\theta\sin\theta|}}{\cos\theta + i\sin\theta} = \sqrt{|\cos\theta\sin\theta|}e^{-i\theta} $$
+				Für $ \theta = 0 $ oder $ \frac{\pi}{2} $ wäre das $0$, aber für $ \theta = \frac{\pi}{4} $ ist das $ \frac{\sqrt{2}}{2} \cdot \frac{1}{\frac{\sqrt{2}}{2} + i\frac{\sqrt{2}}{2}} = \frac{1}{1+i} = \frac{1-i}{2}. $ Also haben wir $ \lim\limits_{r \to 0} \frac{f(re^{i\theta}) - f(0)}{re^{i\theta}} = \frac{1-i}{2} \neq 0 $ für $ \theta = \frac{\pi}{4} $ und $f$ ist nicht differenzierbar an der Stelle $0$.
+			\end{enumerate}
+		\end{exmp}
+		
+		\begin{thm}
+			Sei $ B_R(c) $ ein offener Ball in $\C$. Sei $ f: U \to \C $ mit $ B_R(c) \subseteq U $, schreibe $ f(x+iy) = u(x,y) + iv(x,y) $. Falls 
+			\begin{enumerate}[label={\roman*})]
+				\item die partiellen Ableitungen $ \frac{\del u}{\del x},\ \frac{\del u}{\del y},\ \frac{\del v}{\del x},\ \frac{\del v}{\del y} $ existieren und stetig in $ B_R(c) $ sind und
+				\item die Cauchy-Riemann-Gleichungen an der Stelle $ a+ib \cong (a,b) $ erfüllt sind,
+			\end{enumerate}
+			dann ist $f$ an der Stelle $c$ differenzierbar.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ und sei $ B \subseteq U $ ein offener Ball. Schreibe $ f(x+iy) = u(x,y) + iv(x,y) $. Falls 
+			\begin{enumerate}[label={\roman*})]
+				\item die partiellen Ableitungen existieren und stetig auf $B$ sind und
+				\item die Cauchy-Riemann-Gleichungen auf $B$ gelten,
+			\end{enumerate}
+			dann ist $f$ auf $B$ differenzierbar.
+		\end{thm}
+		
+		\begin{defn}[Holomorphie]
+			Sei $U \subseteq \C$ offen. Eine Funktion $ f: U \to \C $ heißt \emph{holomorph}, falls $f$ an jedem $ c \in U $ differenzierbar ist. Im Falle $ U = \C $ heißt $f$ \emph{ganze Funktion}.
+		\end{defn}
+		
+		\begin{exmp}
+			\begin{itemize}
+				\item Aus Beispiel \ref{exmppolyn} folgt, dass Polynome ganze Funktionen sind.				
+				\item Die rationale Funktion $ f: \C\setminus \{1\} \to \C,\ z \mapsto \frac{z+2i}{z-i} $ ist holomorph auf $ C \setminus \{i\} $.
+				\item $ f: \C \to \C,\ z \mapsto z^2 = (x+iy)^2 = (x^2-y^2)+i(2xy) \\
+				\implies u(x,y) = x^2-y^2,\ v(x,y) = 2xy $
+				\[
+				\left.\begin{array}{ll}
+					\frac{\del u}{\del x}(x,y) = 2x\\
+					\frac{\del u}{\del y}(x,y) = -2y\\
+					\frac{\del v}{\del x}(x,y) = 2y = -\frac{\del u}{\del y}\\
+					\frac{\del v}{\del y}(x,y) = 2x = \frac{\del u}{\del x}
+				\end{array} \right\} \text{alle stetig auf }\R^2
+				\]
+				also ist $f$ holomorph (also eine ganze Funktion) mit $ f^\prime(z) = \frac{\del u(x,y)}{\del x} + i\frac{\del v(x,y)}{\del x} = 2x + 2iy. $				
+				\item $ f: \C\setminus\{0\} \to \C,\ z \mapsto \frac{1}{z} = \frac{1}{x+iy} \implies u(x,y) = \frac{x}{x^2 + y^2} v(x,y) = \frac{-y}{x^2 + y^2} $
+				\[
+				\left.\begin{array}{ll}
+				\frac{\del u}{\del x}(x,y) = \frac{x^2+y^2-2x^2}{(x^2+y^2)^2} = \frac{y^2-x^2}{(x^2+y^2)^2} = \frac{\del v}{\del y}(x,y)\\
+				\frac{\del u}{\del y}(x,y) = \frac{-2xy}{(x^2+y^2)^2} = -\frac{\del v}{\del x}(x,y)
+				\end{array} \right\} \text{alle stetig auf }\R^2\setminus\{0\}
+				\]
+				Also ist $f$ holomorph mit 
+				\begin{align*}
+					f^\prime(z) &= \frac{y^2-x^2}{(x^2+y^2)^2} + i\frac{2xy}{(x^2+y^2)^2} = \frac{y^2-x^2 + i2xy}{(x^2+y^2)^2}\\
+					&= \frac{-(x-iy)^2}{(x+iy)^2(x-iy)^2} = \frac{1}{z^2}\quad \forall\, z \in \ \setminus\{0\}. 
+				\end{align*}
+			\end{itemize}
+		\end{exmp}
+		
+		\marginnote{Vorlesung 3}
+		Also ist eine komplexe Abbildung $ f: U \to \C,\ U \subseteq \C $ genau dann an $ x+iy = c \in \C $ differenzierbar, wenn $ D_{(x,y)}(u,v) $, aufgefasst als Abbildung $ \C \to \C $, $\C$-linear ist. Wir erweitern nun ein Standardergebnis aus der reellen Analysis zum komplexen Fall:
+		
+		\begin{thm}
+			Sei $ f: U \to \C,\ U \subseteq \C $ holomorph auf $ B_R(c) \subseteq U $, und sei $ f^\prime(z) = 0\ \forall z \in B_R(c) $. Dann ist $f$ konstant auf $ B_R(c). $
+		\end{thm}
+		
+		\begin{thm}[Lemma von Goursat]
+			Sei $ f: U \to \C $ auf $U$ holomorph, $ c \in U $. Dann gibt es eine Funktion $ v: U \to \C $ mit 
+			$$ v(z) \overset{z \to c}{\longrightarrow} 0\ \text{und } f(z) = f(c) + (z-c)f^\prime(c) + (z-c) v(z). $$
+		\end{thm}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ eine komplexe Funktion, $ c \in U $. Falls eine komplexe Zahl $A$ existiert, sodass 
+			\[ \frac{f(z) - f(c) - A(z-c)}{z-c} \overset{z \to c}{\longrightarrow} 0, \]
+			so ist $f$ an der Stelle $c$ differenzierbar mit $ f^\prime(c) = A. $
+		\end{thm}
+		
+		\begin{thm}
+			Sei $ f: U \to \C $ holomorph mit $ U \subseteq \C $ offen und zusammenhängend. Falls $ |f| $ auf $U$ konstant ist, dann auch $f$.
+		\end{thm}
+	
+	
+	
+	\subsection*{Komplexe Differentialformen und das Wirtinger-Kalkül}
+		
+		In der reellen Analysis beschäftigt man sich mit reellwertigen alternierenden Differentialformen auf offenen Teilmengen $ U \subseteq \R^n $. Man kann auch komplexwertige $k$-Formen betrachten, die lokal von der Gestalt
+		\[ \omega = \sum_{1 \leq j_1 < \dots < j_k \leq n} a_{j_1,\dots,j_k} \d x_{j_1} \wedge \dotsc \wedge \d x_{j_k} \]
+		sind, mit komplexwertigen Funktionen $ a_{j_1,\dots,j_k}: U \to \C $. Das äußere Produkt solcher Formen ist wie im reellen Fall definiert. Wenn man das Differential $\d$ auf komplexwertige Formen fortsetzen will, muss man 
+		\begin{equation}\label{eq_df}
+			\d f := \d (\Re f) + i \d (\Im f)
+		\end{equation}
+		 setzen (für $ f: U \to C,\ f = \Re f + i \Im f $), und so 
+		\[ \d \omega = \sum_{1 \leq j_1 < \dots < j_k \leq n} \d a_{j_1,\dotsc,j_k} \wedge \d x_{j_1} \wedge \dotsc \wedge \d x_{j_k}. \]
+		Es gilt $ \d^2 = 0 $ und per Definition ist d kompatibel mit $\wedge$: 
+		$$ \d(\omega \wedge \eta) = \d \omega \wedge \eta + (-1)^{|\omega|} \omega\wedge \d \eta. $$
+		Nun sei $ f: U \to \C, U \subseteq \C^n, $ und die Form $\omega$	soll auch von komplexen Argumenten abhängen. Das heißt $\omega$ ist eine Form auf $ U \subseteq \C^n $, die wir vermöge der Identifikation $ \C^n \cong \R^{2n},\ z_j = x_j + iy_j,\ j=1,\dotsc,n $ als Form auf $ U \subseteq \R^{2n} $ auffassen können.\\
+		$ z_j $ und $ \overbar{z_j} $ sind dann komplexwertige Funktionen auf $ \R^{2n} $ und aus \ref{eq_df} folgt
+		\[
+		\left\{\begin{array}{ll}
+			\d z_j = \d x_j + i \d y_j\\
+			\d\overbar{z_j} = \d x_j - i \d y_j
+		\end{array} \right.\ \text{für } j=1,\dotsc,n.
+		\]
+		Umgekehrt gilt dann $ \d x_j = \frac{\d z_j + \d\overbar{z_j}}{2} $ und $ \d y_j = \frac{\d z_j - \d\overbar{z_j}}{2} $.\\
+		Das heißt, jede komplexwertige $k$-Differentialform auf $ U \subseteq \C^n $ lässt sich ausdrücken als Linearkombination (mit komplexwertigen Koeffizienten) von $k$-fachen Dachprodukten von $ \d z_j, \d \overbar{z_j} $.
+		
+		Sei $ f: U \to \C, U \subseteq \C^n, f= f_\Re + if_\Im $ stetig differenzierbar. Dann gilt per Definition:
+		\begin{align*}
+			\d f &= \d f_\Re + i\d f_\Im\\
+			&= \sum_{j=1}^{n} \left( \frac{\del f_\Re}{\del x_j} \d x_j + \frac{\del f_\Re}{\del y_j}\d y_j \right) + i \sum_{j=1}^n \left( \frac{\del f_\Im}{\del x_j} \d x_j + \frac{\del f_\Im}{\del y_j} \d y_j \right)\\
+			&= \sum_{j=1}^{n} \left( \frac{\del f_\Re}{\del x_j} + i \frac{\del f_\Im}{\del x_j} \right) \d x_j + \sum_{j=1}^n \left( \frac{\del f_\Re}{\del y_j} + i \frac{\del f_\Im}{\del y_j} \right) \d y_j.
+		\end{align*}
+		Schreibe $ \frac{\del f}{\del x_j} = \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j},\ \frac{\del f}{\del y_j} = \frac{\del f_\Re}{\del y_j} + i\frac{\del f_\Im}{\del y_j} $. Dann ist 
+		\[ \d f = \sum_{j=1}^n \left( \frac{\del f}{\del x_j} \d x_j + \frac{\del f}{\del y_j} \d y_j \right). \]
+		\begin{align*}
+			\text{Setze nun }\quad \frac{\del f}{\del z_j} &= \frac{1}{2} \left( \frac{\del f}{\del x_j} - i \frac{\del f}{\del y_j} \right),\\
+			\frac{\del f}{\del \overbar{z_j}} &= \frac{1}{2} \left( \frac{\del f}{\del x_j} + i \frac{\del f}{\del y_j} \right).\\
+			\text{Dann gilt}\quad \frac{\del f}{\del x_j} &= \frac{\del f}{\del z_j} + \frac{\del f}{\del \overbar{z_j}}\\
+			\frac{\del f}{\del y_j} &= i \left(\frac{\del f}{\del z_j} - \frac{\del f}{\del \overbar{z_j}}\right).
+		\end{align*}
+		Es gilt dann:
+		\begin{align*}
+			\d f &= \sum_{j=1}^{n} \left( \left( \frac{\del f}{\del z_j} + \frac{\del f}{\del \overbar{z_j}} \right) \d x_j + i \left( \frac{\del f}{\del z_j} - \frac{\del f}{\del \overbar{z_j}} \right) \d y_j \right)\\
+			&= \sum_{j=1}^n \left( \frac{\del f}{\del z_j} (\d x_j + i\d y_j) + \frac{\del f}{\del \overbar{z_j}} (\d x_j - i\d y_j) \right)\\
+			&= \sum_{j=1}^n \left( \frac{\del f}{\del z_j}\d z_j + \frac{\del f}{\del \overbar{z_j}}\d \overbar{z_j} \right).\\
+		\noalign{Außerdem ist}
+			\frac{\del \overbar{f}}{\del z_j} &= \frac{1}{2} \left( \frac{\del \overbar{f}}{\del x_j} - i\frac{\del \overbar{f}}{\del y_j} \right)\\
+			&= \frac{1}{2} \left( \frac{\del f_\Re}{\del x_j} - i\frac{\del f_\Im}{\del x_j} - i\frac{\del f_\Re}{\del y_j} + i^2\frac{\del f_\Im}{\del y_j} \right)\\
+			&= \overbar{\frac{1}{2} \left( \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j} + i\frac{\del f_\Re}{\del y_j} - \frac{\del f_\Im}{\del y_j} \right)}\\
+			&= \overbar{\frac{\del f}{\del \overbar{z_j}}}
+		\end{align*}
+		und ähnlich bekommt man 
+		$$ \frac{\del \overbar{f}}{\del \overbar{z_j}} = \overbar{\frac{\del f}{\del z_j}}. $$
+		Nun gilt
+		\begin{align*}
+			\frac{\del f}{\del \overbar{z_j}} = 0 &\iff \frac{1}{2} \left( \frac{\del f}{\del x_j} + i\frac{\del f}{\del y_j} \right) = 0\\
+			&\iff \frac{\del f_\Re}{\del x_j} + i\frac{\del f_\Im}{\del x_j} + i\frac{\del f_\Re}{\del y_j} - \frac{\del f_\Im}{\del y_j} = 0\\
+			&\iff \begin{cases}
+			\frac{\del f_\Re}{\del x_j} = \frac{\del f_\Im}{\del y_j}\\
+			\frac{\del f_\Im}{\del x_i} = -\frac{\del f_\Re}{\del y_j}
+			\end{cases}
+		\end{align*}
+		Also insbesondere für $n=1$: $ \d f = \frac{\del f}{\del z}\d z \iff f $ holomorph. 
+			
+	
+	\section{Der Satz für implizite Funktionen}\marginnote{Vorlesung 4}
+		
+		Wir wollen hier noch den Satz für implizite Funktionen im komplexen Fall besprechen.
+		
+		\begin{thm}
+			Sei $ f: D \to \C $ eine holomorphe Funktion mit stetiger Ableitung.
+			\begin{enumerate}[label={\alph*})]
+				\item In einem Punkt $a \in D$ gelte $ f^\prime(a) \neq 0 $. Dann existiert eine offene Menge $ D_0 \subseteq D,\ a \in D_0 $, sodass die Einschränkung $ \bound{f}{D_0} $ injektiv ist.
+				\item Die Funktion $f$ sei injektiv und es gelte $ f^\prime(z) \neq 0 $ für alle $z \in D$. Dann ist das Bild $f(D)$ offen. Die Umkehrfunktion $ f^{-1}: f(D) \to \C $ ist holomorph und ihre Ableitung ist 
+				$$ \left(f^{-1}\right)^\prime (f(z)) = \frac{1}{f^\prime(z)},\ z \in D. $$
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Konforme Abbildungen}
+		
+		\begin{defn}[Orientierungs- und Winkeltreue]
+			Eine bijektive $\R$-lineare Abbildung $ T: \R^2 \to \R^2 $ heißt
+			\begin{enumerate}[label={\alph*})]
+				\item \emph{orientierungstreu}, falls $\det(T)>0$,
+				\item \emph{winkeltreu}, wenn für alle $x,y \in \R^2$ gilt $ |Tx|\cdot |Ty| \cdot \langle x,y\rangle = |x| \cdot |y|\cdot \langle Tx,Ty \rangle $, wobei $\langle\cdot ,\cdot \rangle$ das Standardskalarprodukt auf $\R$ ist.
+			\end{enumerate}
+		\end{defn}
+		
+		\begin{defn}[Konformität]
+			Eine differenzierbare Abbildung $ f:D \to D^\prime,\ D,D^\prime \subseteq \R^2, $ heißt \emph{lokal/infinitessimal konform}, falls ihre Jacobimatrix $ D_af $ in jedem Punkt $a \in D$ winkel- und orientierungstreu ist. Falls $f$ auch bijektiv ist, so heißt $f$ \emph{(global) konform}.
+		\end{defn}
+		
+		Es folgt sofort:
+		\begin{thm}
+			$f: D \to D^\prime,\ D,D^\prime \subseteq \C$ offen. $f$ ist genau dann lokal konform, wenn $f$ holomorph ist und $f^\prime(a) \neq 0$ für alle $a \in D$ gilt.
+		\end{thm}
+		
+	
+	\section{Komplexe Potenzreihen}
+		
+		Wie im reellen:
+		\begin{enumerate}
+			\item $ \sum\limits_{n=0}^\infty z_n $ konvergiert zu $S \in \C$, falls $ S_m = \sum\limits_{n=0}^\infty z_n \overset{m \to \infty}{\longrightarrow} S. $
+			\item Falls $\sum\limits_{n=0}^\infty z_n $ konvergent ist, dann ist $ \lim\limits_{n \to \infty} z_n = 0. $
+			\item  $\sum\limits_{n=0}^\infty z_n $ ist \emph{absolut konvergent}, falls $\sum\limits_{n=0}^\infty |z_n| $ konvergent ist. Dann ist auch $ \sum\limits_{n=0}^\infty z_n $ konvergent. Da $\sum\limits_{n=0}^\infty |z_n| $ eine reelle Reihe ist, können die üblichen Konvergenztests angewendet werden.
+			\item Wir betrachten hier \emph{Potenzreihen}, also $\sum\limits_{n=0}^\infty c_n (z-a_n)^n $ mit $ c_n, z, a_n \in \C. $
+		\end{enumerate}
+		
+		\begin{thm}
+			Die Potenzreihe $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ konvergiere für $ z-a = d \in \C $. Dann konvergiert sie absolut für alle $ z \in B_{|d|}(a) $.
+		\end{thm}
+		
+		\begin{cor}\label{cor_pot}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine komplexe Potenzreihe. Dann gilt genau eine der drei folgenden Aussagen:
+			\begin{enumerate}[label={\roman*})]
+				\item die Potenzreihe konvergiert für alle $z \in \C$,
+				\item die Potenzreihe konvergiert nur für $z = a$,
+				\item $ \exists\, R > 0, R \in \R $, sodass die Reihe absolut für alle $z \in B_R(a)$ konvergiert und für alle $ z $ mit $ |z-a|>R $ divergiert.
+			\end{enumerate}
+		\end{cor}
+		
+		\begin{defn}[Konvergenzradius]
+			Die Zahl $R$ im Korollar \ref{cor_pot} heißt der \emph{Konvergenzradius der Potenzreihe} $ \sum\limits_{n=0}^\infty c_n (z-a)^n $. Im Fall \textit{iii)} heißt $ \Bigl\{ z \in \C\ \Bigm|\ |z-a|=R \Bigr\} $ der \emph{Konvergenzkreis der Reihe}.\\
+			Aus dem reellen Fall bekommt man $ R = \frac{1}{\limsup\limits_{n \to \infty}\sqrt[n]{|a_n|}} $.
+		\end{defn}
+		
+		\begin{thm}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $ R \in [0,\infty] $.
+			\begin{enumerate}[label = {\roman*})]
+				\item Falls $ \lim\limits_{n \to \infty} \left|\frac{c_n}{c_{n+1}}\right| = \lambda $, gilt $ \lambda = R $.
+				\item Falls $ \lim\limits_{n \to \infty} \left|\frac{c_n}{c_{n+1}}\right|^{-\frac{1}{n}} = \lambda $, gilt $ \lambda = R $.
+			\end{enumerate}
+		\end{thm}
+		
+		\begin{thm}
+			Die Potenzreihen $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ und $ \sum\limits_{n=0}^\infty n c_n (z-a)^{n-1} $ haben den gleichen Konvergenzradius.
+		\end{thm}
+		\marginnote{Vorlesung 5}
+		\begin{thm}\label{thm_series}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $R \neq 0$, und sei $ f: B_R(a) \to \C, f(z) = \sum\limits_{n=0}^\infty c_n (z-a)^n $. Dann ist $f$ holomorph mit $ f^\prime(z) = \sum\limits_{n=0}^\infty n c_n (z-a)^{n-1} $.
+		\end{thm}
+		
+		\begin{exmp}
+			Betrachte die Reihe $ \sum\limits_{i=0}^\infty i^2 z^{i-1} $ für $|z| < 1$. Da $ \sum\limits_{i=0}^\infty z^{i} = \frac{1}{1-z} $ für $|z|<1$, folgt mit Satz \ref{thm_series}: $ \sum\limits_{i=0}^\infty i z^{i-1} = \frac{1}{(1-z^2)} $ für $|z|<1$ und somit $ \sum\limits_{i=0}^\infty i z^{i} = \frac{z}{(1-z)^2} $ für $|z|<1$. Wieder mit Satz \ref{thm_series} gilt
+			\[ \sum\limits_{i=0}^\infty i^2 z^{i-1} = \frac{(1-z)^2+2z(1-z)}{(1-z)^4} = \frac{1-z+2z}{(1-z)^3} = \frac{1+z}{(1-z)^3}\ \text{für } |z|<1. \]
+		\end{exmp}
+		
+		Nun können wir mit dem Studium der komplexen Exponentialreihe beginnen.
+		
+		\begin{lem}
+			Die Reihe $ \sum\limits_{n=0}^\infty \frac{z^n}{n!} $ hat den Konvergenzradius $ R = \infty $.
+		\end{lem}
+		
+		\begin{defn}[Komplexe Exponentialfunktion]
+			Die Funktion $ \exp: \C \to \C, z \mapsto \sum\limits_{n=0}^\infty \frac{z^n}{n!} $ ist die \emph{(komplexe) Exponentialfunktion}.
+		\end{defn}
+		
+		Aus Satz \ref{thm_series} folgt, dass $\exp$ holomorph ist, mit $ \exp^\prime:\C \to \C, \exp^\prime(z) = \sum\limits_{n=1}^\infty n \cdot \frac{1}{n!} z^{n-1} = \exp(z). $\\
+		
+		\subsection*{Eigenschaften der Exponentialfunktion:}
+		Seien $z,w \in \C$. Da $ \sum\limits_{n=0}^\infty \frac{z^n}{n!},\ \sum\limits_{n=0}^\infty \frac{w^n}{n!} $ absolut konvergieren, konvergiert auch
+		\begin{align*}
+			\exp(z) \cdot \exp(w) &= \sum_{n=0}^\infty \frac{z^n}{n!} \cdot \sum_{m=0}^\infty \frac{w^m}{m!}\\
+			&= \sum_{n=0}^\infty \sum_{m=0}^\infty \frac{z^nw^m}{n!m!} = \sum_{n=0}^\infty \sum_{k=0}^n \frac{z^kw^{n-k}}{k!(n-k)!}\\
+			&= \sum_{n=0}^\infty \frac{1}{n!} \sum_{k=0}^n \binom{n}{k} z^kw^{n-k} = \sum_{n=0}^\infty \frac{(z+w)^n}{n!}\\
+			&= \exp(z+w)
+		\end{align*}
+		Daraus folgt sofort:
+		\begin{align*}
+			\exp(z) \cdot \exp(-z) &= \exp(0) = \sum_{n=0} \frac{0^n}{n!} = 1 \quad \forall\, z \in \C,\\
+			\exp(-z) &= \frac{1}{\exp(z)},\ \exp(z) \neq 0 \quad \forall\, z \in \C.
+		\end{align*}
+		In der reellen Analysis setzt man $\exp(1)=e$ und zeigt dann $ \exp(q) = e^q \ \forall\, q \in \Q $. Dann setzt man $ e^x = \exp(x) \ \forall\, x \in \R. $ Hier setzen wir nun auch $ \exp(z) = e^z \ \forall\, z \in \C $.\\
+		Nun setzen wir (wie im reellen Fall):\\
+		$ \cos,\sin,\cosh,\sinh : \C \to \C, $
+		\begin{itemize}
+			\item $ \cos(z) = \sum\limits_{n=0}^\infty (-1)^n \frac{z^{2n}}{(2n)!} = 1-\frac{z^2}{2!} + \frac{z^4}{4!} + \dots $
+			\item $ \sin(z) = \sum\limits_{n=0}^\infty (-1)^n \frac{z^{2n+1}}{(2n+1)!} = z - \frac{z^3}{3!} + \frac{z^5}{5!} + \dots $
+			\item $ \cosh(z) = \sum\limits_{n=0}^\infty \frac{z^{2n}}{(2n)!} $
+			\item $ \sinh(z) = \sum\limits_{n=0}^\infty \frac{z^{2n+1}}{(2n+1)!} $
+		\end{itemize}
+		Es gilt:
+		\begin{enumerate}[label={\alph*})]
+			\item $ \cos(z) + i\sin(z) = e^{iz} $
+			\item $ \cosh(z) + \sinh(z) = e^z $
+			\item $ e^{iz} + e^{-iz} = 2 \cos(z) \implies \cos(z) = \frac{e^{iz} + e^{-iz}}{2} $\\
+			Ähnlich: $ \sin(z) = \frac{e^{iz} - e^{-iz}}{2i} \quad \implies e^{-iz} = \cos(z) -i\sin(z) $
+			\item $ \cos^2(z) + \sin^2(z) = 1 $
+			\item Da $ \cosh(z) - \sinh(z) = e^{-z} $ ist $ \cosh(z) = \frac{e^{z} + e^{-z}}{2} $ und $ \sinh(z) = \frac{e^{z} - e^{-z}}{2} $.
+			\item Aus Satz \ref{thm_series} folgt $ \cos^\prime(z) = -\sin(z) $\\
+			$ \sin^\prime(z) = \cos(z) $\\
+			$ \cosh^\prime(z) = \sinh(z) $\\
+			$ \sinh(z)^\prime = \cosh(z) $
+			\item $ \cos(z+w) = \cos(z)\cos(w) - \sin(z)\sin(w) $\\
+			$ \sin(z+w) = \sin(z)\cos(w) + \cos(z)\sin(w) $
+			\item $ e^{z+2\pi i} = e^z $ und für $ x,y \in \R $ gilt $ e^{x+iy} = e^x(\cos(y)+i\sin(y)) $\\
+			$ \implies |e^z| = |e^{x+iy}| = e^x, \quad \arg(e^z) \equiv y \mod 2\pi $
+		\end{enumerate}
+	
+	
+	
+	\section{Der komplexe Logarithmus}\marginnote{Vorlesung 6}
+		
+		Erinnerung: Für reelle Zahlen $ x,y > 0 $ gilt $ y = e^x \iff x = \log(y) $.\\
+		Da $ e^z = e^{z+2\pi i} \ \forall\, z \in \C $ ist die Funktion $ \exp: z \mapsto e^z $ nicht mehr injektiv!
+		
+		\begin{defn}[Hauptzweig des Logarithmus]
+			Der \emph{Hauptlogarithmus} $ \log: \C \setminus \{0\} \to \C $ ist die Abbildung $ z \mapsto \log(|z|) + i \arg(z) $.
+		\end{defn}
+		
+		Es gilt dann sofort $ \exp(\log(z)) = z,\ \log(\exp(z)) = x+iy^\prime $ mit $ y^\prime \in (-\pi,\pi], y^\prime \equiv y \mod 2\pi. $ Da $ e^{z+2k\pi i} = e^z $ könnte der Logarithmus $ \log: \C \setminus\{0\} \to \R \times (\alpha,\alpha + 2 \pi] i $ definiert sein für jeden Wert von $ \alpha \in \R $! Unsere Definition entspricht der festen Wahl $ \alpha = -\pi $, $\log$ ist nur Linksinverse von $\exp$ auf $ \{ z \in \C \mid z=x+iy\ \text{mit } y \in (-\pi,\pi) \} $. Wir bekommen:
+		\begin{itemize}
+			\item $ \log(-1) = \log(\cos(\pi) + i\sin(\pi)) = i\pi $
+			\item $ \log(-i) = \log\left( \cos \left( \frac{-\pi}{2} \right) + i \sin \left( \frac{-\pi}{2} \right) \right) = -i \frac{\pi}{2} $
+			\item $ \log(1+i\sqrt{3}) = \log\left(2\left(\cos \left( \frac{\pi}{3} \right) + i \sin \left( \frac{\pi}{3} \right)\right)\right) $
+		\end{itemize}
+		
+		\begin{thm}\label{thm_logdiff}
+			Für alle $ \alpha \in \R $ ist er entsprechende Zweig $ \log: \C \setminus \R_{\geq 0} e^{i\alpha} \to \R + i(\alpha,\alpha + 2\pi) $ des Logarithmus holomorph mit $ \log^\prime(z) = \frac{1}{z}\ \forall z \in \C \setminus \{0\}. $ Wir können dann $ \log^\prime: \C\setminus\{0\} \to \C $ als komplexe Ableitung von $\log$ auffassen. Das folgt daher, dass $\log$ bis auf eine Konstante $ 2k\pi i $ definiert ist.
+		\end{thm}
+		
+		\begin{rem}
+			Wir haben in Satz \ref{thm_logdiff} $\log$ auf die offene Teilmenge $ \C \setminus \R_{\geq 0} e^{i\alpha} $ von $\C$ definiert. Das war ein \emph{Zweig} des Logarithmus. Der Hauptzweig ist auf $\C \setminus \R_{\leq 0}$ definiert. Der Hauptzweig von $\arg$ ist auch die Funktion $ \C \setminus \R_{\leq 0} \to \R, re^{i\theta} \mapsto \theta $. Wir betrachten auch die Abbildungen
+			\begin{align*}
+				z \mapsto z^{"\frac{1}{n}"} &= \{ e^{\frac{1}{n}\log(z)} = e^{\frac{hr}{n} + i \frac{\theta + 2k\pi}{n}} \mid k \in \Z \}\\
+				&= \{ r^\frac{1}{n} \cdot e^{i \frac{\theta + 2k\pi}{n}} \mid k \in \Z \}
+			\end{align*}
+			Wir definieren sie über $ \C \setminus \R_{\leq 0} \to \C, re^{i\theta} \mapsto r^\frac{1}{n} e^\frac{i\theta}{n} $. In allen Beispielen sind 0 und $\infty$ \emph{Verzweigungspunkte} der Abbildungen.
+		\end{rem}
+	
+	
+	\section{Meromorphe Abbildungen}
+		
+		\begin{defn}[Singularität, Pole, Meromorphie]
+			Sei $ f : U \subseteq \C \to \C $ eine komplexe Abbildung.
+			\begin{itemize}
+				\item Falls $ \lim\limits_{z \to c} f(z) $ existiert, aber $ \lim\limits_{z \to c} f(z) \neq f(c) $ gilt, so sagt man, dass $f$ eine \emph{hebbare Singularität} an der Stelle $c$ hat. 
+				\item Falls $ n \geq 1\ (n \in \N) $ existiert, sodass $ \lim\limits_{z \to c} (z-c)^n f(z) $ existiert (aber $ \lim\limits_{z \to c} f(z) $ nicht existiert), so ist $c$ ein \emph{Pol} von $f$. Die \emph{Ordnung des Pols} ist dann $ Ord(c) = \min\limits_{n \in A},\ A = \left\{ n \in \N \mid \lim\limits_{z \to c}(z-c)^nf(c)\ \text{existiert} \right\}. $ Mit $ Ord(c) = n $ nennt man $c$ einen $n$-fachen Pol von $f$.
+				\item Falls $ f $ überall bis auf Pole holomorph ist, so ist $f$ eine \emph{meromorphe Funktion}.
+			\end{itemize}
+		\end{defn}
+		
+	
+	\section{Uniforme Konvergenz}\marginnote{Vorlesung 7}
+		
+		Sei $ f: S \subseteq \C \to \C $ eine beschränkte Funktion. Wir definieren die \emph{Norm von $f$} als $ ||f||=\sup\limits_{z \in S} |f(z)| $. Es gilt $ ||f|| \geq 0,\ ||f||=0 \iff f=0 $ und $ ||f+g|| \leq ||f||+||g|| $. 
+		
+		\begin{defn}[Gleichmäßige Konvergenz]
+			Sei $ (f_n)_{n \in \N} $ eine Folge von Funktionen $ f_n: S \to \C $. $ (f_n)_{n \in N} $ \emph{konvergiert gleichmäßig} gegen $f$ auf $S$ ($ f: S \to \C $), falls $ \forall\, \epsilon > 0 \ \exists\, N \in N: ||f-f_n|| < \epsilon \ \forall\, n \geq N $. $f$ ist der gleichmäßige Limes von $ (f_n)_{n \in \N} $. Daraus folgt $ f_n(z) \overset{n \to \infty}{\longrightarrow} f(z) \ \forall\, z \in S $, aber die Umkehrung gilt nicht.
+		\end{defn}
+		
+		\begin{thm}
+			Sei $ (f_n)_{n \in \N}, f_n:S \to \C $ eine Folge von Funktionen, die gleichmäßig gegen eine Funktion $ f: S \to \C $ konvergiert. Sei $c \in S$. Falls $ f_n $ stetig an der Stelle $c$ ist für alle $n \in \N$, dann ist auch $f$ stetig an der Stelle $c$. 
+		\end{thm}
+		
+		\begin{defn}[Gleichmäßige Summierung]
+			Gegeben eine Folge $ (f_n)_{n \in \N} $ von Funktionen $ f_n: S \to \C $, so kann man die Reihe $ \sum\limits_{n=0}^\infty f_n $ von Funktionen definieren. Falls die Folge $ (F_n)_{n \in \N}, F_n = \sum\limits_{k=0}^n f_k $ gleichmäßig gegen eine Funktion $ F: S \to \C $ konvergiert, so sagt man, dass $ \sum\limits_{n=0}^\infty f_n $ \emph{gleichmäßig zu $F$ summiert}.
+		\end{defn}
+		
+		\begin{thm}[Weierstraß'scher M-Test]
+			Sei für alle $ n \in \N $ die Funktion $ f_n:S \to \C $ so, dass $ M_n > 0 $ existieren mit $ ||f_n|| \leq M_n $. Falls $ \sum\limits_{n=0}^\infty M_n $ konvergiert, so konvergiert auch $ \sum\limits_{n=0}^\infty f_n $ gleichmäßig auf $S$.
+		\end{thm}
+		
+		\begin{cor}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $ R > 0 $. Für alle $ r \in (0,R) $ ist die Reihe gleichmäßig konvergent auf $ \overbar{B_r(a)} $.
+		\end{cor}
+		
+	
+	
+	
+	
+	
+\chapter{Komplexe Integration}
+	
+	\section{Kurven und Kurvenintegrale}
+		
+		\begin{defn}[Kurve]
+			Eine \emph{Kurve} ist eine stetige Abbildung $ \gamma: [a,b] \to \C,\ a<b\in \R $.
+		\end{defn}
+		
+		\begin{defn}[Kurveneigenschaften]
+			Eine Kurve $ \gamma: [a,b] \to \C $ heißt
+			\begin{itemize}
+				\item \emph{geschlossen}, falls $ \gamma(a) = \gamma(b) $.
+				\item \emph{einfach}, falls $ \bound{\gamma}{[a,b)} $ und $ \bound{\gamma}{(a,b]} $ injektiv sind.
+				\item \emph{glatt}, falls sie stetig differenzierbar ist. Wir schreiben $ \dot{\gamma} : [a,b] \to \C $ für die Ableitung.
+				\item \emph{stückweise glatt}, falls es eine Unterteilung $ a = a-0 < a_1 < \dots < a_n=b $ gibt, sodass die Einschränkungen $ \gamma_j = \bound{\gamma}{\left[a_j,a_{j+1}\right]} $ glatt sind.
+				\item \emph{regulär}, falls sie glatt ist und für alle $ t \in [a,b] $ gilt $ \dot{\gamma}(t) \neq 0 $.
+			\end{itemize}
+		\end{defn}
+		
+		\begin{defn}[Bogenlänge]
+			Sei $ \gamma: [a,b] \to \C $ eine Kurve.
+			\begin{itemize}
+				\item Ist $\gamma$ glatt, so bezeichnen wir die Bogenlänge mit 
+				$$ L(\gamma) = \int_{a}^{b} |\dot{\gamma}(t)| \d t. $$
+				\item Ist $\gamma$ stückweise glatt, so bezeichnen wir die Bogenlänge mit 
+				$$ L(\gamma) = \sum\\
+				_{j=0}^{n-1} L(\gamma_j). $$
+			\end{itemize}
+		\end{defn}
+		
+		\begin{defn}[Kurvenintegral]
+			Sei $ \gamma: [a,b] \to \C $ eine glatte Kurve und sei $ f: D \to \C $ eine stetige Funktion mit $ \gamma(t) \in D \ \forall\, t \in [a,b] $. Dann ist 
+			\[ \int_\gamma f = \int_\gamma f(z) \d z := \int_{a}^{b} f(\gamma(t)) \cdot \dot{\gamma}(t) \d t \]	
+			das \emph{Kurvenintegral} von $f$ längs $\gamma$.\\
+			Falls $\gamma$ nur stückweise glatt ist, so existiert eine Zerlegung $ a=a_0 < a_1 < \dots < a_n=b $, sodass die Einschränkungen $ \alpha_j : [a_j,a_{j+1}] \to \C $ glatt sind. Dann ist 
+			\[ \int_\gamma f = \int_\gamma f(z) \d z := \sum_{j=0}^{n-1} \int_{\alpha_j} f(z) \d z. \]
+			Diese Definition hängt nicht von der Wahl der Zerlegung ab.
+		\end{defn}
+		
+		\begin{thm}
+			Das komplexe Kurvenintegral hat folgende Eigenschaften:
+			\begin{enumerate}
+				\item $ \int_\gamma f $ ist $\C$-linear in $f$.
+				\item Es gilt die "Standardabschätzung" $ |\int_\gamma f(z) \d z| \leq C \cdot L(\gamma) $ falls $ |f(z)| \leq C \ \forall\, z \in \gamma[a,b]. $
+				\item Das Kurvenintegral verallgemeinert das gewöhnliche Riemann-Integral: Sei $ \gamma: [a,b] \to \C, \gamma(t) = t $. Dann ist für alle $ t \in [a,b] \dot{\gamma}(t) = 1 $ und es gilt für eine stetige Abbildung $ f: [a,b] \to \C:$
+				$$ \int_\gamma f(z) \d z = \int_{a}^b f(t) \d t. $$
+				\item Transformationsinvarianz des Kurvenintegrals: Seien $ \gamma: [c,d] \to \C $ eine stückweise glatte Kurve, $ f: D \to \C $ stetig mit $ \gamma[c,d] \subseteq D \subseteq \C $, und $ \varphi: [a,b] \to [c,d] (a<b,c<d) $ eine stetig differenzierbare Funktion mit $ \varphi(a) = c, \varphi(b) = d $. Dann gilt $ \int_\gamma f = \int_{\gamma \circ \varphi} f $.
+			\end{enumerate}
+		\end{thm}
+		\marginnote{Vorlesung 8}
+		\begin{thm}
+			Sei $ f:[a,b] \to \C $ eine stetige Funktion. Setze $ F(t) = \int_{a}^b f(s) \d s, F: [a,b] \to \C $. Dann gilt $ F'(t) = f(t) \ \forall\, t \in [a,b]. $ Ist $ \Theta: [a,b] \to \C $ eine Funktion mit $ \Theta' = f $, dann gilt 
+			$$ \int_a^b f(s) \d s = \Theta(b) - \Theta(a). $$
+		\end{thm}
+		
+		\begin{cor}
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine stetige Funktion, die eine Stammfunktion $ F: D \to \C $ besitzt: $ F' = f $. Dann gilt für jede in $D$ verlaufende glatte Kurve $\gamma$:
+			\[ \int_\gamma f = F(\gamma(b)) - F(\gamma(a)). \]
+		\end{cor}
+		
+		\begin{cor}
+			Wenn eine stetige Funktion $ f: D \to \C $ eine Stammfunktion auf $D$ besitzt, so gilt $ \int_\gamma f = 0 $ für \emph{jede} in $D$ verlaufende geschlossene stückweise glatte Kurve.
+		\end{cor}
+		
+		\begin{thm}
+			Sei $\gamma$ eine konvexe, geschlossene, einfache, stückweise glatte Kurve. Sei $ f: D \to \C $ eine stetige Funktion für die gilt: Für alle Dreiecke $ S: [a,b] \to I(\gamma) $ ist $ \int_S f=0 $. Dann existiert eine holomorphe Funktion $ F: I(\gamma) \to \C $ mit $ F'(z) = f(z) \ \forall\, z \in I(\gamma) $.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $\gamma$ eine stückweise glatte Kurve und sei $ (f_n)_{n \in \N} $ eine Folge von stetigen Funktionen auf $S$, mit $ \im(\gamma) \subseteq S $ und so, dass $ \sum\limits_{n=0}^\infty f_n $ gleichmäßig gegen $ F:S \to \C $ konvergiert. Dann gilt
+			\[ \int_\gamma F = \int_\gamma \left( \sum_{n=0}^\infty f_n(z) \right) \d z = \sum_{n=0}^\infty \int_\gamma f_n. \]
+		\end{thm}
+	
+	
+	
+	\section{Der Cauchy'sche Integralsatz}\marginnote{Vorlesung 9}
+		
+		\begin{defn}[Bogenweise zusammenhängend]
+			Eine Menge $ D \subseteq \C $ heißt \emph{bogenweise zusammenhängend}, falls zu je zwei Punkten $ z,w \in D $ eine ganz in $D$ verlaufende, stückweise glatte Kurve existiert, welche $z$ mit $w$ verbindet: $ \gamma: [a,b] \to D $ mit $ \gamma(a) = z, \gamma(b)=w $.
+		\end{defn}
+		
+		\begin{rem}
+			Jede bogenweise zusammenhängende Menge $ D \subseteq \C $ ist zusammenhängend, denn sie ist wegzusammenhängend. Also ist jede lokal konstante Funktion auf $D$ konstant.
+		\end{rem}
+		
+		\begin{defn}[Gebiet]
+			Ein \emph{Gebiet} ist eine offene, bogenweise zusammenhängende Menge $ D \subseteq \C $. Der Begriff des Gebietes ist eine Verallgemeinerung des Begriffs des offenen Intervalls.
+		\end{defn}
+	
+		\subsection*{Zusammensetzung von Kurven}
+		Seien $\begin{aligned}
+			\gamma_1 : [a,b] \to \C\\
+			\gamma_2 : [b,c] \to \C
+		\end{aligned}$ zwei stückweise glatte Kurven mit der Eigenschaft $ \gamma_1(b) = \gamma_2(b) $. Dann wird durch 
+		\begin{align*}
+			\gamma_1 * \gamma_2 &: [a,c] \to \C\\
+			(\gamma_1 * \gamma_2)(t) &= \begin{cases}
+				\gamma_1 (t) \quad t \in [a,b]\\
+				\gamma_2 (t) \quad t \in [b,c]
+				\end{cases}
+		\end{align*}
+		eine stückweise glatte Kurve definiert, die \emph{Zusammensetzung} von $\gamma_1$ und $\gamma_2$.\\
+		Sei $ \gamma: [a,b] \to \C $ eine stückweise glatte Kurve. Dann ist die \emph{reziproke Kurve} $ \overbar{\gamma}: [a,b] \to \C, \overbar{\gamma}(t) = \gamma(a+b-t)$, also insbesondere $ \overbar{\gamma}(a) = \gamma(b), \overbar{\gamma}(b) = \gamma(a) $.
+		
+		Es gilt:
+		\begin{enumerate}[label={\roman*})]
+			\item $$\int_{\gamma_1 * \gamma_2} f = \int_{\gamma_1} f + \int_{\gamma_2} f $$ für $ \gamma_1: [a,b] \to \C, \gamma_2:[b,c]\to\C $ mit $ \gamma_1(b)=\gamma_2(b) $. Das folgt sofort aus der Definition der Integration entlang stückweise glatten Kurven.
+			\item \[ \int_{\overbar{\gamma}} f = -\int_\gamma f\ \text{für $\gamma: [a,b] \to \C$ stückweise glatt.} \]
+		\end{enumerate}
+		
+		\begin{thm}\label{2.2.4}
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ stetig. Dann sind folgende drei Aussagen äquivalent:
+			\begin{enumerate}[label={\roman*})]
+				\item $f$ besitzt eine Stammfunktion.
+				\item Das Integral von $f$ über jede in $D$ verlaufende geschlossene Kurve verschwindet.
+				\item Das Integral von $f$ über jede in $D$ verlaufende Kurve hängt nur vom Anfangs- und Endpunkt der Kurve ab.
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Dreiecksflächen und Dreieckswege}
+		Seien $ z_1,z_2,z_3 \in \C $ drei Punkte. Die von $ z_1,z_2,z_3 $ aufgespannte Dreiecksfläche ist die Menge
+		\[ \Delta_{z_1,z_2,z_3} = \Delta = \Bigl\{ z \in \C \ \bigm|\ z = t_1z_1 + t_2z_2 + t_3z_3,\ 0 \leq t_1,t_2,t_3,\ t_1+t_2+t_3 = 1 \Bigr\}. \]
+		$\Delta$ ist die konvexe Hülle der Punkte $ z_1,z_2,z_3 $. Mit je zwei Punkten $ w_1,w_2 \in \Delta $ liegt auch die gerade Verbindungsstrecke zwischen $w_1$ und $w_2$ in $\Delta$.\\
+		Der \emph{Dreiecksweg} $ <z_1,z_2,z_3> $ ist die geschlossene Kurve
+		\begin{align*}
+			\noalign{\centering $\gamma = \gamma_1 * \gamma_2 * \gamma_3: [0,3] \to \Delta$}
+			\gamma_1 &: [0,1] \to \Delta \qquad \gamma_1 (t) = z_1 + t(z_2-z_1)\\
+			\gamma_2 &: [1,2] \to \Delta \qquad \gamma_2 (t) = z_2 + (t-1)(z_3-z_2)\\
+			\gamma_3 &: [2,3] \to \Delta \qquad \gamma_3 (t) = z_3 + (t-2)(z_1 - z_3)
+		\end{align*}
+		$ <z_1,z_2,z_3> $ ist eine Parametrisierung des Randes von $\Delta$.
+			
+		\begin{thm}[Cauchy'scher Integralsatz für Dreieckswege]
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine holomorphe Funktion. Seien $z_1,z_2,z_3 \in D$, sodass $ \Delta_{z_1,z_2,z_3} \subseteq D $. Dann gilt
+			\[ \int_{<z_1,z_2,z_3>} f = 0. \]
+		\end{thm}
+		\marginnote{Vorlesung 10}
+		\begin{defn}[Sterngebiet]
+			Ein \emph{Sterngebiet} ist eine offene Teilmenge $ D \subseteq \C $ mit folgender Eigenschaft:\\
+			Es existiert ein Punkt $ z_* \in D $, sodass mit jedem Punkt $ z \in D $ die ganze Verbindungsstrecke zwischen $z_*$ und $z$ in $D$ enthalten sind, das heißt $ \{ z_* + t(z-z_*) \mid t \in [0,1] \} \subseteq D $. Der Punkt $z_*$ ist nicht eindeutig bestimmt. Er heißt ein \emph{Sternmittelpunkt} für das Sterngebiet.
+		\end{defn}
+		
+		\begin{rem}
+			Ein Sterngebiet ist automatisch bogenweise zusammenhängend.
+		\end{rem}
+		
+		\begin{exmp}
+			\begin{enumerate}[label = {\roman*})]
+				\item[]
+				\item Jedes konvexe Gebiet ist sternförmig. Dabei ist jeder Punkt des Gebietes ein Sternmittelpunkt.
+				\item $ \C \setminus \R_{\leq 0} $ ist ein Sterngebiet. Die Sternmittelpunkte sind genau alle Punkte $ x \in \R, x > 0 $.
+				\item Eine offene Kreisscheibe $ B_r(c) $,aus der man endlich viele Halbgeraden herausnimmt, deren rückwärtige Verlängerungen durch den Punkt $z_* \in B_r(c)$ gehen, ist ein Sterngebiet mit Sternmittelpunkt $z_*$.
+				\item $ D = \C \setminus \{0\} $ ist \emph{kein} Sterngebiet. Wäre $ z_* \in \C \setminus\{0\} $ ein Sternmittelpunkt, so läge das Geradenstück $ [-z_*,z_*] \in \C \setminus \{0\} \quad \lightning $
+				\item Nach der gleichen Begründung wie in iv) ist für $ 0<r<R $ das Ringgebiet $ R = \{ z \in \C \mid r < |z| < R \} $ kein Sterngebiet.
+				\item Seien $ 0<r<R, \xi \in \C $ mit $ |\xi|=1 $, $z_0 \in \C$ und $ \beta \in (0,\pi) $ mit $ \cos\left(\frac{\beta}{2}\right) > \frac{r}{R} $. Das Kreisringsegment $ \{ z = z_0 + \xi\rho e^{i\varphi} \mid r<\rho<R, 0<\varphi<\beta \} $ ist ein Sterngebiet.
+			\end{enumerate}
+		\end{exmp}
+		
+		\begin{thm}[Cauchy'scher Integralsatz für Sterngebiete, 1]
+			Sei $ f: D \to \C $ eine holomorphe Funktion auf einem Sterngebiet $D$. Dann verschwindet das Integral von $f$ längs jeder in D verlaufenden geschlossenen Kurve.
+		\end{thm}
+		
+		Mit Satz \ref{2.2.4} ist das äquivalent zu:
+		
+		\begin{thm}[Cauchy'scher Integralsatz für Sterngebiete, 2]\label{2.2.8}
+			Jede holomorphe Funktion auf einem Sterngebiet $D$ besitzt eine Stammfunktion auf $D$.
+		\end{thm}
+		
+		\begin{cor}
+			Jede in einem beliebigen Gebiet $ D \subseteq \C $ holomorphe Funktion besitzt wenigstens lokal eine Stammfunktion, das heißt zu jedem Punkt $ a \in D $ gibt es eine offene Umgebung $ U \subseteq D $ von $a$, sodass $ \bound{f}{U} $ eine Stammfunktion besitzt.
+		\end{cor}
+		
+		\begin{thm}
+			Sei $ f: D \to \C $ eine stetige Funktion in einem Sterngebiet $D$ mit Mittelpunkt $ z_* $. Wenn $f$ in allen Punkten $ z \neq z_*, (z \in D) $ komplex differenzierbar ist besitzt $f$ eine Stammfunktion auf $D$.
+		\end{thm}
+		\marginnote{Vorlesung 11}
+		\begin{defn}[Elementargebiet]
+			Ein Gebiet $ D \subseteq \C $ heißt \emph{Elementargebiet}, wenn jede auf $D$ definierte holomorphe Funktion eine Stammfunktion auf $D$ besitzt.
+		\end{defn}
+		
+		\begin{exmp}
+			Nach Satz \ref{2.2.8} ist ein Sterngebiet ein Elementargebiet.
+		\end{exmp}
+		
+		\begin{thm}\label{2.2.14}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung auf einem Elementargebiet $D$ mit den Eigenschaften
+			\begin{enumerate}[label={\roman*})]
+				\item $f'$ ist ebenfalls holomorph.
+				\item $ f(z) \neq 0 \ \forall z \in D $.
+			\end{enumerate}
+			Dann existiert eine holomorphe Abbildung $ h: D \to \C $ mit $ f(z) = \exp(h(z)) \ \forall z \in D. $
+		\end{thm}
+		
+		\begin{rem}
+			In der Situation von \ref{2.2.14} ist die Abbildung $h$ ein holomorpher Zweig des Logarithmus von $f$.
+		\end{rem}
+		
+		\begin{cor}
+			In der Situation von \ref{2.2.14} existiert für jedes $ n \in \N $ eine holomorphe Abbildung $ H: D \to \C $ mit $ H^n = f $.
+		\end{cor}
+		
+		\begin{exmp}
+			Die Funktion $ f: \C \setminus\{0\} \to \C,\ z \mapsto \frac{1}{z} $ hat keine Stammfunktion auf $ \C \setminus\{0\} $. Also ist $ \C\setminus\{0\} $ kein Elementargebiet.
+		\end{exmp}
+		
+		\subsection*{Eigenschaften von Elementargebieten:}
+		\begin{enumerate}
+			\item Seien $ D,D' $ zwei Elementargebiete. Wenn $ D \cap D' $ zusammenhängend und nicht leer ist, so ist auch $ D \cup D' $ ein Elementargebiet.
+			\item Daraus folgt: geschlitzte Kreisringe sind Elementargebiete.
+			\item Sei $ D_1 \subseteq D_2 \subseteq D_3 \subseteq \dots $ eine aufsteigende Folge von Elementargebieten. Dann ist auch die Vereinigung $ D = \bigcup_{n=1}^\infty D_n $ ein Elementargebiet.
+		\end{enumerate}
+		
+		\begin{prop}
+			Sei $ D \subseteq \C $ ein Elementargebiet und $ \varphi: D \to D' $ eine konforme Abbildung. Sei zudem die Ableitung von $\varphi$ auch holomorph. Dann ist $D'$ ein Elementargebiet.
+		\end{prop}
+		
+	
+	\section{Die Cauchy'sche Integralformel}\marginnote{Vorlesung 12}
+		
+		\begin{thm}
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine holomorphe Funktion. Seien weiterhin $ z_0 \in D $ und $ r > 0 $, sodass $ \overbar{B_r(z_0)} \subseteq D. $ Dann gilt für jeden Punkt $ z \in B_r(z_0) $:
+			\[ f(z) = \frac{1}{2\pi i} \int_\gamma \frac{f(\xi)}{\xi - z} \d \xi \]
+			für die Kurve $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it}. $
+		\end{thm}
+		
+		\begin{rem}
+			\begin{enumerate}[label = {\alph*})]
+				\item Wir sagen, dass $\gamma$ die Kreislinie mit Mittelpunkt $z_0$ und Radius $r$ ist. Es ist eine Parametrisierung des Kreises um $z_0$ mit Radius $r$, mit konstanter Geschwindigkeit $r$.
+				\item Wenn über eine Kreislinie $\gamma$ integriert wird, schreiben wir 
+				$$ \varointctrclockwise_\gamma\ \text{für } \int_\gamma,\ \text{oder auch } \varointctrclockwise_{|\zeta - z_0|=r}. $$
+			\end{enumerate}
+		\end{rem}
+		
+		\begin{lem}
+			Es gilt für $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it} $: $ \varointctrclockwise_\gamma \frac{\d \zeta}{\zeta - a} = 2\pi i $ für alle $a$ mit $ |a-z_0| < r. $ $a$ liegt im Inneren des Kreises um $z_0$ mit Radius $r$.
+		\end{lem}
+		
+		\begin{cor}["Mittelwertgleichung"]
+			Seien $ f: D \to \C $ holomorph, $ z_0 \in D $ und $ r > 0 $, sodass $ \overbar{B_r(z_0)} \subseteq D $. Dann gilt
+			\begin{align*}
+				f(z_0) &= \frac{1}{2\pi i} \int_\gamma \frac{f(\xi)}{\xi - z_0} \d \xi\\
+				\noalign{\centering für $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it} $, also}
+				f(z_0) &= \frac{1}{2\pi i} \int_0^{2\pi} \frac{rie^{it} f(z_0+re^{it})}{re^{it}} \d t\\
+				&= \frac{1}{2\pi} \int_0^{2\pi} f(z_0+re^{it}) \d t.
+			\end{align*}
+		\end{cor}
+		
+		\begin{rem}[Cauchy'sche Integralformel]
+			Die Werte einer holomorphen Funktion im Inneren einer Kreisscheibe können durch die Werte der Funktion auf dem Rand berechnet werden.
+		\end{rem}
+		
+		\begin{rem}[Leibniz'sche Regel]
+			Sei $ f: [a,b]\times D \to \C $ stetig, sodass $ \forall t \in [a,b]\ f_t: D \to \C,\ f_t(z) = f(t,z) $ holomorph ist. Die Ableitung $ \frac{\del f}{\del z}: [a,b]\times D \to \C $ sei auch stetig. Dann ist die Funktion $ g: D \to \C,\ g(z) = \int_a^b f(t,z) \d t $ holomorph, und es gilt
+			\[ g'(z) = \int_a^b \frac{\del f}{\del z}(t,z)\d t. \]
+		\end{rem}
+		\marginnote{Vorlesung 13}
+		\begin{thm}[Verallgemeinerte Cauchy'sche Integralformel]\label{2.3.6}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Dann ist $f$ beliebig oft komplex differenzierbar. Jede Ableitung ist wieder holomorph.\\
+			Sei $ z_0 \in D $ und $r>0$, sodass $ \overbar{B_r(z_0)} \subseteq D $. $ \forall\,n \in \N,\ \forall\, z \in B_r(z_0) $ gilt:
+			\[ f^{(n)}(z) = \frac{n!}{2 \pi i} \varointctrclockwise_\gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}} \d \zeta, \]
+			wobei $ \gamma: [0,2\pi] \to \C,\ \gamma(t) = z_0 + re^{it}. $
+		\end{thm}
+		
+		\begin{thm}[Satz von Morera]
+			Sei $ D \subset \C $ offen und $f: D \to \C$ stetig. Für jeden Dreiecksweg $ <z_1,z_2,z_3> $, für den die jeweilige Dreiecksfläche $\Delta$ ganz in $D$ enthalten ist, sei
+			\[ \int_{<z_1,z_2,z_3>} f(\zeta) \d\zeta = 0. \]
+			Dann ist $f$ holomorph.
+		\end{thm}
+		
+		\begin{thm}[Satz von Liouville]
+			Jede beschränkte ganze Funktion $f: \C \to \C$ ist konstant.
+		\end{thm}
+		
+		\begin{thm}[Fundamentalsatz der Algebra]
+			Jedes nichtkonstante komplexe Polynom besitzt eine Nullstelle.
+		\end{thm}
+	
+		\begin{cor}
+			Jedes Polynom $ P(z) = \sum_{\nu=0}^{n} a_\nu z^\nu,\ a_\nu \in \C, $ vom Grad $ n \geq 1 $ lässt sich als Produkt von $n$ Linearfaktoren und einer Konstante $ C \in \C \setminus \{0\} $ schreiben, d.h. 
+			$$ P(z) = C \cdot \prod_{\nu = 1}^n (z-\alpha_\nu). $$
+			Dabei sind die Zahlen $ \alpha_1,\dotsc,\alpha_n \in \C $ bis auf ihre Reihenfolge eindeutig bestimmt und $ C = a_n. $
+		\end{cor}
+	
+	
+	\section{Der Potenzreihenentwicklungssatz}\marginnote{Vorlesung 14}
+		
+		\begin{thm}\label{2.4.1}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Sei $ a \in D $ und $r>0$, sodass $ B_r(a) \subseteq D $. Dann gilt $ f(z) = \sum_{n=0}^\infty a_n(z-a)^n\ \forall \, z \in B_r(a), $ wobei $ a_n = \frac{f^{(n)}(a)}{n!}\ \forall\, n \in \N. $
+		\end{thm}
+		
+		\begin{rem}
+			\begin{enumerate}
+				\item[]
+				\item Die Formeln $ a_n = \frac{f^{(n)}(a)}{n!} $ folgen aus der Potenzreihenentwicklung; für $ f(z) = \sum_{n=0}^\infty a_n(z-a)^n $ folgt aus Satz \ref{thm_series}. dass die Ableitungen an $a$ $ f^{(k)}(a) = k!a_k $ erfüllen, also $ a_k = \frac{f^{(k)(a)}}{k!}\ \forall\, k \in \N. $
+				\item Für die Koeffizienten $a_n$ gilt nach Satz \ref{2.3.6} 
+				$$ a_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2 \pi i} \int_{|\zeta-a|=\rho} \frac{f(\zeta)}{(\zeta-a)^{n+1}} \d \zeta $$
+				für $ 0 < \rho < R $.
+				\item Der Satz sagt, dass holomorphe Abbildungen genau die Funktionen sind, welche sich lokal in Potenzreihen mit positivem Konvergenzradius entwickeln lassen! Daher sagt man auch "analytisch" für "holomorph".
+				\item Die Koeffizienten $a_n$ sind die \emph{Taylorkoeffizienten von $f$ zur Stelle $a$}, und die Potenzreihe ist die \emph{Taylorreihe von $f$ zur Stelle $a$}.
+				\item Sei $ f: \C \to \C $ eine ganze Abbildung. Dann ist nach Satz \ref{2.4.1} $ f(z) = \sum_{n=0}^\infty \frac{f^{(n)}(0)}{n!} z^n\ \forall z \in \C, $ oder allgemeiner:
+				\[ f(z) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (z-a)^n \]
+				für $a \in \C$ und alle $z \in \C$.
+			\end{enumerate}
+		\end{rem}
+	
+	\section[Weitere Eigenschaften]{Weitere Eigenschaften holomorpher Abbildungen}\marginnote{Vorlesung 15}
+		
+		\begin{thm}[Weierstraß, 1841]\label{2.5.1}
+			Seien $ f_0,f_1,f_2,\dots: D \to \C $ holomorphe Abbildungen. Die Folge $ (f_n)_{n \in  \N} $ konvergiere lokal gleichmäßig gegen $f: D \to \C$. Dann ist $f$ holomorph und $ (f'_n)_{n \in \N} $ konvergiert gleichmäßig gegen $f'$.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $f: D \to \C$ eine von der Nullfunktion verschiedene holomorphe Funktion, $D \subseteq \C$ ein Gebiet. Die Menge $N(f) = \{z \in D \mid f(z) = 0\}$ ist diskret in $D$, das heißt, $N(f)$ hat keinen Häufungspunkt in $D$. 
+		\end{thm}
+		
+		\begin{cor}[Identitätssatz für holomorphe Funktionen]
+			Seien $f,g: D \to \C$ zwei holomorphe Funktionen auf einem Gebiet $ D \neq \emptyset $. Dann sind die folgenden Aussagen äquivalent:
+			\begin{enumerate}[label={\roman*})]
+				\item $f=g$
+				\item Die Menge $ \{z \in D \mid f(z)=g(z)\} $ hat einen Häufungspunkt in $D$.
+				\item Es gibt einen Punkt $z_0 \in D$ mit $ f^{(n)}(z_0) = g^{(n)}(z_0) $ für alle $n \in \N$.
+			\end{enumerate}
+		\end{cor}
+		
+		\begin{cor}[Eindeutigkeit der holomorphen Fortsetzung]
+			Sei $D \subseteq \C$ ein Gebiet und $M \subseteq D$ eine Menge mit mindestens einem Häufungspunkt in $D$ und $f: M \to \C$ eine Funktion. Existiert eine holomorphe Funktion $\tilde{f}: D \to \C$, welche $f$ fortsetzt, also $\tilde{f}(z) = f(z) \ \forall\, z \in M$, dann ist $\tilde{f}$ eindeutig bestimmt.
+		\end{cor}
+		
+		\begin{prop}
+			Sei $I \subseteq \R $ ein nicht-leeres Intervall. Eine Funktion $ f: I \to \C $ besitzt genau dann eine holomorphe Fortsetzung auf einem Gebiet $ D \subseteq \C $ mit $ I \subset D $, wenn $f$ reell-analytisch ist.
+		\end{prop}
+		
+		Für ein offenes $D \subseteq \C$ definieren wir nun $ \O(D) = \{ f: D \to \C \mid f $ holomorph$ \} $. Dann ist $ \O(D) $ offensichtlich ein kommutativer Ring mit $1$.
+			
+		\begin{prop}
+			Sei $D \subseteq \C$ ein Gebiet. Dann ist $\O(D)$ ein Integritätsring, also nullteilerfrei.
+		\end{prop}
+		
+		\begin{cor}
+			Im Umkehrschluss gilt, dass falls $\O(D)$ ein Integritätsring ist, $D$ ein Gebiet sein muss.
+		\end{cor}
+		
+	
+	\section{Das Maximumsprinzip}	\marginnote{Vorlesung 16}
+		
+		\begin{thm}[Satz von der Gebietstreue]\label{2.6.1}
+			Ist $f$ eine nichtkonstante holomorphe Funktion auf einem Gebiet $D \subseteq \C$, dann ist das Bild $f(D)$ offen und zusammenhängend, also ein Gebiet.
+		\end{thm}
+		
+		\begin{prop}
+			\begin{itemize}
+				\item[]
+				\item Jede nichtkonstante holomorphe Abbildung $f: D \to \C$ mit $f(0) = 0$ ist in einer kleinen offenen Umgebung von $0$ die Zusammensetzung einer konformen Abbildung mit einer $n$-ten Potenz.
+				\item Die Winkel im Nullpunkt werden ver-$n$-facht.
+				\item Falls $f$ injektiv in einer Umgebung von $a \in D$ ist, so ist die Ableitung $f'$ in einer Umgebung von $a$ von $0$ verschieden.
+			\end{itemize}
+		\end{prop}
+		
+		\begin{cor}
+			Sei $ f: D \to \C $ holomorph auf einem Gebiet $D \subseteq \C$. Gilt $ \Re(f)=c $ oder $ \Im(f) = c $ oder $ |f|=c,\ c \in \R $, dann ist $f$ selbst konstant.
+		\end{cor}
+		
+		\begin{thm}[Das Maximumsprinzip]
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ holomorph. Existiert ein $a \in D$ mit $ |f(a)| \geq |f(z)| \ \forall\, z \in D $, dann ist $f$ konstant auf $D$.
+		\end{thm}
+		
+		\begin{rem}
+			\begin{itemize}
+				\item[]
+				\item Wir sehen im Beweis, dass es reicht, wenn wir voraussetzen, dass $|f|$ ein lokales Maximum besitzt. Wegen des Identitätssatzes reicht es, $f$ nur lokal zu betrachten.
+				\item Sei $ K \subset D $ eine kompakte Teilmenge des Gebietes $D$ und $f : D \to \C$ holomorph. Dann hat $ \bound{f}{K}: D \to \C $ ein Betragsmaximum, da $f$ stetig ist. Aus Satz \ref{2.6.1} folgt dann, dass dieses Betragsmaximum auf dem Rand von $K$ angenommen werden muss.
+			\end{itemize}
+		\end{rem}
+		
+		\begin{cor}[Minimumsprinzip]
+			Sei $ D \subseteq \C $ ein Gebiet und $ f: D \to \C $ nicht-konstant und holomorph. Wenn $ f $ in $ a \in D $ ein (lokales) Betragsminimum besitzt, dann ist $f(a) = 0$.
+		\end{cor}
+		
+		\begin{thm}[Schwarz'sches Lemma]
+			Sei $ f: B_1(0) \to B_1(0) $ eine holomorphe Abbildung mit $f(0)=0$. Dann gilt $ |f(z)| \leq |z|\ \forall\, z \in B_1(0) $. Daraus folgt auch $ |f'(0)| \leq 1 $.
+		\end{thm}
+		
+		\begin{lem}
+			Sei $ \varphi: B_1(0) \to B_1(0) $ eine bijektive Abbildung, sodass $ \varphi $ und $ \varphi^{-1} $ holomorph sind. Falls $ \varphi(0)=0 $ gilt, dann existiert eine komplexe Zahl $ \xi \in \C $ mit $ |\xi|=1 $, sodass $ \varphi(z) = \xi z \ \forall\, z \in B_1(0). $
+		\end{lem}
+		
+		\begin{lem}
+			Sei $ a \in B_1(0) $. Dann ist $ \varphi_a: B_1(0) \to B_1(0) $ definiert durch $ \varphi_a(z) = \frac{z-a}{\overbar{a}z-1} $ bijektiv und holomorph mit 
+			\begin{enumerate}[label={\roman*})]
+				\item $\varphi_a(a)=0$
+				\item $ \varphi_a(0)=a $
+				\item $ \varphi_a^{-1} = \varphi_a. $
+			\end{enumerate}
+		\end{lem}
+		
+		\begin{thm}
+			Sei $ \varphi: B_1(0) \to B_1(0) $ eine konforme Abbildung. Dann existieren $ \xi \in \C,\ |\xi| = 1 $ und $ a \in B_1(0) $ mit $ \varphi(z) = \xi \frac{z-a}{\overbar{a}z-1}\ \forall\, z \in B_1(0) $.
+		\end{thm}
+		
+
+
+
+\chapter{Singularitäten holomorpher Abbildungen}\marginnote{Vorlesung 17}
+	
+	\section{Außerwesentliche Singularitäten}
+		
+		\begin{defn}[Isolierte Singularität]
+			Sei $ D \subset \C $ offen. Sei $ f: D \to \C $ holomorph. Sei $ a \in \C $ ein Punkt, der nicht zu $D$ gehört, aber so, dass ein $r>0$ existiert mit $ \underbrace{B_r(a) \setminus \{a\}}_{\dot{B_r(a)}} \subseteq D $. Der Punkt $a$ ist dann eine \emph{isolierte Singularität} von $f$.
+		\end{defn}
+		
+		\begin{defn}[Hebbare Singularität]
+			Eine Singularität $a$ einer holomorphen Abbildung $f: D \to \C$ heißt \emph{hebbar}, falls sich $f$ auf ganz $D \cup \{a\}$ holomorph fortsetzen lässt: $ \exists\, \tilde{f}: D \cup \{a\} \to \C $ holomorph mit $ \bound{\tilde{f}}{D} = f. $
+		\end{defn}
+		
+		\begin{thm}[Riemannscher Hebbarkeitssatz]
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Sei $a \in \C$ eine Singularität von $f$. Dann ist die Singularität $a$ genau dann hebbar, wenn es eine punktierte Umgebung $ \dot{B_r(a)} \subset D $ von $a$ gibt, in der $f$ beschränkt ist.
+		\end{thm}
+		
+		\begin{defn}[Außerwesentliche Singularität, Polstelle]
+			\begin{itemize}
+				\item[]
+				\item Eine Singularität $a$ einer holomorphen Abbildung $ f: D \to \C $ heißt \emph{außerwesentlich}, falls es eine ganze Zahl $m \in \Z$ gibt, sodass $ g: D \to \C,\ g(z) = (z-a)^mf(z) $ eine hebbare Singularität in $a$ hat.
+				\item Ist $a$ nicht hebbar als Singularität von $f$, so ist $a$ ein \emph{Pol} oder eine \emph{Polstelle} von $f$.
+			\end{itemize}
+		\end{defn}
+		
+		\begin{prop}\label{3.1.5}
+			Sei $a \in \C$ eine außerwesentliche Singularität einer holomorphen Abbildung $ f: D \to \C $. Wenn $f$ in keiner Umgebung von $a$ identisch verschwindet, so existiert eine kleinste ganze Zahl $k \in \Z$, sodass $ z \mapsto (z-a)^kf(z) $ eine hebbare Singularität hat.
+		\end{prop}
+		
+		\begin{defn}[Ordnung]
+			Sei $ f: D \to \C $ mit einer außerwesentlichen Singularität $ a \in \C $ wie in \ref{3.1.5}. Sei $k$ die Zahl wie in \ref{3.1.5}. Dann ist $ -k =: \ord{f}{a} $ die Ordnung von $f$ in $a$.
+		\end{defn}
+		
+		\begin{prop}
+			Sei $a$ eine außerwesentliche Singularität einer holomorphen Funktion $f: D \to \C$. Dann gilt, falls $f$ in keiner Umgebung von $a$ identisch verschwindet:
+			\begin{enumerate}[label={\roman*})]
+				\item $\begin{aligned}[t]
+					\ord{f}{a} \geq 0 &\iff a\ \text{ist hebbar, dabei gilt:}\\
+					\ord{f}{a} = 0 &\iff a\ \text{ist hebbar und } f(a) \neq 0\\
+					\ord{f}{a} > 0 &\iff a\ \text{ist hebbar und } f(a) = 0
+				\end{aligned}$
+				\item $ \ord{f}{a} < 0 \iff a $ ist ein Pol
+			\end{enumerate}
+		\end{prop}
+		
+		\begin{prop}
+			Sei $ a \in \C $ eine außerwesentliche Singularität von zwei holomorphen Abbildungen $ f,g: D \to \C $. Dann ist auch $a$ eine außerwesentliche Singularität der Funktion $ \alpha f + \beta g,\ f \cdot g, $ und $ \frac{f}{g} $, falls $g(z) \neq 0 \ \forall\, z \in D,\ \alpha,\beta \in \C^*$.	Außerdem gilt
+			\begin{align*}
+				\ord{\alpha f + \beta g}{a} &\geq \min\{\ord{f}{a},\ord{g}{a}\}\\
+				\ord{f\cdot g}{a} &= \ord{f}{a} + \ord{g}{a}\\
+				\ord{\frac{f}{g}}{a} &= \ord{f}{a} - \ord{g}{a}
+			\end{align*}
+		\end{prop}
+		
+	
+	\section{Wesentliche Singularitäten}\marginnote{Vorlesung 18}
+		
+		\begin{prop}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung und sei $ a \in \C $ eine Polstelle von $f$. Dann gilt $ \lim\limits_{z\to a} |f(z)| = \infty. $
+		\end{prop}
+		
+		\begin{defn}[Wesentliche Singularität]
+			Eine Singularität $a \in \C$ einer holomorphen Funktion $f: D \to \C$ heißt \emph{wesentlich}, falls sie nicht außerwesentlich ist.
+		\end{defn}
+		
+		\begin{thm}[Satz von Casorati-Weierstraß]
+			Sei $a$ eine wesentliche Singularität der holomorphen Abbildung $f: D \to \C$. Sei $ \dot{B_r(a)} $ eine beliebige punktierte Umgebung von $a$. Dann ist das Bild $ f\left(\dot{B_r(a)} \cap D\right) $ dicht in $\C$, das heißt für alle $b \in \C$ und $\epsilon > 0$ gilt $ f\left( \dot{B_r(a)} \cap D\right) \cap B_\epsilon(b) \neq \emptyset. $
+		\end{thm}
+		
+		\begin{thm}[Klassifikation der Singularitäten durch das Abbildungsverhalten]
+			Sei $a$ eine isolierte Singularität der holomorphen Abbildung $f: D \to \C$. Die Singularität $a \in \C$ ist
+			\begin{enumerate}[label={\roman*})]
+				\item hebbar $\iff f$ ist in einer punktierten Umgebung von $a$ beschränkt
+				\item ein Pol $\iff \lim\limits_{z\to a}|f(z)| = \infty$
+				\item wesentlich $\iff$ in jeder punktierten Umgebung von $a$ kommt $f$ jedem beliebigen Wert $b \in \C$ beliebig nahe
+			\end{enumerate}
+		\end{thm}
+	
+	
+	\section{Laurentzerlegung}\marginnote{Vorlesung 19}
+		
+		Sei im Folgenden $ 0 \leq r < R \leq \infty $. Betrachte das Ringgebiet $$ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $$
+		und z.B. $ g: B_R(0) \to \C,\ h: B_{\frac{1}{r}}(0) \to \R. $ Dann ist $ \C \setminus \overbar{B_r(0)} \to \C, z \mapsto h\left(\frac{1}{z}\right) $ holomorph. Setze $ f: \mathcal{R} \to \C,\ f(z) = g(z) + h\left(\frac{1}{z}\right). $ $f$ ist holomorph auf $\mathcal{R}$. Der folgende Satz zeigt, dass jede holomorphe Funktion auf $ \mathcal{R} $ sich in dieser Weise zerlegen lässt.
+		
+		\begin{thm}[Laurentzerlegung]\label{3.3.1}
+			Sei $ 0 \leq r < R \leq \infty $. Jede auf dem Ringgebiet $ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $ holomorphe Abbildung kann geschrieben werden als
+			\begin{equation}\label{laurent}
+			f(z) = g(z) + h\left(\frac{1}{z}\right)
+			\end{equation}
+			mit $ g: B_R(0) \to \C,\ h: B_{\frac{1}{r}}(0) \to \C $ holomorph. Fordert man noch $h(0) = 0$, so ist diese Zerlegung eindeutig bestimmt.
+		\end{thm}
+		
+		\begin{defn}[Hauptteil, Nebenteil, Laurentzerlegung]
+			In der Situation von Satz \ref{3.3.1} ist $ z \to h\left(\frac{1}{z}\right) $ der \emph{Hauptteil} der Funktion $f$. $g$ ist der \emph{Nebenteil} der Funktion $f$ und \ref{laurent} ist die \emph{Laurentzerlegung} der Funktion $f$.
+		\end{defn}
+		
+		\begin{lem}
+			Seien $ 0 \leq r < R \leq \infty $, und sei $ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $. Sei $ G: \mathcal{R} \to \C $ eine holomorphe Abbildung. Sind $ P, \rho \in \R $, sodass $ r < \rho < P < R $, dann gilt 
+			\[ \varointctrclockwise_{|\zeta| = \rho} G(\zeta) \d\zeta = \varointctrclockwise_{|\zeta| = P} G(\zeta)\d\zeta. \]
+		\end{lem}
+		
+		\begin{thm}[Laurententwicklung]\label{3.3.4}
+			Die Funktion $ f: \mathcal{R} \to \C,\ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $ sei holomorph. Dann lässt sich $f$ in eine Laurentreihe entwickeln, welche auf $\mathcal{R}$ lokal normal konvergiert: 
+			\[ f(z) = \sum_{n \in \Z} a_n (z-a)^n \qquad \forall\, z \in \mathcal{R}. \]
+			Außerdem gilt
+			\begin{enumerate}[label={\roman*})]
+				\item Diese Laurententwicklung ist eindeutig bestimmt:
+				\[ a_n = \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} \frac{f(\zeta)}{(\zeta - a)^{n+1}}\d\zeta \qquad \forall\, n \in \Z, r < \rho < R \]
+				\item Sei $ M_\rho (f) = \sup \left\{|f(\zeta)| \mid |\zeta-a| = \rho \right\} $ für $ r < \rho < R. $ Dann gilt 
+				\[ |a_n| \leq \frac{M_\rho(f)}{\rho^n}, \qquad n \in \Z \]
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Laurentreihen und Singularitäten holomorpher Abbildungen}\marginnote{Vorlesung 20}
+		
+		Sei $ f: D \to \C $ eine holomorphe Abbildung und $a \in \C$ eine Singularität von $f$. Dann ist $f$ für ein geeignetes $ r > 0$ holomorph auf $ \dot{B_r(a)} \subset D $. Nach Satz \ref{3.3.4} besitzt $f$ eine Laurententwicklung auf $ \dot{B_r(a)} $
+		\[ f(z) = \sum_{n \in \Z} a_n(z-a)^n\qquad \forall\, z \in \dot{B_r(a)}. \] 
+		
+		\begin{thm}\label{3.3.5}
+			In der oben geschilderten Situation ist die Singularität $a$ von $f$
+			\begin{enumerate}[label={\roman*})]
+				\item \emph{hebbar} $\iff a_n = 0 \ \forall\, n<0$,
+				\item ein \emph{Pol} der Ordnung $k \in \N \iff a_{-k} \neq 0 $ und $a_n=0 \ \forall\, n < -k$,
+				\item \emph{wesentlich} $\iff a_n \neq 0$ für unendlich viele $n < 0$.
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Komplexe Fourierreihen}
+		
+		Seien $ a<b $ und betrachte $ D = \{z \in \C \mid a < \Im(z) < b\}. $ Sei $ f: D \to \C $ holomorph, sodass $ \omega \in \R^* $ mit $ f(z + \omega) = f(z) $ für $z \in D$, $f$ hat also die reelle Periode $\omega$.\\
+		Sei $g: \tilde{D} \to \C,\ g(z) = f(\omega z)$ für $\tilde{D} = \begin{cases}
+		\left\{ z \in \C \mid \frac{a}{\omega} < \Im(z) < \frac{b}{\omega} \right\}, \quad &\omega > 0\\
+		\left\{ z \in \C \mid \frac{b}{\omega} < \Im(z) < \frac{a}{\omega} \right\}, \quad &\omega < 0.
+		\end{cases}$\\
+		Es gilt $ g(z+1) = = f(\omega(z+1)) = f(\omega z + \omega) = f(\omega z) = g(z)\ \forall \,z \in \tilde{D} $, also hat $g$ die Periode $1 \in \R$. O.B.d.A  habe also $f$ die Periode 1.
+		
+		\begin{lem}
+			\begin{enumerate}[label={\roman*})]
+				\item Die Abbildung $ \phi: \C\to \C, z \mapsto e^{2\pi iz} $ bildet $D$ auf den Kreisring $ \mathcal{R} = \left\{ z \in \C \mid \underbrace{e^{-2\pi b}}_{=r} < |z| < \underbrace{e^{-2\pi a}}_{=R} \right\} $ ab.
+				\item Für $ a = - \infty $ ist $ \mathcal{R} = \{z \in \C \mid r < |z| < \infty\} $ und für $ b = \infty $ ist $ \mathcal{R} = \{ z\in \C \mid 0 < |z| < R\}. $
+			\end{enumerate}
+		\end{lem}
+		
+		Setze $ g: \mathcal{R} \to \C,\ w \mapsto f(z) $ für $ w = e^{2\pi iz} $.
+		\begin{itemize}
+			\item $g$ ist wohldefiniert, denn $ \begin{aligned}[t]
+			&e^{2\pi iz} = e^{2\pi iz'} \\
+			&\iff z - z' \in \Z \\
+			&\iff f(z') = f(z' + z-z') = f(z).
+			\end{aligned} $
+			\item $g$ ist holomorph: Es gilt $ \phi'(z) = 2\pi i e^{2\pi iz} \neq 0\ \forall\, z \in \C. $
+		\end{itemize}
+		Aus dem Satz für implizite Funktionen folgt, dass $ \forall\, z \in D $ eine offene Umgebung $ D_0 \subseteq D $ existiert, sodass $ \phi: D_0 \to \phi(D_0) \subseteq \mathcal{R} $ konform ist mit $ \phi^{-1} = \phi(D_0) \to D_0 $ holomorph.\\
+		Sei also $ w \in \mathcal{R}. $ Wähle $ z \in D $ mit $ \phi(z) = e^{2\pi iz} = w, $ und wähle $D_0$ wie oben. Dann ist
+		$$\begin{tikzcd}
+			\bound{g}{\phi(D_0)}:\phi(D_0)\arrow{rr}\arrow{ddr}{\phi^{-1}} & & \C\\
+			&&\\
+			&D_0 \arrow{uur}{f}
+		\end{tikzcd}$$
+		holomorph.\\
+		Die Funktion $ g: \mathcal{R} \to \C $ lässt sich dann in eine Laurentreihe entwickeln:
+		\begin{align*}
+			g(z) &= \sum_{n \in \Z} a_nz^n\qquad \text{für } z \in \mathcal{R},\ \text{mit}\\
+			a_n &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta| = \rho} \frac{g(\zeta)}{\zeta^{n+1}}\d\zeta\\
+			&= \frac{1}{2\pi i} \int_0^1 \frac{2\pi i \rho e^{2\pi it} \cdot g\left(\rho e^{2\pi it}\right)}{\rho^{n+1} e^{2\pi i(n+1)t}} \d t\\
+			&= \int_0^1 \frac{g\left( \rho e^{2\pi it} \right)}{\rho^n e^{2\pi int}} \d t \quad \text{für } r<\rho<R,\ \forall\, n \in \Z
+		\end{align*}
+		
+		\begin{thm}[Fourierentwicklung]
+			Sei $ D = \{ z \in \C \mid  a < \Im(z) < b \} $ für $ -\infty \leq a < b \leq \infty $. Sei $ f: D \to \C $ holomorph mit der Periode 1, das heißt $ f(z) = f(z+1)\ \forall \, z \in D. $ Dann lässt sich $f$ in eine in $D$ lokal normal konvergente komplexe \emph{Fourierreihe} 
+			\[ f(z) = \sum_{n \in \Z} a_n e^{2\pi inz} \]
+			entwickeln. Die \emph{Fourierkoeffizienten} $a_n$ sind eindeutig bestimmt: für jedes $ y \in (a,b) $ gilt
+			\[ a_n = \int_0^1 f(x+iy)e^{-2\pi in(x+iy)} \d x. \]
+		\end{thm}
+	
+	
+	\section{Der Residuensatz}\marginnote{Vorlesung 21}
+		
+		\begin{thm}
+			Sei $\gamma: [a,b] \to \C$ eine geschlossene, stückweise glatte Kurve. Sei $ \Omega := \C \setminus \gamma[a,b] $. Sei 
+			$$ \Ind{\gamma}: \Omega \to \C,\ z \mapsto \frac{1}{2\pi i} \int_\gamma \frac{1}{\zeta- z}\d\zeta. $$
+			Dann gilt:
+			\begin{enumerate}[label={\alph*})]
+				\item $\Ind{\gamma}$ ist stetig und nimmt nur Werte in $\Z$ an. Also ist $\Ind{\gamma}$ auf jeder Zusammenhangskomponente von $\Omega$ konstant.
+				\item Auf der unbeschränkten Zusammenhangskomponente von $\Omega$ ist $\Ind{\gamma} = 0$.
+			\end{enumerate}
+		\end{thm}
+		
+		Insbesondere gilt für $ \gamma:[0,1] \to \C,\ t \mapsto z_0 + re^{2\pi ikt} $ mit $ z_0 \in \C,\ k \in \Z\setminus\{0\} $
+		\[ \Ind{\gamma}(z) = \frac{1}{2\pi i} \int_\gamma \frac{1}{\zeta- z}\d\zeta = \begin{cases}
+		0 \quad &|z-z_0| > r,\\
+		k \quad &|z-z_0| < r.
+		\end{cases} \]
+			
+		\begin{defn}[Umlaufzahl]
+			Sei $\gamma$ eine geschlossene, stückweise glatte Kurve, deren Bild den Punkt $z \in \C$ nicht enthält. Dann ist $\Ind{\gamma}$ die \emph{Umlaufzahl} von $\gamma$ bezüglich $z$.
+		\end{defn}
+		
+		\begin{defn}[Residuum]
+			Sei $ f: D \to \C,\ D \subset \C $ offen, eine holomorphe Abbildung und $a \in \C$ eine Singularität von $f$. Sei 
+			\[ f(z) = \sum_{n \in \Z} a_n(z-a)^n,\quad z \in \dot{B_r(a)} \]
+			die Laurententwicklung von $f$ auf $ \dot{B_r(a)} \subseteq D $. Der Koeffizient
+			\[ a_{-1} = \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} f(\zeta)\d\zeta, \quad 0 < \rho < r \]
+			dieser Reihe heißt das \emph{Residuum} von $f$ an der Stelle $a$ und wird $\Res{f}{a}$ geschrieben.
+		\end{defn}
+		
+		\begin{exmp*}
+			\begin{enumerate}[label={\alph*})]
+				\item[]
+				\item Falls $a$ eine hebbare Singularität von $f$ ist, ist nach Satz \ref{3.3.5} $a_n = 0$ für alle $n < 0$, also $\Res{f}{a} = a_{-1} = 0$.
+				\item Sei $ f_n : D_n \to \C,\ z \mapsto z^n $ mit $ D_n = \begin{cases}
+				\C \quad &n \geq 0,\\
+				\C \setminus\{0\} \quad &n<0.
+				\end{cases} $
+				\begin{align*}
+					\Res{f_n}{0} &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta| = 1} f(\zeta)\d\zeta\\
+					&= \int_0^1 \left(e^{2\pi it}\right)^{n+1}\d t\\
+					&= \begin{cases}
+					1 \quad &n = -1,\\
+					\left[ \frac{1}{2\pi i(n+1)} e^{(2\pi it)(n+1)} \right]_0^1 = 0 \quad &n \neq -1.
+					\end{cases}
+				\end{align*}
+				Also gilt $ \Res{f_n}{0} = 0 $ für alle $n \leq -2$, obwohl $0$ eine Singularität von $f_n$ ist.
+			\end{enumerate}
+		\end{exmp*}
+		
+		\begin{thm}[Der Residuensatz]\label{3.4.4}
+			Es seien $ D \subseteq \C $ ein Elementargebiet und $z_1,\dotsc,z_k \in D$ paarweise verschiedene Punkte. Sei $ f: D \setminus\{z_1,\dotsc,z_k\} \to \C $ eine holomorphe Abbildung. Für eine geschlossene, stückweise glatte Kurve $\gamma: [a,b] \to D \setminus\{z_1,\dotsc,z_k\}$ gilt dann
+			\[ \int_\gamma f = 2\pi i \sum_{j=1}^k \Res{f}{z_j} \cdot \Ind{\gamma}(z_j). \]
+		\end{thm}
+		
+		\begin{exmp*}
+			$ f_n : D_n \to \C,\ z \mapsto z^n $ mit $ D_n = \begin{cases}
+			\C \quad &n \geq 0,\\
+			\C \setminus\{0\} \quad &n<0.
+			\end{cases} $
+			\begin{align*}
+				\varointctrclockwise_{|\zeta| = 1} f_n &= 2\pi i \Res{f_n}{0}\\
+				&= 2\pi i \Res{f_n}{0} \cdot \Ind{\gamma}(0) \quad \text{da } \Ind{\gamma}(0)=1
+			\end{align*}
+		\end{exmp*}
+		
+		\begin{rem}
+			\begin{enumerate}[label={\alph*})]
+				\item[]
+				\item In Satz \ref{3.4.4} liefern nur die Punkte $z_j$ einen Beitrag, für die $\Ind{\gamma}(z_j) \neq 0$, also die Punkte $z_j \in I(\gamma)$, die von $\gamma$ umlaufen werden. So gibt etwa im Beispiel oben die Residuenformel 
+				\begin{align*}
+					\varointctrclockwise_{|\zeta - 2|=1} &= 2\pi i \Res{f_n}{0} \cdot \Ind{\gamma}(0)\\
+					&= 0 \qquad \forall\, n \in \N,
+				\end{align*}
+				denn $\Ind{\gamma}(0) = 0$ für $\gamma$ als Kreis mit Radius $1$ um den Punkt 2. (Es passt, denn alle Funktionen besitzen auf $\C \setminus\R_{\leq 0}$ eine Stammfunktion und $ \gamma[0,1] \subset \C\setminus\R_{\leq 0} $.)
+				\item Falls $f$ hebbare Singularitäten in $z_1,\dotsc,z_k$ besitzt, also falls $f$ auf $D$ holomorph fortsetzbar ist, ist $\int_\gamma f = 0$ für alle $ \gamma:[a,b] \to D \setminus\{z_1,\dotsc,z_k\} $, denn $D$ ist ein Elementargebiet. Satz \ref{3.4.4} ist also eine Verallgemeinerung des Cauchy'schen Integralsatzes für Elementargebiete.
+				\item Sei $ f: D \to \C $ holomorph, $D$ ein Elementargebiet. Dann ist für alle $a \in D$ die Funktion $ h: D \setminus\{a\} \to \C,\ z \mapsto \frac{f(z)}{z-a} $ holomorph und es gilt
+				\begin{align*}
+					\Res{h}{a} &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} h(\zeta)\d\zeta\\
+					&= f(a).
+				\end{align*}
+				Für $ \gamma: [\alpha,\beta] \to D\setminus\{a\} $ gilt also nach der Residuenformel
+				\begin{align*}
+					\frac{1}{2\pi i} \int_\gamma h(\zeta)\d\zeta &= \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta-a} \d\zeta\\
+					&= \Res{h}{a} \Ind{\gamma}(a)\\
+					&= f(a) \Ind{\gamma}(a).
+				\end{align*}
+				Es gilt also:
+				\[ f(a)\Ind{\gamma}(a) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta-a}\d\zeta, \]
+				und insbesondere für $\Ind{\gamma}(a) = 1$:
+				\[ f(a) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta -a}\d\zeta. \]
+				Das sind Verallgemeinerungen der Cauchy'schen Integralformel.
+			\end{enumerate}
+		\end{rem}
+		
+		\begin{prop}
+			Sei $D$ ein Gebiet und $a \in D$. Seien $ f,g: D\setminus\{a\} \to \C $ holomorphe Abbildungen mit einer außerwesentlichen Singularität in $a$. Dann gilt:
+			\begin{enumerate}[label={\alph*})]
+				\item Falls $ \ord{f}{a} \geq -1 $, so gilt $ \Res{f}{a} = \lim\limits_{z \to a} (z-a)f(z). $
+				\item Falls $a$ ein Pol der Ordnung $k$ ist (also $\ord{f}{a} = -k,\ k \in \N^*$), so gilt $ \Res{f}{a} = \frac{\tilde{f}^{(k-1)}(a)}{k-1} $ mit $\tilde{f}(z) = (z-a)^kf(z)$.
+				\item Falls $\ord{f}{a} \geq 0$ und $\ord{g}{a} = 1$, so gilt $ \Res{\frac{f}{g}}{a} = \frac{f(a)}{g(a)}. $
+				\item Falls $f \neq 0$, so ist für alle $a \in D: \Res{\frac{f'}{f}}{a} = \ord{f}{a}. $
+				\item Falls $g$ holomorph auf $D$ ist, gilt $ \Res{g \cdot \frac{f'}{f}}{a} = g(a)\ord{f}{a}. $
+			\end{enumerate}
+		\end{prop}
+	
+	
+	\section{Anwendungen des Residuensatzes} \marginnote{Vorlesung 22}
+		
+		\begin{thm}\label{3.5.1}
+			Sei $D \subseteq \C$ ein Elementargebiet, sei $f$ eine in $D$ meromorphe Funktion mit den Nullstellen $ a_1,\dotsc,a_n \in D $ und den Polstellen $ b_1,\dotsc,b_m \in D $. Sei $ \gamma:[a,b] \to \C\setminus\{a_1,\dotsc,a_n,b_1,\dotsc,b_m\} $ eine geschlossene, stückweise glatte Kurve. Dann gilt 
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f} = \sum_{\mu=1}^n \ord{f}{a_\mu} \Ind{\gamma}(a_\mu) + \sum_{\nu=1}^m \ord{f}{b_\nu} \Ind{\gamma}(b_\nu). \]
+		\end{thm}
+		
+		\begin{thm}[Hurwitz, 1889]
+			Sei $ (f_j)_{j \in \N} $ eine Folge von holomorphen Abbildungen $ f_j : D \to \C $ mit einem Gebiet $D$. Seien die $f_j$ außerdem alle nullstellenfrei.\\
+			Falls $(f_j)_{j \in \N}$ lokal gleichmäßig gegen $f: D \to \C$ konvergiert, ist $f$ entweder identisch 0 oder $f$ hat ebenfalls keine Nullstelle in $D$.
+		\end{thm}
+		
+		\begin{rem}
+			Nach Satz \ref{2.5.1} ist $f$ holomorph!
+		\end{rem}
+		
+		\begin{cor}
+			Sei $ D \subseteq \C $ ein Gebiet und sei $ (f_n)_{n \in \N} $ eine Folge von injektiven holomorphen Funktionen, die lokal gleichmäßig gegen $f: D \to \C$ konvergiert. Dann ist $f$ entweder konstant oder injektiv.
+		\end{cor}
+		
+		\begin{cor}[aus Satz \ref{3.5.1}]\label{3.5.4}
+			Sei $ D \subseteq \C $ ein Elementargebiet, $f: D \to \C$ eine meromorphe Funktion mit $ S(f) = \{b_1,\dotsc,b_m\} \subset D $ und $ N(f) = \{a_1,\dotsm,a_n\} \subset D $.	Seien 
+			$$ N(0) = \sum_{\mu=1}^n \ord{f}{a_\mu} $$
+			 die Gesamtzahl der Nullstellen und 
+			 $$ N(\infty) = -\sum_{\nu=1}^m \ord{f}{b_\nu} $$
+			 die Gesamtzahl der Polstellen (jeweils mit Vielfachheiten gerechnet). Sei $ \gamma: [a,b] \to D\setminus(N(f) \cup S(f)) $ eine stückweise glatte, geschlossene Kurve mit $ \Ind{\gamma}(a_\mu) = 1 = \Ind{\gamma}(b_\nu) $ für $ 1 \leq \mu \leq n,\ 1 \leq \nu \leq  m$. Dann gilt
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f}(\zeta) \d\zeta = N(0) - N(\infty), \quad \text{Anzahlformel für Null- und Polstellen.} \]
+		\end{cor}
+		
+		\begin{cor}
+			$ f: D \to \C $ holomorph, $ \gamma: [a,b] \to D $ geschlossene, stückweise stetige Kurve mit $ f(\gamma(t)) \neq 0 $ für alle $ t \in [a,b] $. Dann ist 
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f} (\zeta)\d\zeta = \Ind{f \circ \gamma}(0) \in \Z. \]
+			In der Situation von Satz \ref{3.5.4} (mit $N(\infty) = 0$ da $S(f) = \emptyset$) ist also $ \Ind{f \circ \gamma}(0) = N(0). $ 
+		\end{cor}
+		
+		\begin{cor}[aus \ref{3.5.1}]
+			Seien $D \subseteq \C$ ein Elementargebiet, $ f: D \to \C $ eine meromorphe Funktion mit $ N(f) = \{a_1,\dotsc,a_n\} $ und $ S(f) = \{b_1,\dotsc,b_m\} \in D $.\\
+			Sei $ g: D \to \C $ holomorph. Dann gilt für jede geschlossene, stückweise stetige Kurve $ \gamma: [a,b] \to D \setminus (N(f) \cup S(f)): $
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f' g}{f} = \sum_{\mu=1}^n \ord{f}{a_\mu} \Ind{\gamma}(a_\mu)g(a_\mu) + \sum_{\nu=1}^m \ord{f}{b_\nu} \Ind{\gamma}(b_\nu)g(b_\nu). \]
+		\end{cor}
+		
+		
+
+	
+	
+	
+	
+		
+	
+	\listoftheorems[ignoreall,show={defn}]
+	
+	
+	
+\end{document}

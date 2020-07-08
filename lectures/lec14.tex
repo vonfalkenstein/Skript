@@ -1,0 +1,20 @@
+\section{Der Potenzreihenentwicklungssatz}\lecture
+		
+		\begin{thm}\label{2.4.1}
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Sei $ a \in D $ und $r>0$, sodass $ B_r(a) \subseteq D $. Dann gilt $ f(z) = \sum_{n=0}^\infty a_n(z-a)^n\ \forall \, z \in B_r(a), $ wobei $ a_n = \frac{f^{(n)}(a)}{n!}\ \forall\, n \in \N. $
+		\end{thm}
+		
+		\begin{rem}
+			\begin{enumerate}
+				\item[]
+				\item Die Formeln $ a_n = \frac{f^{(n)}(a)}{n!} $ folgen aus der Potenzreihenentwicklung; für $ f(z) = \sum_{n=0}^\infty a_n(z-a)^n $ folgt aus Satz \ref{thm_series}. dass die Ableitungen an $a$ $ f^{(k)}(a) = k!a_k $ erfüllen, also $ a_k = \frac{f^{(k)(a)}}{k!}\ \forall\, k \in \N. $
+				\item Für die Koeffizienten $a_n$ gilt nach Satz \ref{2.3.6} 
+				$$ a_n = \frac{f^{(n)}(a)}{n!} = \frac{1}{2 \pi i} \int_{|\zeta-a|=\rho} \frac{f(\zeta)}{(\zeta-a)^{n+1}} \d \zeta $$
+				für $ 0 < \rho < R $.
+				\item Der Satz sagt, dass holomorphe Abbildungen genau die Funktionen sind, welche sich lokal in Potenzreihen mit positivem Konvergenzradius entwickeln lassen! Daher sagt man auch "analytisch" für "holomorph".
+				\item Die Koeffizienten $a_n$ sind die \emph{Taylorkoeffizienten von $f$ zur Stelle $a$}, und die Potenzreihe ist die \emph{Taylorreihe von $f$ zur Stelle $a$}.
+				\item Sei $ f: \C \to \C $ eine ganze Abbildung. Dann ist nach Satz \ref{2.4.1} $ f(z) = \sum_{n=0}^\infty \frac{f^{(n)}(0)}{n!} z^n\ \forall z \in \C, $ oder allgemeiner:
+				\[ f(z) = \sum_{n=0}^\infty \frac{f^{(n)}(a)}{n!} (z-a)^n \]
+				für $a \in \C$ und alle $z \in \C$.
+			\end{enumerate}
+		\end{rem}

@@ -1,0 +1,52 @@
+\chapter[Singularitäten]{Singularitäten holomorpher Abbildungen}\lecture
+	
+	\section{Außerwesentliche Singularitäten}
+		
+		\begin{defn}[Isolierte Singularität]
+			Sei $ D \subset \C $ offen. Sei $ f: D \to \C $ holomorph. Sei $ a \in \C $ ein Punkt, der nicht zu $D$ gehört, aber so, dass ein $r>0$ existiert mit $ \underbrace{B_r(a) \setminus \{a\}}_{\dot{B_r(a)}} \subseteq D $. Der Punkt $a$ ist dann eine \emph{isolierte Singularität} von $f$.
+		\end{defn}
+		
+		\begin{defn}[Hebbare Singularität]
+			Eine Singularität $a$ einer holomorphen Abbildung $f: D \to \C$ heißt \emph{hebbar}, falls sich $f$ auf ganz $D \cup \{a\}$ holomorph fortsetzen lässt: $ \exists\, \tilde{f}: D \cup \{a\} \to \C $ holomorph mit $ \bound{\tilde{f}}{D} = f. $
+		\end{defn}
+		
+		\begin{thmn}[Riemannscher Hebbarkeitssatz]
+			Sei $ f: D \to \C $ eine holomorphe Abbildung. Sei $a \in \C$ eine Singularität von $f$. Dann ist die Singularität $a$ genau dann hebbar, wenn es eine punktierte Umgebung $ \dot{B_r(a)} \subset D $ von $a$ gibt, in der $f$ beschränkt ist.
+		\end{thmn}
+		
+		\begin{defn}[Außerwesentliche Singularität, Polstelle]
+			\begin{itemize}
+				\item[]
+				\item Eine Singularität $a$ einer holomorphen Abbildung $ f: D \to \C $ heißt \emph{außerwesentlich}, falls es eine ganze Zahl $m \in \Z$ gibt, sodass $ g: D \to \C,\ g(z) = (z-a)^mf(z) $ eine hebbare Singularität in $a$ hat.
+				\item Ist $a$ nicht hebbar als Singularität von $f$, so ist $a$ ein \emph{Pol} oder eine \emph{Polstelle} von $f$.
+			\end{itemize}
+		\end{defn}
+		
+		\begin{prop}\label{3.1.5}
+			Sei $a \in \C$ eine außerwesentliche Singularität einer holomorphen Abbildung $ f: D \to \C $. Wenn $f$ in keiner Umgebung von $a$ identisch verschwindet, so existiert eine kleinste ganze Zahl $k \in \Z$, sodass $ z \mapsto (z-a)^kf(z) $ eine hebbare Singularität hat.
+		\end{prop}
+		
+		\begin{defn}[Ordnung]
+			Sei $ f: D \to \C $ mit einer außerwesentlichen Singularität $ a \in \C $ wie in \ref{3.1.5}. Sei $k$ die Zahl wie in \ref{3.1.5}. Dann ist $ -k =: \ord{f}{a} $ die Ordnung von $f$ in $a$.
+		\end{defn}
+		
+		\begin{prop}
+			Sei $a$ eine außerwesentliche Singularität einer holomorphen Funktion $f: D \to \C$. Dann gilt, falls $f$ in keiner Umgebung von $a$ identisch verschwindet:
+			\begin{enumerate}[label={\roman*})]
+				\item $\begin{aligned}[t]
+					\ord{f}{a} \geq 0 &\iff a\ \text{ist hebbar, dabei gilt:}\\
+					\ord{f}{a} = 0 &\iff a\ \text{ist hebbar und } f(a) \neq 0\\
+					\ord{f}{a} > 0 &\iff a\ \text{ist hebbar und } f(a) = 0
+				\end{aligned}$
+				\item $ \ord{f}{a} < 0 \iff a $ ist ein Pol
+			\end{enumerate}
+		\end{prop}
+		
+		\begin{prop}
+			Sei $ a \in \C $ eine außerwesentliche Singularität von zwei holomorphen Abbildungen $ f,g: D \to \C $. Dann ist auch $a$ eine außerwesentliche Singularität der Funktion $ \alpha f + \beta g,\ f \cdot g, $ und $ \frac{f}{g} $, falls $g(z) \neq 0 \ \forall\, z \in D,\ \alpha,\beta \in \C^*$.	Außerdem gilt
+			\begin{align*}
+				\ord{\alpha f + \beta g}{a} &\geq \min\{\ord{f}{a},\ord{g}{a}\}\\
+				\ord{f\cdot g}{a} &= \ord{f}{a} + \ord{g}{a}\\
+				\ord{\frac{f}{g}}{a} &= \ord{f}{a} - \ord{g}{a}
+			\end{align*}
+		\end{prop}

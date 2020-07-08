@@ -1,0 +1,39 @@
+\lecture
+		\begin{defn}[Sterngebiet]
+			Ein \emph{Sterngebiet} ist eine offene Teilmenge $ D \subseteq \C $ mit folgender Eigenschaft:\\
+			Es existiert ein Punkt $ z_* \in D $, sodass mit jedem Punkt $ z \in D $ die ganze Verbindungsstrecke zwischen $z_*$ und $z$ in $D$ enthalten sind, das heißt $ \{ z_* + t(z-z_*) \mid t \in [0,1] \} \subseteq D $. Der Punkt $z_*$ ist nicht eindeutig bestimmt. Er heißt ein \emph{Sternmittelpunkt} für das Sterngebiet.
+		\end{defn}
+		
+		\begin{rem}
+			Ein Sterngebiet ist automatisch bogenweise zusammenhängend.
+		\end{rem}
+		
+		\begin{exmp*}
+			\begin{enumerate}[label = {\roman*})]
+				\item[]
+				\item Jedes konvexe Gebiet ist sternförmig. Dabei ist jeder Punkt des Gebietes ein Sternmittelpunkt.
+				\item $ \C \setminus \R_{\leq 0} $ ist ein Sterngebiet. Die Sternmittelpunkte sind genau alle Punkte $ x \in \R, x > 0 $.
+				\item Eine offene Kreisscheibe $ B_r(c) $,aus der man endlich viele Halbgeraden herausnimmt, deren rückwärtige Verlängerungen durch den Punkt $z_* \in B_r(c)$ gehen, ist ein Sterngebiet mit Sternmittelpunkt $z_*$.
+				\item $ D = \C \setminus \{0\} $ ist \emph{kein} Sterngebiet. Wäre $ z_* \in \C \setminus\{0\} $ ein Sternmittelpunkt, so läge das Geradenstück $ [-z_*,z_*] \in \C \setminus \{0\} \quad \lightning $
+				\item Nach der gleichen Begründung wie in iv) ist für $ 0<r<R $ das Ringgebiet $ R = \{ z \in \C \mid r < |z| < R \} $ kein Sterngebiet.
+				\item Seien $ 0<r<R, \xi \in \C $ mit $ |\xi|=1 $, $z_0 \in \C$ und $ \beta \in (0,\pi) $ mit $ \cos\left(\frac{\beta}{2}\right) > \frac{r}{R} $. Das Kreisringsegment $ \{ z = z_0 + \xi\rho e^{i\varphi} \mid r<\rho<R, 0<\varphi<\beta \} $ ist ein Sterngebiet.
+			\end{enumerate}
+		\end{exmp*}
+		
+		\begin{thmn}[Cauchy'scher Integralsatz für Sterngebiete, 1]
+			Sei $ f: D \to \C $ eine holomorphe Funktion auf einem Sterngebiet $D$. Dann verschwindet das Integral von $f$ längs jeder in D verlaufenden geschlossenen Kurve.
+		\end{thmn}
+		
+		Mit Satz \ref{2.2.4} ist das äquivalent zu:
+		
+		\begin{thmn}[Cauchy'scher Integralsatz für Sterngebiete, 2]\label{2.2.8}
+			Jede holomorphe Funktion auf einem Sterngebiet $D$ besitzt eine Stammfunktion auf $D$.
+		\end{thmn}
+		
+		\begin{cor}
+			Jede in einem beliebigen Gebiet $ D \subseteq \C $ holomorphe Funktion besitzt wenigstens lokal eine Stammfunktion, das heißt zu jedem Punkt $ a \in D $ gibt es eine offene Umgebung $ U \subseteq D $ von $a$, sodass $ \bound{f}{U} $ eine Stammfunktion besitzt.
+		\end{cor}
+		\stepcounter{thm}
+		\begin{thm}
+			Sei $ f: D \to \C $ eine stetige Funktion in einem Sterngebiet $D$ mit Mittelpunkt $ z_* $. Wenn $f$ in allen Punkten $ z \neq z_*, (z \in D) $ komplex differenzierbar ist besitzt $f$ eine Stammfunktion auf $D$.
+		\end{thm}

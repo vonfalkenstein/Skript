@@ -1,0 +1,40 @@
+\section{Anwendungen des Residuensatzes} \lecture
+		
+		\begin{thm}\label{3.5.1}
+			Sei $D \subseteq \C$ ein Elementargebiet, sei $f$ eine in $D$ meromorphe Funktion mit den Nullstellen $ a_1,\dotsc,a_n \in D $ und den Polstellen $ b_1,\dotsc,b_m \in D $. Sei $ \gamma:[a,b] \to \C\setminus\{a_1,\dotsc,a_n,b_1,\dotsc,b_m\} $ eine geschlossene, stückweise glatte Kurve. Dann gilt 
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f} = \sum_{\mu=1}^n \ord{f}{a_\mu} \Ind{\gamma}(a_\mu) + \sum_{\nu=1}^m \ord{f}{b_\nu} \Ind{\gamma}(b_\nu). \]
+		\end{thm}
+		
+		\begin{thm}[Hurwitz, 1889]
+			Sei $ (f_j)_{j \in \N} $ eine Folge von holomorphen Abbildungen $ f_j : D \to \C $ mit einem Gebiet $D$. Seien die $f_j$ außerdem alle nullstellenfrei.\\
+			Falls $(f_j)_{j \in \N}$ lokal gleichmäßig gegen $f: D \to \C$ konvergiert, ist $f$ entweder identisch 0 oder $f$ hat ebenfalls keine Nullstelle in $D$.
+		\end{thm}
+		
+		\begin{rem}
+			Nach Satz \ref{2.5.1} ist $f$ holomorph!
+		\end{rem}
+		
+		\begin{cor}
+			Sei $ D \subseteq \C $ ein Gebiet und sei $ (f_n)_{n \in \N} $ eine Folge von injektiven holomorphen Funktionen, die lokal gleichmäßig gegen $f: D \to \C$ konvergiert. Dann ist $f$ entweder konstant oder injektiv.
+		\end{cor}
+		
+		\begin{cor}[aus Satz \ref{3.5.1}]\label{3.5.4}
+			Sei $ D \subseteq \C $ ein Elementargebiet, $f: D \to \C$ eine meromorphe Funktion mit $ S(f) = \{b_1,\dotsc,b_m\} \subset D $ und $ N(f) = \{a_1,\dotsm,a_n\} \subset D $.	Seien 
+			$$ N(0) = \sum_{\mu=1}^n \ord{f}{a_\mu} $$
+			 die Gesamtzahl der Nullstellen und 
+			 $$ N(\infty) = -\sum_{\nu=1}^m \ord{f}{b_\nu} $$
+			 die Gesamtzahl der Polstellen (jeweils mit Vielfachheiten gerechnet). Sei $ \gamma: [a,b] \to D\setminus(N(f) \cup S(f)) $ eine stückweise glatte, geschlossene Kurve mit $ \Ind{\gamma}(a_\mu) = 1 = \Ind{\gamma}(b_\nu) $ für $ 1 \leq \mu \leq n,\ 1 \leq \nu \leq  m$. Dann gilt
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f}(\zeta) \d\zeta = N(0) - N(\infty), \quad \text{Anzahlformel für Null- und Polstellen.} \]
+		\end{cor}
+		
+		\begin{cor}
+			$ f: D \to \C $ holomorph, $ \gamma: [a,b] \to D $ geschlossene, stückweise stetige Kurve mit $ f(\gamma(t)) \neq 0 $ für alle $ t \in [a,b] $. Dann ist 
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f'}{f} (\zeta)\d\zeta = \Ind{f \circ \gamma}(0) \in \Z. \]
+			In der Situation von Satz \ref{3.5.4} (mit $N(\infty) = 0$ da $S(f) = \emptyset$) ist also $ \Ind{f \circ \gamma}(0) = N(0). $ 
+		\end{cor}
+		
+		\begin{cor}[aus \ref{3.5.1}]
+			Seien $D \subseteq \C$ ein Elementargebiet, $ f: D \to \C $ eine meromorphe Funktion mit $ N(f) = \{a_1,\dotsc,a_n\} $ und $ S(f) = \{b_1,\dotsc,b_m\} \in D $.\\
+			Sei $ g: D \to \C $ holomorph. Dann gilt für jede geschlossene, stückweise stetige Kurve $ \gamma: [a,b] \to D \setminus (N(f) \cup S(f)): $
+			\[ \frac{1}{2\pi i} \int_\gamma \frac{f' g}{f} = \sum_{\mu=1}^n \ord{f}{a_\mu} \Ind{\gamma}(a_\mu)g(a_\mu) + \sum_{\nu=1}^m \ord{f}{b_\nu} \Ind{\gamma}(b_\nu)g(b_\nu). \]
+		\end{cor}

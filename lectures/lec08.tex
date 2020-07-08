@@ -1,0 +1,23 @@
+\lecture
+		\begin{thm}
+			Sei $ f:[a,b] \to \C $ eine stetige Funktion. Setze $ F(t) = \int_{a}^b f(s) \d s, F: [a,b] \to \C $. Dann gilt $ F'(t) = f(t) \ \forall\, t \in [a,b]. $ Ist $ \Theta: [a,b] \to \C $ eine Funktion mit $ \Theta' = f $, dann gilt 
+			$$ \int_a^b f(s) \d s = \Theta(b) - \Theta(a). $$
+		\end{thm}
+		
+		\begin{cor}
+			Sei $ f: D \to \C,\ D \subseteq \C $ offen, eine stetige Funktion, die eine Stammfunktion $ F: D \to \C $ besitzt: $ F' = f $. Dann gilt für jede in $D$ verlaufende glatte Kurve $\gamma$:
+			\[ \int_\gamma f = F(\gamma(b)) - F(\gamma(a)). \]
+		\end{cor}
+		
+		\begin{cor}
+			Wenn eine stetige Funktion $ f: D \to \C $ eine Stammfunktion auf $D$ besitzt, so gilt $ \int_\gamma f = 0 $ für \emph{jede} in $D$ verlaufende geschlossene stückweise glatte Kurve.
+		\end{cor}
+		\stepcounter{thm}
+		\begin{thm}
+			Sei $\gamma$ eine konvexe, geschlossene, einfache, stückweise glatte Kurve. Sei $ f: D \to \C $ eine stetige Funktion für die gilt: Für alle Dreiecke $ S: [a,b] \to I(\gamma) $ ist $ \int_S f=0 $. Dann existiert eine holomorphe Funktion $ F: I(\gamma) \to \C $ mit $ F'(z) = f(z) \ \forall\, z \in I(\gamma) $.
+		\end{thm}
+		
+		\begin{thm}
+			Sei $\gamma$ eine stückweise glatte Kurve und sei $ (f_n)_{n \in \N} $ eine Folge von stetigen Funktionen auf $S$, mit $ \im(\gamma) \subseteq S $ und so, dass $ \sum\limits_{n=0}^\infty f_n $ gleichmäßig gegen $ F:S \to \C $ konvergiert. Dann gilt
+			\[ \int_\gamma F = \int_\gamma \left( \sum_{n=0}^\infty f_n(z) \right) \d z = \sum_{n=0}^\infty \int_\gamma f_n. \]
+		\end{thm}

@@ -1,0 +1,105 @@
+\section{Der Residuensatz}\lecture
+		
+		\begin{thm}
+			Sei $\gamma: [a,b] \to \C$ eine geschlossene, stückweise glatte Kurve. Sei $ \Omega := \C \setminus \gamma[a,b] $. Sei 
+			$$ \Ind{\gamma}: \Omega \to \C,\ z \mapsto \frac{1}{2\pi i} \int_\gamma \frac{1}{\zeta- z}\d\zeta. $$
+			Dann gilt:
+			\begin{enumerate}[label={\alph*})]
+				\item $\Ind{\gamma}$ ist stetig und nimmt nur Werte in $\Z$ an. Also ist $\Ind{\gamma}$ auf jeder Zusammenhangskomponente von $\Omega$ konstant.
+				\item Auf der unbeschränkten Zusammenhangskomponente von $\Omega$ ist $\Ind{\gamma} = 0$.
+			\end{enumerate}
+		\end{thm}
+		
+		Insbesondere gilt für $ \gamma:[0,1] \to \C,\ t \mapsto z_0 + re^{2\pi ikt} $ mit $ z_0 \in \C,\ k \in \Z\setminus\{0\} $
+		\[ \Ind{\gamma}(z) = \frac{1}{2\pi i} \int_\gamma \frac{1}{\zeta- z}\d\zeta = \begin{cases}
+		0 \quad &|z-z_0| > r,\\
+		k \quad &|z-z_0| < r.
+		\end{cases} \]
+			
+		\begin{defn}[Umlaufzahl]
+			Sei $\gamma$ eine geschlossene, stückweise glatte Kurve, deren Bild den Punkt $z \in \C$ nicht enthält. Dann ist $\Ind{\gamma}$ die \emph{Umlaufzahl} von $\gamma$ bezüglich $z$.
+		\end{defn}
+		
+		\begin{defn}[Residuum]
+			Sei $ f: D \to \C,\ D \subset \C $ offen, eine holomorphe Abbildung und $a \in \C$ eine Singularität von $f$. Sei 
+			\[ f(z) = \sum_{n \in \Z} a_n(z-a)^n,\quad z \in \dot{B_r(a)} \]
+			die Laurententwicklung von $f$ auf $ \dot{B_r(a)} \subseteq D $. Der Koeffizient
+			\[ a_{-1} = \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} f(\zeta)\d\zeta, \quad 0 < \rho < r \]
+			dieser Reihe heißt das \emph{Residuum} von $f$ an der Stelle $a$ und wird $\Res{f}{a}$ geschrieben.
+		\end{defn}
+		
+		\begin{exmp*}
+			\begin{enumerate}[label={\alph*})]
+				\item[]
+				\item Falls $a$ eine hebbare Singularität von $f$ ist, ist nach Satz \ref{3.3.5} $a_n = 0$ für alle $n < 0$, also $\Res{f}{a} = a_{-1} = 0$.
+				\item Sei $ f_n : D_n \to \C,\ z \mapsto z^n $ mit $ D_n = \begin{cases}
+				\C \quad &n \geq 0,\\
+				\C \setminus\{0\} \quad &n<0.
+				\end{cases} $
+				\begin{align*}
+					\Res{f_n}{0} &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta| = 1} f(\zeta)\d\zeta\\
+					&= \int_0^1 \left(e^{2\pi it}\right)^{n+1}\d t\\
+					&= \begin{cases}
+					1 \quad &n = -1,\\
+					\left[ \frac{1}{2\pi i(n+1)} e^{(2\pi it)(n+1)} \right]_0^1 = 0 \quad &n \neq -1.
+					\end{cases}
+				\end{align*}
+				Also gilt $ \Res{f_n}{0} = 0 $ für alle $n \leq -2$, obwohl $0$ eine Singularität von $f_n$ ist.
+			\end{enumerate}
+		\end{exmp*}
+		
+		\begin{thmn}[Der Residuensatz]\label{3.4.4}
+			Es seien $ D \subseteq \C $ ein Elementargebiet und $z_1,\dotsc,z_k \in D$ paarweise verschiedene Punkte. Sei $ f: D \setminus\{z_1,\dotsc,z_k\} \to \C $ eine holomorphe Abbildung. Für eine geschlossene, stückweise glatte Kurve $\gamma: [a,b] \to D \setminus\{z_1,\dotsc,z_k\}$ gilt dann
+			\[ \int_\gamma f = 2\pi i \sum_{j=1}^k \Res{f}{z_j} \cdot \Ind{\gamma}(z_j). \]
+		\end{thmn}
+		
+		\begin{exmp*}
+			$ f_n : D_n \to \C,\ z \mapsto z^n $ mit $ D_n = \begin{cases}
+			\C \quad &n \geq 0,\\
+			\C \setminus\{0\} \quad &n<0.
+			\end{cases} $
+			\begin{align*}
+				\varointctrclockwise_{|\zeta| = 1} f_n &= 2\pi i \Res{f_n}{0}\\
+				&= 2\pi i \Res{f_n}{0} \cdot \Ind{\gamma}(0) \quad \text{da } \Ind{\gamma}(0)=1
+			\end{align*}
+		\end{exmp*}
+		
+		\begin{rem}
+			\begin{enumerate}[label={\alph*})]
+				\item[]
+				\item In Satz \ref{3.4.4} liefern nur die Punkte $z_j$ einen Beitrag, für die $\Ind{\gamma}(z_j) \neq 0$, also die Punkte $z_j \in I(\gamma)$, die von $\gamma$ umlaufen werden. So gibt etwa im Beispiel oben die Residuenformel 
+				\begin{align*}
+					\varointctrclockwise_{|\zeta - 2|=1} &= 2\pi i \Res{f_n}{0} \cdot \Ind{\gamma}(0)\\
+					&= 0 \qquad \forall\, n \in \N,
+				\end{align*}
+				denn $\Ind{\gamma}(0) = 0$ für $\gamma$ als Kreis mit Radius $1$ um den Punkt 2. (Es passt, denn alle Funktionen besitzen auf $\C \setminus\R_{\leq 0}$ eine Stammfunktion und $ \gamma[0,1] \subset \C\setminus\R_{\leq 0} $.)
+				\item Falls $f$ hebbare Singularitäten in $z_1,\dotsc,z_k$ besitzt, also falls $f$ auf $D$ holomorph fortsetzbar ist, ist $\int_\gamma f = 0$ für alle $ \gamma:[a,b] \to D \setminus\{z_1,\dotsc,z_k\} $, denn $D$ ist ein Elementargebiet. Satz \ref{3.4.4} ist also eine Verallgemeinerung des Cauchy'schen Integralsatzes für Elementargebiete.
+				\item Sei $ f: D \to \C $ holomorph, $D$ ein Elementargebiet. Dann ist für alle $a \in D$ die Funktion $ h: D \setminus\{a\} \to \C,\ z \mapsto \frac{f(z)}{z-a} $ holomorph und es gilt
+				\begin{align*}
+					\Res{h}{a} &= \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} h(\zeta)\d\zeta\\
+					&= f(a).
+				\end{align*}
+				Für $ \gamma: [\alpha,\beta] \to D\setminus\{a\} $ gilt also nach der Residuenformel
+				\begin{align*}
+					\frac{1}{2\pi i} \int_\gamma h(\zeta)\d\zeta &= \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta-a} \d\zeta\\
+					&= \Res{h}{a} \Ind{\gamma}(a)\\
+					&= f(a) \Ind{\gamma}(a).
+				\end{align*}
+				Es gilt also:
+				\[ f(a)\Ind{\gamma}(a) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta-a}\d\zeta, \]
+				und insbesondere für $\Ind{\gamma}(a) = 1$:
+				\[ f(a) = \frac{1}{2\pi i} \int_\gamma \frac{f(\zeta)}{\zeta -a}\d\zeta. \]
+				Das sind Verallgemeinerungen der Cauchy'schen Integralformel.
+			\end{enumerate}
+		\end{rem}
+		
+		\begin{prop}
+			Sei $D$ ein Gebiet und $a \in D$. Seien $ f,g: D\setminus\{a\} \to \C $ holomorphe Abbildungen mit einer außerwesentlichen Singularität in $a$. Dann gilt:
+			\begin{enumerate}[label={\alph*})]
+				\item Falls $ \ord{f}{a} \geq -1 $, so gilt $ \Res{f}{a} = \lim\limits_{z \to a} (z-a)f(z). $
+				\item Falls $a$ ein Pol der Ordnung $k$ ist (also $\ord{f}{a} = -k,\ k \in \N^*$), so gilt $ \Res{f}{a} = \frac{\tilde{f}^{(k-1)}(a)}{k-1} $ mit $\tilde{f}(z) = (z-a)^kf(z)$.
+				\item Falls $\ord{f}{a} \geq 0$ und $\ord{g}{a} = 1$, so gilt $ \Res{\frac{f}{g}}{a} = \frac{f(a)}{g(a)}. $
+				\item Falls $f \neq 0$, so ist für alle $a \in D: \Res{\frac{f'}{f}}{a} = \ord{f}{a}. $
+				\item Falls $g$ holomorph auf $D$ ist, gilt $ \Res{g \cdot \frac{f'}{f}}{a} = g(a)\ord{f}{a}. $
+			\end{enumerate}
+		\end{prop}

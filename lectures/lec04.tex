@@ -1,0 +1,72 @@
+\section{Der Satz für implizite Funktionen}\lecture
+		
+		Wir wollen hier noch den Satz für implizite Funktionen im komplexen Fall besprechen.
+		
+		\begin{thm}
+			Sei $ f: D \to \C $ eine holomorphe Funktion mit stetiger Ableitung.
+			\begin{enumerate}[label={\alph*})]
+				\item In einem Punkt $a \in D$ gelte $ f^\prime(a) \neq 0 $. Dann existiert eine offene Menge $ D_0 \subseteq D,\ a \in D_0 $, sodass die Einschränkung $ \bound{f}{D_0} $ injektiv ist.
+				\item Die Funktion $f$ sei injektiv und es gelte $ f^\prime(z) \neq 0 $ für alle $z \in D$. Dann ist das Bild $f(D)$ offen. Die Umkehrfunktion $ f^{-1}: f(D) \to \C $ ist holomorph und ihre Ableitung ist 
+				$$ \left(f^{-1}\right)^\prime (f(z)) = \frac{1}{f^\prime(z)},\ z \in D. $$
+			\end{enumerate}
+		\end{thm}
+		
+		\subsection*{Konforme Abbildungen}
+		
+		\begin{defn}[Orientierungs- und Winkeltreue]
+			Eine bijektive $\R$-lineare Abbildung $ T: \R^2 \to \R^2 $ heißt
+			\begin{enumerate}[label={\alph*})]
+				\item \emph{orientierungstreu}, falls $\det(T)>0$,
+				\item \emph{winkeltreu}, wenn für alle $x,y \in \R^2$ gilt $ |Tx|\cdot |Ty| \cdot \langle x,y\rangle = |x| \cdot |y|\cdot \langle Tx,Ty \rangle $, wobei $\langle\cdot ,\cdot \rangle$ das Standardskalarprodukt auf $\R$ ist.
+			\end{enumerate}
+		\end{defn}
+		
+		\begin{defn}[Konformität]
+			Eine differenzierbare Abbildung $ f:D \to D^\prime,\ D,D^\prime \subseteq \R^2, $ heißt \emph{lokal/infinitessimal konform}, falls ihre Jacobimatrix $ D_af $ in jedem Punkt $a \in D$ winkel- und orientierungstreu ist. Falls $f$ auch bijektiv ist, so heißt $f$ \emph{(global) konform}.
+		\end{defn}
+		
+		Es folgt sofort:
+		\begin{thm}
+			$f: D \to D^\prime,\ D,D^\prime \subseteq \C$ offen. $f$ ist genau dann lokal konform, wenn $f$ holomorph ist und $f^\prime(a) \neq 0$ für alle $a \in D$ gilt.
+		\end{thm}
+		
+	
+	\section{Komplexe Potenzreihen}
+		
+		Wie im reellen:
+		\begin{enumerate}
+			\item $ \sum\limits_{n=0}^\infty z_n $ konvergiert zu $S \in \C$, falls $ S_m = \sum\limits_{n=0}^\infty z_n \overset{m \to \infty}{\longrightarrow} S. $
+			\item Falls $\sum\limits_{n=0}^\infty z_n $ konvergent ist, dann ist $ \lim\limits_{n \to \infty} z_n = 0. $
+			\item  $\sum\limits_{n=0}^\infty z_n $ ist \emph{absolut konvergent}, falls $\sum\limits_{n=0}^\infty |z_n| $ konvergent ist. Dann ist auch $ \sum\limits_{n=0}^\infty z_n $ konvergent. Da $\sum\limits_{n=0}^\infty |z_n| $ eine reelle Reihe ist, können die üblichen Konvergenztests angewendet werden.
+			\item Wir betrachten hier \emph{Potenzreihen}, also $\sum\limits_{n=0}^\infty c_n (z-a_n)^n $ mit $ c_n, z, a_n \in \C. $
+		\end{enumerate}
+		
+		\begin{thm}
+			Die Potenzreihe $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ konvergiere für $ z-a = d \in \C $. Dann konvergiert sie absolut für alle $ z \in B_{|d|}(a) $.
+		\end{thm}
+		
+		\begin{cor}\label{cor_pot}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine komplexe Potenzreihe. Dann gilt genau eine der drei folgenden Aussagen:
+			\begin{enumerate}[label={\roman*})]
+				\item die Potenzreihe konvergiert für alle $z \in \C$,
+				\item die Potenzreihe konvergiert nur für $z = a$,
+				\item $ \exists\, R > 0, R \in \R $, sodass die Reihe absolut für alle $z \in B_R(a)$ konvergiert und für alle $ z $ mit $ |z-a|>R $ divergiert.
+			\end{enumerate}
+		\end{cor}
+		
+		\begin{defn}[Konvergenzradius]
+			Die Zahl $R$ im Korollar \ref{cor_pot} heißt der \emph{Konvergenzradius der Potenzreihe} $ \sum\limits_{n=0}^\infty c_n (z-a)^n $. Im Fall \textit{iii)} heißt $ \Bigl\{ z \in \C\ \Bigm|\ |z-a|=R \Bigr\} $ der \emph{Konvergenzkreis der Reihe}.\\
+			Aus dem reellen Fall bekommt man $ R = \frac{1}{\limsup\limits_{n \to \infty}\sqrt[n]{|a_n|}} $.
+		\end{defn}
+		
+		\begin{thm}
+			Sei $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ eine Potenzreihe mit Konvergenzradius $ R \in [0,\infty] $.
+			\begin{enumerate}[label = {\roman*})]
+				\item Falls $ \lim\limits_{n \to \infty} \left|\frac{c_n}{c_{n+1}}\right| = \lambda $, gilt $ \lambda = R $.
+				\item Falls $ \lim\limits_{n \to \infty} \left|\frac{c_n}{c_{n+1}}\right|^{-\frac{1}{n}} = \lambda $, gilt $ \lambda = R $.
+			\end{enumerate}
+		\end{thm}
+		
+		\begin{thm}
+			Die Potenzreihen $ \sum\limits_{n=0}^\infty c_n (z-a)^n $ und $ \sum\limits_{n=0}^\infty n c_n (z-a)^{n-1} $ haben den gleichen Konvergenzradius.
+		\end{thm}
