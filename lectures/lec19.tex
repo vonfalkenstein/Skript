@@ -1,7 +1,7 @@
 \section{Laurentzerlegung}\lecture
 		
 		Sei im Folgenden $ 0 \leq r < R \leq \infty $. Betrachte das Ringgebiet $$ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $$
-		und z.B. $ g: B_R(0) \to \C,\ h: B_{\frac{1}{r}}(0) \to \R. $ Dann ist $ \C \setminus \overbar{B_r(0)} \to \C, z \mapsto h\left(\frac{1}{z}\right) $ holomorph. Setze $ f: \mathcal{R} \to \C,\ f(z) = g(z) + h\left(\frac{1}{z}\right). $ $f$ ist holomorph auf $\mathcal{R}$. Der folgende Satz zeigt, dass jede holomorphe Funktion auf $ \mathcal{R} $ sich in dieser Weise zerlegen lässt.
+		und z.B. $ g: B_R(0) \to \C,\ h: B_{\frac{1}{r}}(0) \to \C. $ Dann ist $ \C \setminus \overbar{B_r(0)} \to \C, z \mapsto h\left(\frac{1}{z}\right) $ holomorph. Setze $ f: \mathcal{R} \to \C,\ f(z) = g(z) + h\left(\frac{1}{z}\right). $ $f$ ist holomorph auf $\mathcal{R}$. Der folgende Satz zeigt, dass jede holomorphe Funktion auf $ \mathcal{R} $ sich in dieser Weise zerlegen lässt.
 		
 		\begin{thmn}[Laurentzerlegung]\label{3.3.1}
 			Sei $ 0 \leq r < R \leq \infty $. Jede auf dem Ringgebiet $ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $ holomorphe Abbildung kann geschrieben werden als
@@ -21,13 +21,14 @@
 		\end{lem}
 		
 		\begin{thmn}[Laurententwicklung]\label{3.3.4}
-			Die Funktion $ f: \mathcal{R} \to \C,\ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $ sei holomorph. Dann lässt sich $f$ in eine Laurentreihe entwickeln, welche auf $\mathcal{R}$ lokal normal konvergiert: 
+			Die Funktion $ f: \mathcal{R} \to \C,\ \mathcal{R} := \{z \in \C \mid r < |z| < R\} $ sei holomorph mit der Laurenzerlegung $f(z) = g(z) + h\left(\frac{1}{z}\right)$. Dann kann man $g$ und $h$ in Potenzreihen entwickeln
+			\[ g(z) = \sum_{n=0}^\infty a_n z^n\ \text{für } |z| < R,\quad h(z) = \sum_{n=1}^\infty b_n z^n\ \text{für } |z| < \frac{1}{r}, \] und mit $a_{-n} = b_n$ erhält man die Laurententwicklung von $f$, welche auf $\mathcal{R}$ lokal normal konvergiert: 
 			\[ f(z) = \sum_{n \in \Z} a_n (z-a)^n \qquad \forall\, z \in \mathcal{R}. \]
 			Außerdem gilt
 			\begin{enumerate}[label={\roman*})]
 				\item Diese Laurententwicklung ist eindeutig bestimmt:
 				\[ a_n = \frac{1}{2\pi i} \varointctrclockwise_{|\zeta - a| = \rho} \frac{f(\zeta)}{(\zeta - a)^{n+1}}\d\zeta \qquad \forall\, n \in \Z, r < \rho < R \]
 				\item Sei $ M_\rho (f) = \sup \left\{|f(\zeta)| \mid |\zeta-a| = \rho \right\} $ für $ r < \rho < R. $ Dann gilt 
-				\[ |a_n| \leq \frac{M_\rho(f)}{\rho^n}, \qquad n \in \Z \]
+				\[ |a_n| \leq \frac{M_\rho(f)}{\rho^n}, \qquad n \in \Z,\ \text{"Cauchy'sche Abschätzungsformel"} \]
 			\end{enumerate}
 		\end{thmn}

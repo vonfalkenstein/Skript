@@ -1,18 +1,22 @@
-\documentclass{jvfscript}
+\documentclass{jvfscript-de}
 \usepackage{ftstyle}
+
+%\usepackage{showframe}
 
 \begin{document}
 	\frontmatter
 	\maketitle
 	
-	\setcounter{page}{1}
-	\tableofcontents
-	\newpage
-	\thispagestyle{plain}
-	Dieses Skript stellt keinen Ersatz für die Vorlesungsnotizen von Prof. Jotz Lean dar und wird nicht nochmals von ihr durchgesehen, im Grunde sind das hier nur meine persönlichen Mitschriften. Beweise werde ich i.d.R. nicht übernehmen (weil das in \LaTeX{} einfach keinen Spaß macht). \hspace{\fill} glhf
-	\mainmatter
-	\setcounter{chapter}{-1}	
-	\setstretch{1.15}			%Zeilenabstand. Kann man auch später nochmal reinhämmern, falls man es ändern will
+%	\setcounter{page}{1}
+\tableofcontents
+\newpage
+%	\setcounter{page}{1}
+\thispagestyle{plain}
+Dieses Skript stellt keinen Ersatz für die Vorlesungsnotizen von Prof. Jotz Lean dar und wird nicht nochmals von ihr durchgesehen, im Grunde sind das hier nur meine persönlichen Mitschriften. Beweise werde ich i.d.R. nicht übernehmen (weil das in \LaTeX{} einfach keinen Spaß macht). \hspace{\fill} glhf
+\newpage
+\mainmatter
+\setcounter{chapter}{-1}	
+\setstretch{1.15}			%Zeilenabstand. Kann man auch später nochmal reinhämmern, falls man es ändern will
 	
 	
 	
@@ -45,7 +49,7 @@
 	
 	
 	
-	\listoftheorems[ignoreall,show={defn}]
+	\listoftheorems[ignoreall,show={defn,defn*}]
 	\renewcommand{\listtheoremname}{Liste der Sätze mit Namen}
-	\listoftheorems[ignoreall,show={thmn,corn}]
+	\listoftheorems[ignoreall,show={thmn,corn,thmn*,corn*}]
 \end{document}

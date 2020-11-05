@@ -15,12 +15,36 @@
 
 %==============HEADER============================================================
 
-\ofoot{Funktionentheorie}
-\ifoot{Jun.-Prof. Dr. Madeleine Jotz Lean}
+\refoot{Funktionentheorie}
+\lofoot{Jun.-Prof. Dr. Madeleine Jotz Lean}
+\ohead{Vorlesung \arabic{lecture}}
 
-%================================================================================
+%==========================NEWTHM================================================
 
-%\usepackage{showframe}
+\theoremstyle{newthm}
+\newtheorem{thm}{Satz}[section]
+\newtheorem{thmn}[thm]{Satz}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Korollar}
+\newtheorem{corn}[thm]{Korollar}
+\newtheorem*{thm*}{Satz}
+\newtheorem*{thmn*}{Satz}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{prop*}{Proposition}
+\newtheorem*{cor*}{Korollar}
+\newtheorem*{corn*}{Korollar}
 
-%==========================COMMANDS==============================================
+\theoremstyle{newdef}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{conj}[thm]{Annahme}
+\newtheorem*{defn*}{Definition}
+\newtheorem*{conj*}{Annahme}
 
+\theoremstyle{newrem}
+\newtheorem{exmp}[thm]{Beispiel}
+\newtheorem{rem}[thm]{Bemerkung}
+\newtheorem{note}[thm]{Anmerkung}
+\newtheorem*{exmp*}{Beispiel}
+\newtheorem*{rem*}{Bemerkung}
+\newtheorem*{note*}{Anmerkung}

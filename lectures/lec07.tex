@@ -2,17 +2,17 @@
 		
 		Sei $ f: S \subseteq \C \to \C $ eine beschränkte Funktion. Wir definieren die \emph{Norm von $f$} als $ ||f||=\sup\limits_{z \in S} |f(z)| $. Es gilt $ ||f|| \geq 0,\ ||f||=0 \iff f=0 $ und $ ||f+g|| \leq ||f||+||g|| $. 
 		
-		\begin{defn}[Gleichmäßige Konvergenz]
+		\begin{defn*}[Gleichmäßige Konvergenz]
 			Sei $ (f_n)_{n \in \N} $ eine Folge von Funktionen $ f_n: S \to \C $. $ (f_n)_{n \in N} $ \emph{konvergiert gleichmäßig} gegen $f$ auf $S$ ($ f: S \to \C $), falls $ \forall\, \epsilon > 0 \ \exists\, N \in N: ||f-f_n|| < \epsilon \ \forall\, n \geq N $. $f$ ist der gleichmäßige Limes von $ (f_n)_{n \in \N} $. Daraus folgt $ f_n(z) \overset{n \to \infty}{\longrightarrow} f(z) \ \forall\, z \in S $, aber die Umkehrung gilt nicht.
-		\end{defn}
+		\end{defn*}
 		
 		\begin{thm}
 			Sei $ (f_n)_{n \in \N}, f_n:S \to \C $ eine Folge von Funktionen, die gleichmäßig gegen eine Funktion $ f: S \to \C $ konvergiert. Sei $c \in S$. Falls $ f_n $ stetig an der Stelle $c$ ist für alle $n \in \N$, dann ist auch $f$ stetig an der Stelle $c$. 
 		\end{thm}
 		
-		\begin{defn}[Gleichmäßige Summierung]
+		\begin{defn*}[Gleichmäßige Summierung]
 			Gegeben eine Folge $ (f_n)_{n \in \N} $ von Funktionen $ f_n: S \to \C $, so kann man die Reihe $ \sum\limits_{n=0}^\infty f_n $ von Funktionen definieren. Falls die Folge $ (F_n)_{n \in \N}, F_n = \sum\limits_{k=0}^n f_k $ gleichmäßig gegen eine Funktion $ F: S \to \C $ konvergiert, so sagt man, dass $ \sum\limits_{n=0}^\infty f_n $ \emph{gleichmäßig zu $F$ summiert}.
-		\end{defn}
+		\end{defn*}
 		
 		\begin{thmn}[Weierstraß'scher M-Test]
 			Sei für alle $ n \in \N $ die Funktion $ f_n:S \to \C $ so, dass $ M_n > 0 $ existieren mit $ ||f_n|| \leq M_n $. Falls $ \sum\limits_{n=0}^\infty M_n $ konvergiert, so konvergiert auch $ \sum\limits_{n=0}^\infty f_n $ gleichmäßig auf $S$.
